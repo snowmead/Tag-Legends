@@ -16045,7 +16045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4489175654884898, guid: 830eb2bdeec3f2748985b1d3847d67ce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.0354805
+      value: -9.02
       objectReference: {fileID: 0}
     - target: {fileID: 4489175654884898, guid: 830eb2bdeec3f2748985b1d3847d67ce, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16053,7 +16053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4489175654884898, guid: 830eb2bdeec3f2748985b1d3847d67ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.8012276
+      value: -20.68
       objectReference: {fileID: 0}
     - target: {fileID: 4489175654884898, guid: 830eb2bdeec3f2748985b1d3847d67ce, type: 3}
       propertyPath: m_LocalRotation.x
@@ -17677,7 +17677,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  anim: {fileID: 5866666021909216657, guid: 0616642aaff4a6d43a7b469a7b9011db, type: 3}
+  runForwardAnim: {fileID: 5866666021909216657, guid: 0616642aaff4a6d43a7b469a7b9011db,
+    type: 3}
+  runLeftAnim: {fileID: 5866666021909216657, guid: d070ae0b7a53e5444aeb2db185af1c4c,
+    type: 3}
+  runBackAnim: {fileID: 5866666021909216657, guid: adab250b56fec7e4a835bc3d9da4d411,
+    type: 3}
+  runRightAnim: {fileID: 5866666021909216657, guid: f69ca010c9f79944fab3eeed23a2889b,
+    type: 3}
+  runDiagLeft: {fileID: 5866666021909216657, guid: 4e515c217964a8a4d8249848fcd4b0c9,
+    type: 3}
+  runDiagRight: {fileID: 5866666021909216657, guid: b4baaae8aa0e34a49a94d58f7e454648,
+    type: 3}
+  runBackDiagLeft: {fileID: 5866666021909216657, guid: 2abe92b30934b40499f1c2c27dbef2c9,
+    type: 3}
+  runBackDiagRight: {fileID: 5866666021909216657, guid: 59fa43f42fb0f1241a0dff1d0d3826e5,
+    type: 3}
+  jump: {fileID: 5866666021909216657, guid: 65a8f8ef6a6323c45babf5554656682d, type: 3}
+  runJump: {fileID: 5866666021909216657, guid: 53b0effce5231b746b40375df7e169c8, type: 3}
+  backJump: {fileID: 5866666021909216657, guid: 8202c778ff3689348a1b6edb0051c39e,
+    type: 3}
 --- !u!136 &665168133
 CapsuleCollider:
   m_ObjectHideFlags: 0
