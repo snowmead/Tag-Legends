@@ -26,7 +26,7 @@ public class testingPlayerController : MonoBehaviour
         animator.SetFloat("Turn", -inputVector.x);
         grounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f, groundLayer);
         
-        if (Input.GetKey(KeyCode.Space) && grounded)
+        if (Input.GetButtonDown("Jump") && grounded)
         {
             Jump();
         }
