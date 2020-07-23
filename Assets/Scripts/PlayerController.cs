@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         else if (PhotonNetwork.IsMasterClient)
         {
             // check if all players have initialized their player in the game
-            if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length)
+            if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.instance.countdownStarted)
             {
                 // start the game for all players
                 GameManager.instance.photonView.RPC("StartCountdown", RpcTarget.All);

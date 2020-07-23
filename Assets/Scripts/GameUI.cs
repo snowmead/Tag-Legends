@@ -76,6 +76,8 @@ public class GameUI : MonoBehaviour
     // begin 3... 2... 1... Go! Countdown
     IEnumerator Countdown(int seconds)
     {
+        Debug.Log("countdown was called");
+
         countdownText.gameObject.SetActive(true);
         int count = seconds + 1;
 

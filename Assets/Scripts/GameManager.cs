@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [HideInInspector]
     PlayerController playerScript;
+    public bool countdownStarted = false;
 
     // instance
     public static GameManager instance;
@@ -108,6 +109,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void StartCountdown()
     {
+        countdownStarted = true;
         // begin countdown for each player
         GameUI.instance.BeginCountdown(3);
     }
