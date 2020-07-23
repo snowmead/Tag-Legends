@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
+using System;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -56,8 +57,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     void SpawnPlayer()
     {
         // instantiate the player accross the network
-        GameObject playerObj = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
-        
+        GameObject playerObj = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+
         // get the player script
         PlayerController playerScript = playerObj.GetComponent<PlayerController>();
 
