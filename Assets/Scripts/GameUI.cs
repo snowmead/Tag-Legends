@@ -9,6 +9,7 @@ public class GameUI : MonoBehaviour
 {
     public PlayerUIContainer[] playerContainers;
     public TextMeshProUGUI loseText;
+    public TextMeshProUGUI countdownText;
 
     // instance
     public static GameUI instance;
@@ -65,6 +66,38 @@ public class GameUI : MonoBehaviour
     {
         loseText.gameObject.SetActive(true);
         loseText.text = loserName + " lost";
+    }
+
+    public void BeginCountdown(int seconds)
+    {
+        StartCoroutine(Countdown(seconds));
+    }
+
+    // begin 3... 2... 1... Go! Countdown
+    IEnumerator Countdown(int seconds)
+    {
+        countdownText.gameObject.SetActive(true);
+        int count = seconds + 1;
+
+        while (count >= 0)
+        {
+            // display 3... 2... 1... Go! Text
+            if (count == 0)
+            {
+                countdownText.text = "Go!";
+            }
+            else
+            {
+                countdownText.text = count.ToString();
+            }
+
+            // wait for second
+            count--;
+            yield return new WaitForSeconds(1);
+        }
+
+        GameManager.instance.StartGame();
+        countdownText.gameObject.SetActive(false);
     }
 }
 

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [HideInInspector]
     public int id;
     public float curTagTime;
+    public bool startGame = false;
 
     [Header("Components")]
     public Player photonPlayer;
@@ -33,8 +34,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     public float jumpForce;
     public float turnSmoothTime = 0.1f;
-    /*float turnSmoothVelocity;*/
-
 
     // called when the player object is instantiated
     [PunRPC]
@@ -53,45 +52,69 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // the other players sync their own position accross the network
         if (!photonView.IsMine)
         {
-            rig.isKinematic = true;
             cam.enabled = false;
         }
+
+        rig.isKinematic = true;
     }
 
-    // Start is called before the first frame update
+    // start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
+    // update is called once per frame
     void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (startGame)
         {
-            if (curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded)
+            // only the master client decides when the game has ended
+            if (PhotonNetwork.IsMasterClient)
             {
-                GameManager.instance.gameEnded = true;
-                GameManager.instance.photonView.RPC("GameOver", RpcTarget.All, id);
+                // check if the curTagTime is greater then the max time allowed before losing
+                if (curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded)
+                {
+                    // end the game for all players
+                    GameManager.instance.gameEnded = true;
+                    GameManager.instance.photonView.RPC("GameOver", RpcTarget.All, id);
+                }
+            }
+
+            // only move my player
+            if (photonView.IsMine)
+            {
+                // get x and z input axis
+                inputVector = new Vector3(Input.GetAxis("Horizontal"), transform.position.y, Input.GetAxis("Vertical"));
+
+                // set animator parameters for player animations
+                animator.SetFloat("Speed", inputVector.z);
+                animator.SetFloat("Turn", -inputVector.x);
+                
+                // check if my player is grounded
+                grounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f, groundLayer);
+
+                // only jump when i press the space bar and if I'm grounded
+                if (Input.GetButtonDown("Jump") && grounded)
+                {
+                    Jump();
+                }
+            }
+
+            // track the amount of time we're tagged
+            if (tagIndicator.activeInHierarchy)
+                curTagTime += Time.deltaTime;
+        } 
+        // only the master client decides when to start the game
+        else if (PhotonNetwork.IsMasterClient)
+        {
+            // check if all players have initialized their player in the game
+            if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length)
+            {
+                // start the game for all players
+                GameManager.instance.photonView.RPC("StartCountdown", RpcTarget.All);
             }
         }
-
-        if (photonView.IsMine)
-        {
-            inputVector = new Vector3(Input.GetAxis("Horizontal"), transform.position.y, Input.GetAxis("Vertical"));
-            animator.SetFloat("Speed", inputVector.z);
-            animator.SetFloat("Turn", -inputVector.x);
-            grounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f, groundLayer);
-
-            if (Input.GetButtonDown("Jump") && grounded)
-            {
-                Jump();
-            }
-        }
-
-        // track the amount of time we're wearing the hat
-        if (tagIndicator.activeInHierarchy)
-        curTagTime += Time.deltaTime;
     }
 
     private void Jump()
@@ -100,7 +123,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     // check if we're grounded and if so - jump
-    void TryJump()
+    /*void TryJump()
     {
         // create a ray which shoots below us
         Ray ray = new Ray(transform.position, Vector3.down);
@@ -110,7 +133,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-    }
+    }*/
 
     public void TagPlayer(bool tagged)
     {
@@ -153,6 +176,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         else if (stream.IsReading)
         {
             curTagTime = (float)stream.ReceiveNext();
+        }
+    }
+
+    // called when all the players are ready to play and the countdown was done
+    [PunRPC]
+    public void BeginGame()
+    {
+        Debug.Log("BeginGame was called");
+        startGame = true;
+        if (photonView.IsMine)
+        {
+            rig.isKinematic = false;
         }
     }
 }

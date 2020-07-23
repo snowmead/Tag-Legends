@@ -5,6 +5,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
 using System;
+using TMPro;
+using System.Diagnostics;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -23,6 +25,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [Header("Components")]
     public PhotonView photonView;
+
+    [HideInInspector]
+    PlayerController playerScript;
 
     // instance
     public static GameManager instance;
@@ -60,7 +65,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         GameObject playerObj = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
 
         // get the player script
-        PlayerController playerScript = playerObj.GetComponent<PlayerController>();
+        playerScript = playerObj.GetComponent<PlayerController>();
 
         // intialize the player
         playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
@@ -97,6 +102,19 @@ public class GameManager : MonoBehaviourPunCallbacks
             return true;
         else
             return false;
+    }
+
+    // called when all players are ready and loaded in
+    [PunRPC]
+    void StartCountdown()
+    {
+        // begin countdown for each player
+        GameUI.instance.BeginCountdown(3);
+    }
+
+    public void StartGame()
+    {
+        playerScript.photonView.RPC("BeginGame", RpcTarget.All);
     }
 
     // called when a player was tagged passed the maxed time - player tagged lost

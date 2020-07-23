@@ -9418,6 +9418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   curTagTime: 0
+  startGame: 0
   rig: {fileID: 8773132442728661278}
   animator: {fileID: 8773132442728661272}
   cam: {fileID: 8773132442728661277}

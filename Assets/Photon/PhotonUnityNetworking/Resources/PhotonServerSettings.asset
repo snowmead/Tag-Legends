@@ -46,6 +46,10 @@ MonoBehaviour:
   - tagPlayer
   - TagPlayer
   - GameOver
+  - StartGame
+  - BeginCountdown
+  - BeginGame
+  - StartCountdown
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
