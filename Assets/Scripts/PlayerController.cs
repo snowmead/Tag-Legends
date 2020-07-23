@@ -15,17 +15,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Components")]
     public Player photonPlayer;
     public Rigidbody rig;
-    public Animator runForwardAnim;
-    public Animator jump;
-    public Animator runJump;
+    public Animator animator;
     public Camera cam;
     public GameObject tagIndicator;
-    
+    private Vector3 inputVector;
+
+    [SerializeField]
+    private bool grounded;
+    [SerializeField]
+    private LayerMask groundLayer;
+
     [Header("Info")]
-    public float gravity = 1f;
-    public float speed = 4f;
+    public const float gravity = 1f;
+    public const float acceleration = 0.00005f;
+    public const float speedConstant = 0.15f;
+    public float speed = 0f;
+
     public float jumpForce;
     public float turnSmoothTime = 0.1f;
+    /*float turnSmoothVelocity;*/
+
 
     // called when the player object is instantiated
     [PunRPC]
@@ -52,9 +61,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     // Start is called before the first frame update
     void Start()
     {
-        runForwardAnim = GetComponent<Animator>();
-        jump = GetComponent<Animator>();
-        runJump = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -71,45 +78,25 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if (photonView.IsMine)
         {
-            float x = Input.GetAxis("Horizontal") * speed;
-            float z = Input.GetAxis("Vertical") * speed;
+            inputVector = new Vector3(Input.GetAxis("Horizontal"), transform.position.y, Input.GetAxis("Vertical"));
+            animator.SetFloat("Speed", inputVector.z);
+            animator.SetFloat("Turn", -inputVector.x);
+            grounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f, groundLayer);
 
-            Vector3 direction = new Vector3(x, 0f, z).normalized;
-
-            if (direction.magnitude >= 0.1f)
+            if (Input.GetKey(KeyCode.Space) && grounded)
             {
-                //float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
-                //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                //transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-                rig.velocity = new Vector3(x, rig.velocity.y, z);
-            }
-
-            runForwardAnim.SetBool("isRunningForward", false);
-            jump.SetBool("isJump", false);
-            runJump.SetBool("isRunJump", false);
-
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-            {
-                runForwardAnim.SetBool("isRunningForward", true);
-            }
-
-            if (Input.GetKey(KeyCode.Space) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
-            {
-                runForwardAnim.SetBool("isRunJump", true);
-                TryJump();
-            }
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                runForwardAnim.SetBool("isJump", true);
-                TryJump();
+                Jump();
             }
         }
 
         // track the amount of time we're wearing the hat
         if (tagIndicator.activeInHierarchy)
-            curTagTime += Time.deltaTime;
+        curTagTime += Time.deltaTime;
+    }
+
+    private void Jump()
+    {
+        animator.SetTrigger("Jump");
     }
 
     // check if we're grounded and if so - jump
