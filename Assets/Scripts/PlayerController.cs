@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             cam.gameObject.SetActive(true);
+            rig.isKinematic = false;
         }
     }
 
@@ -132,19 +133,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         animator.SetTrigger("Jump");
     }
 
-    // check if we're grounded and if so - jump
-    /*void TryJump()
-    {
-        // create a ray which shoots below us
-        Ray ray = new Ray(transform.position, Vector3.down);
-
-        // if we hit something then we're grounded - so then jump
-        if (Physics.Raycast(ray, 0.7f))
-        {
-            rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
-    }*/
-
     // tag a player or remove tag from player
     public void TagPlayer(bool tagged)
     {
@@ -153,44 +141,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         else
             tagIndicator.SetActive(false);
     }
-
-    /*void OnCollisionEnter(Collision collision)
-    {
-        // only the client controlling this player will check for collisions
-        // client based collision detection
-        if (!photonView.IsMine)
-            return;
-
-        // did we hit another player?
-        *//*if (collision.gameObject.CompareTag("Player"))
-        {
-            // do they have the hat?
-            if (GameManager.instance.GetPlayer(collision.gameObject).id == GameManager.instance.taggedPlayer)
-            {
-                // can we get the hat?
-                if (GameManager.instance.CanGetTagged())
-                {
-                    // give us the hat
-                    GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
-                }
-            }
-        }*//*
-
-        // did we hit another player's tag range circle?
-        if (collision.gameObject.CompareTag("TagCircle"))
-        {
-            // do they have the hat?
-            if (collision.gameObject.GetComponentInParent<PlayerController>().id == GameManager.instance.taggedPlayer)
-            {
-                // can we get the hat?
-                if (GameManager.instance.CanGetTagged())
-                {
-                    // give us the hat
-                    GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
-                }
-            }
-        }
-    }*/
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -208,8 +158,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 // can we get tagged?
                 if (GameManager.instance.CanGetTagged())
                 {
-                    Debug.Log("I GOT TAGGED " + id);
-
                     // get tagged
                     GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
                 }
