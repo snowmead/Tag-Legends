@@ -23,9 +23,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int taggedPlayer;
     private int playersInGame;
 
-    [Header("Components")]
-    public PhotonView photonView;
-
     [HideInInspector]
     PlayerController playerScript;
     public bool countdownStarted = false;
