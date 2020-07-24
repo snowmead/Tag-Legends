@@ -56,11 +56,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
         {
             // disable all other player's cameras
-            cam.enabled = false;
+            cam.gameObject.SetActive(false);
+            rig.isKinematic = true;
         }
-
-        // disable all player's movement before the countdown
-        rig.isKinematic = true;
+        else
+        {
+            cam.gameObject.SetActive(true);
+        }
     }
 
     // start is called before the first frame update
@@ -152,7 +154,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             tagIndicator.SetActive(false);
     }
 
-    void OnCollisionEnter(Collision collision)
+    /*void OnCollisionEnter(Collision collision)
     {
         // only the client controlling this player will check for collisions
         // client based collision detection
@@ -160,7 +162,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             return;
 
         // did we hit another player?
-        if (collision.gameObject.CompareTag("Player"))
+        *//*if (collision.gameObject.CompareTag("Player"))
         {
             // do they have the hat?
             if (GameManager.instance.GetPlayer(collision.gameObject).id == GameManager.instance.taggedPlayer)
@@ -172,10 +174,45 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
                 }
             }
+        }*//*
+
+        // did we hit another player's tag range circle?
+        if (collision.gameObject.CompareTag("TagCircle"))
+        {
+            // do they have the hat?
+            if (collision.gameObject.GetComponentInParent<PlayerController>().id == GameManager.instance.taggedPlayer)
+            {
+                // can we get the hat?
+                if (GameManager.instance.CanGetTagged())
+                {
+                    // give us the hat
+                    GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
+                }
+            }
+        }
+    }*/
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        // did we hit another player's tag range circle?
+        if (collision.gameObject.CompareTag("TagCircle"))
+        {
+            // are they tag?
+            if (collision.gameObject.GetComponentInParent<PlayerController>().id == GameManager.instance.taggedPlayer)
+            {
+                // can we get tagged?
+                if (GameManager.instance.CanGetTagged())
+                {
+                    Debug.Log("I GOT TAGGED " + id);
+
+                    // get tagged
+                    GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
+                }
+            }
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         // we want to sync the 'curTagTime' between all clients
         if (stream.IsWriting)
@@ -195,12 +232,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // start the game
         // update function will now have player movement
         startGame = true;
-        
+    }
+
+    // called when all the players are ready to play and the countdown was done
+    [PunRPC]
+    public void EndGame()
+    {
+        // start the game
+        // update function will now have player movement
+        startGame = false;
+
         // only set enable character movement for that player's character
         if (photonView.IsMine)
         {
             // set kinematic to false so that the player could move is character
-            rig.isKinematic = false;
+            rig.isKinematic = true;
         }
     }
 }

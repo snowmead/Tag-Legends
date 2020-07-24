@@ -79,6 +79,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         return players.First(x => x.id == playerId);
     }
 
+    // returns the player of the requested id
+    /*public PlayerController GetPlayer(int playerId)
+    {
+        return players.First(x => x.id == playerId);
+    }*/
+
     // returns the player of the requested GameObject
     public PlayerController GetPlayer(GameObject playerObj)
     {
@@ -133,8 +139,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerController player = GetPlayer(playerId);
         GameUI.instance.SetLoseText(player.photonPlayer.NickName);
 
+        // send rpc call to all players to end their game
+        playerScript.photonView.RPC("EndGame", RpcTarget.All);
+
         // Wait 3 seconds before going back to Menu Scene
-        Invoke("GoBackToMenu", 3.0f);
+        Invoke("GoBackToMenu", 10.0f);
     }
 
     // called after the game has been won - navigates back to the Menu scene
