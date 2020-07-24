@@ -2064,6 +2064,7 @@ GameObject:
   - component: {fileID: 1218416715}
   - component: {fileID: 1218416714}
   - component: {fileID: 1218416716}
+  - component: {fileID: 1218416717}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -2089,7 +2090,6 @@ MonoBehaviour:
   joinRoomButton: {fileID: 521302101}
   playerListText: {fileID: 241315553}
   startGameButton: {fileID: 373531583}
-  photonView: {fileID: 1218416716}
 --- !u!4 &1218416715
 Transform:
   m_ObjectHideFlags: 0
@@ -2119,13 +2119,28 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 0
+  Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 2
+  - {fileID: 1218416717}
+  viewIdField: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1218416717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218416713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
 --- !u!1 &1248956577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2333,7 +2348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5a9eab9990ad347a30d088b9cdf72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photonView: {fileID: 1353713206}
 --- !u!114 &1353713206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2353,7 +2367,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 0}
-  viewIdField: 1
+  viewIdField: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &1442100147

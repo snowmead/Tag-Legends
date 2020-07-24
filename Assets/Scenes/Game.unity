@@ -22963,7 +22963,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 0}
-  viewIdField: 2
+  viewIdField: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &828072265
@@ -22992,6 +22992,7 @@ MonoBehaviour:
   players: []
   taggedPlayer: 0
   photonView: {fileID: 828072264}
+  countdownStarted: 0
 --- !u!4 &828072266
 Transform:
   m_ObjectHideFlags: 0

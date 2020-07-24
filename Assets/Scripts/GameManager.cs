@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         instance.enabled = true;
     }
 
+
     private void Start()
     {
         // set players maximum size to the number of players who were originally in the room lobby
@@ -109,13 +110,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void StartCountdown()
     {
+        // set to true
+        // player controller will no longer call this method from it's update function
         countdownStarted = true;
+        
         // begin countdown for each player
         GameUI.instance.BeginCountdown(3);
     }
 
+    // start the game
     public void StartGame()
     {
+        // send rpc call to all players to begin their game
         playerScript.photonView.RPC("BeginGame", RpcTarget.All);
     }
 

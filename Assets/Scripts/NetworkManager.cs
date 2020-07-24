@@ -11,9 +11,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager instance;
 
-    [Header("Components")]
-    public PhotonView photonView;
-
     private void Awake()
     {
         // If an instance already exists and it's not this one - destroy to avoid duplicate NetworkManager object

@@ -9,9 +9,9 @@ using System.Globalization;
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector]
-    public int id;
-    public float curTagTime;
-    public bool startGame = false;
+    public int id;                  // player id
+    public float curTagTime;        // current tag time of player
+    public bool startGame = false;  // determines if the game started
 
     [Header("Components")]
     public Player photonPlayer;
@@ -39,9 +39,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     public void Initialize(Player player)
     {
+        // set network photon player
         photonPlayer = player;
+        // set player id using photon player actor number
         id = player.ActorNumber;
 
+        // set the amount of players in the game 
         GameManager.instance.players[id - 1] = this;
 
         // tag the first player
@@ -52,9 +55,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // the other players sync their own position accross the network
         if (!photonView.IsMine)
         {
+            // disable all other player's cameras
             cam.enabled = false;
         }
 
+        // disable all player's movement before the countdown
         rig.isKinematic = true;
     }
 
@@ -67,6 +72,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     // update is called once per frame
     void Update()
     {
+        // check if the game is started
         if (startGame)
         {
             // only the master client decides when the game has ended
@@ -103,6 +109,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
             // track the amount of time we're tagged
             if (tagIndicator.activeInHierarchy)
+                // increase current tag time every second
                 curTagTime += Time.deltaTime;
         } 
         // only the master client decides when to start the game
@@ -119,6 +126,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Jump()
     {
+        // trigger jump animation
         animator.SetTrigger("Jump");
     }
 
@@ -135,6 +143,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
     }*/
 
+    // tag a player or remove tag from player
     public void TagPlayer(bool tagged)
     {
         if (tagged)
@@ -183,10 +192,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     public void BeginGame()
     {
-        Debug.Log("BeginGame was called");
+        // start the game
+        // update function will now have player movement
         startGame = true;
+        
+        // only set enable character movement for that player's character
         if (photonView.IsMine)
         {
+            // set kinematic to false so that the player could move is character
             rig.isKinematic = false;
         }
     }

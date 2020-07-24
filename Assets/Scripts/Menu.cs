@@ -20,9 +20,6 @@ public class Menu : MonoBehaviourPunCallbacks
     public TextMeshProUGUI playerListText;
     public Button startGameButton;
 
-    [Header("Components")]
-    public PhotonView photonView;
-
     private void Start()
     {
         createRoomButton.interactable = false;
@@ -71,6 +68,11 @@ public class Menu : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateLobbyUI", RpcTarget.All);
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("SOMEONE ENTERED! " + newPlayer.NickName);
+    }
+
     // called when a player leaves the room
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
@@ -79,8 +81,8 @@ public class Menu : MonoBehaviourPunCallbacks
         UpdateLobbyUI();
     }
 
-    [PunRPC]
     // updates the lobby UI to show player list and host buttons
+    [PunRPC]
     public void UpdateLobbyUI()
     {
         playerListText.text = "";
