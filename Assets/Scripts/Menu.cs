@@ -58,11 +58,6 @@ public class Menu : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = playerNameInput.text;
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log("SOMEONE ENTERED! " + newPlayer.NickName);
-    }
-
     // called when a player leaves the room
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {

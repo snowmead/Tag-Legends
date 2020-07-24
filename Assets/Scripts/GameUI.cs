@@ -79,7 +79,7 @@ public class GameUI : MonoBehaviour
         Debug.Log("countdown was called");
 
         countdownText.gameObject.SetActive(true);
-        int count = seconds + 1;
+        int count = seconds;
 
         while (count >= 0)
         {
