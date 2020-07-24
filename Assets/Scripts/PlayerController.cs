@@ -194,6 +194,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     private void OnTriggerEnter(Collider collision)
     {
+        // only the client controlling this player will check for collisions
+        // client based collision detection
+        if (!photonView.IsMine)
+            return;
+
         // did we hit another player's tag range circle?
         if (collision.gameObject.CompareTag("TagCircle"))
         {
