@@ -58,16 +58,6 @@ public class Menu : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = playerNameInput.text;
     }
 
-    // called when a player joins the room
-    public override void OnJoinedRoom()
-    {
-        SetScreen(lobbyScreen);
-
-        // send an rpc call to update all the other clients that this player has joined the room
-        // update everyone elses lobby ui
-        photonView.RPC("UpdateLobbyUI", RpcTarget.All);
-    }
-
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("SOMEONE ENTERED! " + newPlayer.NickName);
@@ -81,6 +71,16 @@ public class Menu : MonoBehaviourPunCallbacks
         UpdateLobbyUI();
     }
 
+    // called when a player joins the room
+    public override void OnJoinedRoom()
+    {
+        SetScreen(lobbyScreen);
+
+        // send an rpc call to update all the other clients that this player has joined the room
+        // update everyone elses lobby ui
+        photonView.RPC("UpdateLobbyUI", RpcTarget.All);
+    }
+
     // updates the lobby UI to show player list and host buttons
     [PunRPC]
     public void UpdateLobbyUI()
@@ -88,7 +88,7 @@ public class Menu : MonoBehaviourPunCallbacks
         playerListText.text = "";
 
         // display all the players currently in the lobby
-        foreach(Player player in PhotonNetwork.PlayerList)
+        foreach (Player player in PhotonNetwork.PlayerList)
         {
             playerListText.text += player.NickName + "\n";
         }
