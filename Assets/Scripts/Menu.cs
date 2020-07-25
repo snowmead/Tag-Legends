@@ -184,7 +184,6 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void OnExitButton()
     {
-        Debug.Log("ENtERED");
         Application.Quit();
     }
 }
