@@ -13,22 +13,48 @@ public class Menu : MonoBehaviourPunCallbacks
     public GameObject[] screens;
     private const string mainOptionsName = "MainOptions";
     private const string playOptionsName = "PlayOptions";
+    private const string settings = "Settings";
     private const string lobbyName = "LobbyScreen";
 
-    [Header("Main Screen")]
+    [Header("Play Options Screen")]
     public Button createRoomButton;
     public Button joinRoomButton;
+
+    [Header("Settings Screen")]
+    public Slider volumeSlider;
+    public GameObject cam;
+    private AudioSource audioSource;
 
     [Header("Lobby Screen")]
     public TextMeshProUGUI playerListText;
     public Button startGameButton;
 
+    [Header("Player Preview")]
+    public GameObject playerPreview;
+    private Animator animator;
+
+    public GameObject buttonClickAudioObject;
+    private AudioSource buttonClickAudio;
+
     private void Start()
     {
+        // set the player preview in a kneeling animation
+        animator = playerPreview.GetComponent<Animator>();
+        animator.SetBool("InMainMenu", true);
+
+        // can't create room or join rooms until connected to the master
         createRoomButton.interactable = false;
         joinRoomButton.interactable = false;
+
+        // set audio source volume to the sliders default setting
+        audioSource = cam.GetComponent<AudioSource>();
+        audioSource.volume = volumeSlider.value;
+
+        // set button click audio
+        buttonClickAudio = buttonClickAudioObject.GetComponent<AudioSource>();
     }
 
+    // called when connection to photon server is successful
     public override void OnConnectedToMaster()
     {
         createRoomButton.interactable = true;
@@ -56,23 +82,35 @@ public class Menu : MonoBehaviourPunCallbacks
     // called when "Play" Button is pressed
     public void OnPlayButton()
     {
+        buttonClickAudio.Play();
         SetScreen(GetScreen(playOptionsName));
     }
 
+    // called when "Settings" Button is pressed
+    public void OnSettingsButton()
+    {
+        buttonClickAudio.Play();
+        SetScreen(GetScreen(settings));
+    }
+
+    // called when "BackToMenu" Button is pressed
     public void BackToMainOptions()
     {
+        buttonClickAudio.Play();
         SetScreen(GetScreen(mainOptionsName));
     }
 
     // called when "Create Room" Button is pressed
     public void OnCreateRoomButton(TMP_InputField roomNameInput)
     {
+        buttonClickAudio.Play();
         NetworkManager.instance.CreateRoom(roomNameInput.text);
     }
 
     // called when "Join Room" Button is pressed
     public void OnJoinRoomButton(TMP_InputField roomNameInput)
     {
+        buttonClickAudio.Play();
         NetworkManager.instance.JoinRoom(roomNameInput.text);
     }
 
@@ -122,6 +160,7 @@ public class Menu : MonoBehaviourPunCallbacks
     // called when the "Leave Lobby" button is pressed
     public void OnLeaveLobbyButton()
     {
+        buttonClickAudio.Play();
         PhotonNetwork.LeaveRoom();
         SetScreen(GetScreen(playOptionsName));
     }
@@ -130,7 +169,16 @@ public class Menu : MonoBehaviourPunCallbacks
     // only the host can click this button
     public void OnStartGameButton()
     {
+        buttonClickAudio.Play();
+        // set animator to not be kneeling - entering game now
+        animator.SetBool("InMainMenu", false);
+
         // send an rpc call to all players in the room to load the "Game" scene
         NetworkManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "Game");
+    }
+
+    public void AdjustVolume(Slider volume)
+    {
+        audioSource.volume = volume.value;
     }
 }
