@@ -181,4 +181,10 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         audioSource.volume = volume.value;
     }
+
+    public void OnExitButton()
+    {
+        Debug.Log("ENtERED");
+        Application.Quit();
+    }
 }
