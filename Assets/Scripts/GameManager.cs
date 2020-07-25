@@ -135,16 +135,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         gameEnded = true;
         PlayerController player = GetPlayer(playerId);
         GameUI.instance.SetLoseText(player.photonPlayer.NickName);
-
-        // send rpc call to all players to end their game
-        playerScript.photonView.RPC("EndGame", RpcTarget.All);
-
-        // Wait 3 seconds before going back to Menu Scene
-        Invoke("GoBackToMenu", 10.0f);
     }
 
     // called after the game has been won - navigates back to the Menu scene
-    void GoBackToMenu()
+    public void GoBackToMenu()
     {
         PhotonNetwork.LeaveRoom();
         NetworkManager.instance.ChangeScene("Menu");

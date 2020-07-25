@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Globalization;
+using System.Numerics;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -19,7 +20,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public Animator animator;
     public Camera cam;
     public GameObject tagIndicator;
-    private Vector3 inputVector;
 
     [SerializeField]
     private bool grounded;
@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public const float acceleration = 0.00005f;
     public const float speedConstant = 0.15f;
     public float speed = 0f;
+    public UnityEngine.Vector3 inputVector;
 
     public float jumpForce;
     public float turnSmoothTime = 0.1f;
@@ -90,18 +91,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
 
+            // if game ended
+            if (GameManager.instance.gameEnded)
+            {
+                // set player animation to idle
+                animator.SetFloat("Speed", 0);
+                animator.SetFloat("Turn", 0);
+            }
+
             // only move my player
             if (photonView.IsMine)
             {
                 // get x and z input axis
-                inputVector = new Vector3(Input.GetAxis("Horizontal"), transform.position.y, Input.GetAxis("Vertical"));
+                inputVector = new UnityEngine.Vector3(Input.GetAxis("Horizontal"), transform.position.y, Input.GetAxis("Vertical"));
 
                 // set animator parameters for player animations
                 animator.SetFloat("Speed", inputVector.z);
                 animator.SetFloat("Turn", -inputVector.x);
                 
                 // check if my player is grounded
-                grounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f, groundLayer);
+                grounded = Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, 1.1f, groundLayer);
 
                 // only jump when i press the space bar and if I'm grounded
                 if (Input.GetButtonDown("Jump") && grounded)
@@ -114,6 +123,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (tagIndicator.activeInHierarchy)
                 // increase current tag time every second
                 curTagTime += Time.deltaTime;
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameUI.instance.EscapeMenu();
+            }
         } 
         // only the master client decides when to start the game
         else if (PhotonNetwork.IsMasterClient)
@@ -165,7 +179,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         // we want to sync the 'curTagTime' between all clients
         if (stream.IsWriting)
@@ -185,21 +199,5 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // start the game
         // update function will now have player movement
         startGame = true;
-    }
-
-    // called when all the players are ready to play and the countdown was done
-    [PunRPC]
-    public void EndGame()
-    {
-        // start the game
-        // update function will now have player movement
-        startGame = false;
-
-        // only set enable character movement for that player's character
-        if (photonView.IsMine)
-        {
-            // set kinematic to false so that the player could move is character
-            rig.isKinematic = true;
-        }
     }
 }

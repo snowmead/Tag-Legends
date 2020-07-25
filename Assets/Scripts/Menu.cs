@@ -5,12 +5,15 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Linq;
 
 public class Menu : MonoBehaviourPunCallbacks
 {
     [Header("Screens")]
-    public GameObject mainScreen;
-    public GameObject lobbyScreen;
+    public GameObject[] screens;
+    private const string mainOptionsName = "MainOptions";
+    private const string playOptionsName = "PlayOptions";
+    private const string lobbyName = "LobbyScreen";
 
     [Header("Main Screen")]
     public Button createRoomButton;
@@ -32,12 +35,33 @@ public class Menu : MonoBehaviourPunCallbacks
         joinRoomButton.interactable = true;
     }
 
-    void SetScreen(GameObject screen)
+    // get screen game object using screen name
+    public GameObject GetScreen(string screenName)
     {
-        mainScreen.SetActive(false);
-        lobbyScreen.SetActive(false);
+        return screens.First(screen => screen.name == screenName);
+    }
 
-        screen.SetActive(true);
+    // set the scene in the menu 
+    void SetScreen(GameObject sceneToView)
+    {
+        foreach (GameObject screen in screens)
+        {
+            if (sceneToView == screen)
+                screen.SetActive(true);
+            else
+                screen.SetActive(false);
+        }
+    }
+
+    // called when "Play" Button is pressed
+    public void OnPlayButton()
+    {
+        SetScreen(GetScreen(playOptionsName));
+    }
+
+    public void BackToMainOptions()
+    {
+        SetScreen(GetScreen(mainOptionsName));
     }
 
     // called when "Create Room" Button is pressed
@@ -69,7 +93,7 @@ public class Menu : MonoBehaviourPunCallbacks
     // called when a player joins the room
     public override void OnJoinedRoom()
     {
-        SetScreen(lobbyScreen);
+        SetScreen(GetScreen(lobbyName));
 
         // send an rpc call to update all the other clients that this player has joined the room
         // update everyone elses lobby ui
@@ -99,7 +123,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnLeaveLobbyButton()
     {
         PhotonNetwork.LeaveRoom();
-        SetScreen(mainScreen);
+        SetScreen(GetScreen(playOptionsName));
     }
 
     // called when the "Start Game" button is pressed

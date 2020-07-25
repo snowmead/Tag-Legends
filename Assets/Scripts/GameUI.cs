@@ -10,6 +10,7 @@ public class GameUI : MonoBehaviour
     public PlayerUIContainer[] playerContainers;
     public TextMeshProUGUI loseText;
     public TextMeshProUGUI countdownText;
+    public GameObject menu;
 
     // instance
     public static GameUI instance;
@@ -100,6 +101,15 @@ public class GameUI : MonoBehaviour
 
         GameManager.instance.StartGame();
         countdownText.gameObject.SetActive(false);
+    }
+
+    // open or close menu while in game
+    public void EscapeMenu()
+    {
+        if (menu.activeSelf)
+            menu.SetActive(false);
+        else
+            menu.SetActive(true);
     }
 }
 
