@@ -111,43 +111,46 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
                 inputVector = direction * speed * Time.deltaTime;
 
-                // Only move if input was calculated
-                if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
-                {
-                    transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-                    transform.forward = inputVector;
-                    rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y, transform.forward.z * speed);
-                    //rig.velocity = transform.forward * speed;
-                }
+                // check if my player is grounded
+                grounded = Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.down), 1.2f, groundLayer);
 
-                // Completely stop moving (velocity-wise) if no input was found
-                if(horizontal == 0f && vertical == 0f)
+                // Can only move while grounded
+                if (grounded)
                 {
-                    rig.velocity = new Vector3(0f, rig.velocity.y, 0f);
-                    //rig.velocity = transform.forward * 0;
-                }
+                    // Only move if input was calculated
+                    if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
+                    {
+                        transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                        transform.forward = inputVector;
+                        rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y, transform.forward.z * speed);
+                        //rig.velocity = transform.forward * speed;
+                    }
 
-                // Animatiom changer
-                if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1)
-                {
-                    animator.Play("Sprint");
+                    // Completely stop moving (velocity-wise) if no input was found
+                    if (horizontal == 0f && vertical == 0f)
+                    {
+                        rig.velocity = new Vector3(0f, rig.velocity.y, 0f);
+                        //rig.velocity = transform.forward * 0;
+                    }
+
+                    // Animatioms
+                    if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1)
+                    {
+                        animator.Play("Sprint");
+                    }
+                    else
+                    {
+                        animator.Play("Idle");
+                    }
+
+                    if (Input.GetButtonDown("Jump"))
+                    {
+                        Jump();
+                    }
                 }
                 else
                 {
-                    animator.Play("Idle");
-                }
-
-
-
-
-
-                // check if my player is grounded
-                grounded = Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, 1.1f, groundLayer);
-
-                // only jump when i press the space bar and if I'm grounded
-                if (Input.GetButtonDown("Jump") && grounded)
-                {
-                    Jump();
+                    animator.Play("Jump");
                 }
             }
 
@@ -176,7 +179,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     private void Jump()
     {
         // trigger jump animation
-        animator.SetTrigger("Jump");
+        //animator.SetTrigger("Jump");
+        //animator.Play("Jump");
+        rig.velocity = new Vector3(0f, 6f, 0f);
     }
 
     // tag a player or remove tag from player
