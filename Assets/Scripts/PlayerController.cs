@@ -123,6 +123,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                         transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
                         transform.forward = inputVector;
                         rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y, transform.forward.z * speed);
+                        Debug.Log("Velocity: " + rig.velocity);
                         //rig.velocity = transform.forward * speed;
                     }
 
@@ -134,8 +135,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     }
 
                     // Animatioms
-                    if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1)
-                    {
+                    if(Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
+                {
                         animator.Play("Sprint");
                     }
                     else
