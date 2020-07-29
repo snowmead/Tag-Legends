@@ -6,6 +6,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Globalization;
 using System.Numerics;
+using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -30,8 +32,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public const float gravity = 1f;
     public const float acceleration = 0.00005f;
     public const float speedConstant = 0.15f;
-    public float speed = 0f;
-    public UnityEngine.Vector3 inputVector;
+    public float speed = 10f;
+    public Vector3 inputVector;
 
     public float jumpForce;
     public float turnSmoothTime = 0.1f;
@@ -95,20 +97,50 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (GameManager.instance.gameEnded)
             {
                 // set player animation to idle
-                animator.SetFloat("Speed", 0);
-                animator.SetFloat("Turn", 0);
+                    //animator.SetFloat("Speed", 0);
+                    //animator.SetFloat("Turn", 0);
             }
 
             // only move my player
             if (photonView.IsMine)
             {
-                // get x and z input axis
-                inputVector = new UnityEngine.Vector3(Input.GetAxis("Horizontal"), transform.position.y, Input.GetAxis("Vertical"));
+                // Get movement vertices
+                float horizontal = Input.GetAxis("Horizontal");
+                float vertical = Input.GetAxis("Vertical");
+                Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+                float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+                inputVector = direction * speed * Time.deltaTime;
 
-                // set animator parameters for player animations
-                animator.SetFloat("Speed", inputVector.z);
-                animator.SetFloat("Turn", -inputVector.x);
-                
+                // Only move if input was calculated
+                if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
+                {
+                    transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                    transform.forward = inputVector;
+                    rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y, transform.forward.z * speed);
+                    //rig.velocity = transform.forward * speed;
+                }
+
+                // Completely stop moving (velocity-wise) if no input was found
+                if(horizontal == 0f && vertical == 0f)
+                {
+                    rig.velocity = new Vector3(0f, rig.velocity.y, 0f);
+                    //rig.velocity = transform.forward * 0;
+                }
+
+                // Animatiom changer
+                if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1)
+                {
+                    animator.Play("Sprint");
+                }
+                else
+                {
+                    animator.Play("Idle");
+                }
+
+
+
+
+
                 // check if my player is grounded
                 grounded = Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, 1.1f, groundLayer);
 
