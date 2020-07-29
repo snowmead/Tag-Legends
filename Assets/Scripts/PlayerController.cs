@@ -97,8 +97,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (GameManager.instance.gameEnded)
             {
                 // set player animation to idle
-                    //animator.SetFloat("Speed", 0);
-                    //animator.SetFloat("Turn", 0);
             }
 
             // only move my player
@@ -137,11 +135,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     // Animatioms
                     if(Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
                 {
-                        animator.Play("Sprint");
+                        //animator.Play("Sprint");
+                        animator.SetBool("Sprint", true);
                     }
                     else
                     {
-                        animator.Play("Idle");
+                        //animator.Play("Idle");
+                        animator.SetBool("Sprint", false);
                     }
 
                     if (Input.GetButtonDown("Jump"))
@@ -151,7 +151,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 }
                 else
                 {
-                    animator.Play("Jump");
+                    //animator.Play("Jump");
+                    animator.SetTrigger("Jump");
                 }
             }
 
@@ -183,6 +184,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         //animator.SetTrigger("Jump");
         //animator.Play("Jump");
         rig.velocity = new Vector3(0f, 6f, 0f);
+        animator.SetTrigger("Jump");
     }
 
     // tag a player or remove tag from player

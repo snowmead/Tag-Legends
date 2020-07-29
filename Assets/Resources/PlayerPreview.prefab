@@ -9180,8 +9180,8 @@ GameObject:
   - component: {fileID: 5015998194980150280}
   - component: {fileID: 5015998194980150281}
   - component: {fileID: 5015998194980150295}
-  - component: {fileID: 5015998194980150282}
   - component: {fileID: 5015998194980150652}
+  - component: {fileID: 3246563552590345059}
   m_Layer: 0
   m_Name: PlayerPreview
   m_TagString: Player
@@ -9218,7 +9218,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 5cea0145638f9384291b3cd1496680e1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -9266,12 +9266,12 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 5015998194980150295}
-  - {fileID: 5015998194980150282}
   - {fileID: 5015998194980150280}
+  - {fileID: 3246563552590345059}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -9290,36 +9290,6 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &5015998194980150282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5015998194980150924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 1
-    SynchronizeType: 2
-    Name: Speed
-  - Type: 1
-    SynchronizeType: 2
-    Name: Turn
-  - Type: 9
-    SynchronizeType: 2
-    Name: Jump
-  - Type: 4
-    SynchronizeType: 0
-    Name: InMainMenu
-  m_SynchronizeLayers:
-  - SynchronizeType: 2
-    LayerIndex: 0
 --- !u!54 &5015998194980150652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9336,6 +9306,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &3246563552590345059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5015998194980150924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: InMainMenu
+  - Type: 4
+    SynchronizeType: 2
+    Name: Sprint
+  - Type: 9
+    SynchronizeType: 2
+    Name: Jump
+  - Type: 4
+    SynchronizeType: 2
+    Name: Idle
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &5015998194980150925
 GameObject:
   m_ObjectHideFlags: 0

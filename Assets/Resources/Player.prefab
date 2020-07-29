@@ -5960,7 +5960,7 @@ GameObject:
   - component: {fileID: 6134871984073530760}
   - component: {fileID: 7506297259458774090}
   - component: {fileID: 3343384217939038434}
-  - component: {fileID: 4951057161238747529}
+  - component: {fileID: 4198171779513970714}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6029,12 +6029,12 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 6134871984073530760}
   - {fileID: 9187452598562689943}
-  - {fileID: 4951057161238747529}
+  - {fileID: 4198171779513970714}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -6088,7 +6088,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4951057161238747529
+--- !u!114 &4198171779513970714
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6106,12 +6106,15 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: InMainMenu
-  - Type: 1
+  - Type: 4
     SynchronizeType: 2
-    Name: Direction
-  - Type: 1
+    Name: Sprint
+  - Type: 9
     SynchronizeType: 2
-    Name: Speed
+    Name: Jump
+  - Type: 4
+    SynchronizeType: 2
+    Name: Idle
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
