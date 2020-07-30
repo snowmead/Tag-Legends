@@ -115,32 +115,28 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 // Can only move while grounded
                 if (grounded)
                 {
+                    animator.SetBool("Jump", false);
                     // Only move if input was calculated
                     if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
                     {
                         transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
                         transform.forward = inputVector;
                         rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y, transform.forward.z * speed);
-                        Debug.Log("Velocity: " + rig.velocity);
-                        //rig.velocity = transform.forward * speed;
                     }
 
                     // Completely stop moving (velocity-wise) if no input was found
                     if (horizontal == 0f && vertical == 0f)
                     {
                         rig.velocity = new Vector3(0f, rig.velocity.y, 0f);
-                        //rig.velocity = transform.forward * 0;
                     }
 
                     // Animatioms
                     if(Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
                 {
-                        //animator.Play("Sprint");
                         animator.SetBool("Sprint", true);
                     }
                     else
                     {
-                        //animator.Play("Idle");
                         animator.SetBool("Sprint", false);
                     }
 
@@ -151,8 +147,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 }
                 else
                 {
-                    //animator.Play("Jump");
-                    animator.SetTrigger("Jump");
+                    animator.SetBool("Jump", true);
                 }
             }
 
@@ -184,7 +179,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         //animator.SetTrigger("Jump");
         //animator.Play("Jump");
         rig.velocity = new Vector3(0f, 6f, 0f);
-        animator.SetTrigger("Jump");
+        animator.SetBool("Jump", true);
     }
 
     // tag a player or remove tag from player
