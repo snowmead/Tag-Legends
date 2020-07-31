@@ -97,7 +97,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
         SetScreen(GetScreen(playOptionsName));
-        NetworkManager.instance.GetListOfRooms("SqlTypedLobby");
+        NetworkManager.instance.GetListOfRooms();
     }
 
     // called when "Settings" Button is pressed

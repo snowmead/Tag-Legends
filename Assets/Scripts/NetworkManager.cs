@@ -14,7 +14,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public const string ELO_PROP_KEY = "C0";
     public const int MAX_PLAYERS = 5;
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
-    string matchmakingSqlQuery = "C0 == -10";
+    string matchmakingSqlQuery = "C0 BETWEEN -10 AND 100";
 
     private void Awake()
     {
@@ -35,28 +35,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    public override void OnConnectedToMaster()
-    {
-      
-    }
-
     // get list of rooms based on string query
-    public void GetListOfRooms(string query)
+    public void GetListOfRooms()
     {
-        Debug.Log("GetListRooms");
         PhotonNetwork.GetCustomRoomList(typedLobby, matchmakingSqlQuery);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log("OnRoomListUpdate " + roomList.Count);
-
-        for (int i = 0; i < roomList.Count; i++)
-        {
-            Debug.LogFormat(this, "[{0}] - {1}", i, roomList[i].Name);
-        }
-
-        PopulateGrid.instance.PopulateRoomList(roomList);
+        if(roomList.Count > 0)
+            PopulateGrid.instance.PopulateRoomList(roomList);
     }
 
     public void CreateRoom(string roomName)
