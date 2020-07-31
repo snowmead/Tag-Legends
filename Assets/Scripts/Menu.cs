@@ -34,14 +34,20 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Player Preview")]
     public GameObject playerPreview;
     private Animator animator;
+    public TextMeshProUGUI rankScore;
 
     public GameObject buttonClickAudioObject;
     private AudioSource buttonClickAudio;
 
+    public static Menu instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
-        ValidateFirebase();
-
         // set the player preview in a kneeling animation
         animator = playerPreview.GetComponent<Animator>();
         animator.SetBool("InMainMenu", true);
@@ -56,28 +62,6 @@ public class Menu : MonoBehaviourPunCallbacks
 
         // set button click audio
         buttonClickAudio = buttonClickAudioObject.GetComponent<AudioSource>();
-    }
-
-    public void ValidateFirebase()
-    {
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
-            var dependencyStatus = task.Result;
-            if (dependencyStatus == Firebase.DependencyStatus.Available)
-            {
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
-                FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
-
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
-                Debug.Log("Firebase is ready to use!");
-            }
-            else
-            {
-                UnityEngine.Debug.LogError(System.String.Format(
-                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
-            }
-        });
     }
 
     // called when connection to photon server is successful
@@ -206,6 +190,11 @@ public class Menu : MonoBehaviourPunCallbacks
     public void AdjustVolume(Slider volume)
     {
         audioSource.volume = volume.value;
+    }
+
+    public void UpdateUI(string rank)
+    {
+        rankScore.text = rank;
     }
 
     public void OnExitButton()
