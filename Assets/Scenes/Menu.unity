@@ -6209,7 +6209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 589003a376d454a8b93679a95e54d910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomPrefab: {fileID: 4481507005334017991, guid: 0c2191769ea3f4977b8047a9de4f18cb,
+  roomPrefab: {fileID: 1783213944079773371, guid: 0c2191769ea3f4977b8047a9de4f18cb,
     type: 3}
 --- !u!1 &1792851946
 GameObject:

@@ -62,9 +62,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreateRoom(string roomName)
     {
         int rank;
+        int.TryParse(CloudManager.instance.GetRank(), out rank);
+
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = MAX_PLAYERS;
-        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, int.TryParse(CloudManager.instance.GetRank(), out rank) } };
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, rank } };
         roomOptions.CustomRoomPropertiesForLobby = roomPropertiesLobby;
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
