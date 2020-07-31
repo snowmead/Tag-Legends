@@ -37,7 +37,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        GetListOfRooms("SqlTypedLobby");
+      
     }
 
     // get list of rooms based on string query

@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     public static PlayerController instance;
 
+    public Joystick joystick;
+
     void Awake()
     {
         instance = this;
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     // start is called before the first frame update
     void Start()
     {
-
+        //if using computer remove joystick
     }
 
     // update is called once per frame
@@ -110,8 +112,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (photonView.IsMine)
             {
                 // Get movement vertices
-                float horizontal = Input.GetAxis("Horizontal");
-                float vertical = Input.GetAxis("Vertical");
+                float horizontal = Input.GetAxis("Horizontal") + joystick.Horizontal;
+                float vertical = Input.GetAxis("Vertical") + joystick.Vertical;
                 Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
                 float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
                 inputVector = direction * speed * Time.deltaTime;
@@ -138,7 +140,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     }
 
                     // Animatioms
-                    if(Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
+                    if(Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1 || Mathf.Abs(joystick.Vertical) > .1 || Mathf.Abs(joystick.Horizontal) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
                 {
                         animator.SetBool("Sprint", true);
                     }
@@ -180,13 +182,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    private void Jump()
+    public void Jump()
     {
-        // trigger jump animation
-        //animator.SetTrigger("Jump");
-        //animator.Play("Jump");
-        rig.velocity = new Vector3(0f, 6f, 0f);
-        animator.SetBool("Jump", true);
+        if (grounded)
+        {
+            rig.velocity = new Vector3(0f, 6f, 0f);
+            animator.SetBool("Jump", true);
+        }
     }
 
     // tag a player or remove tag from player
