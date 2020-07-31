@@ -132,8 +132,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void GameOver(int playerId)
     {
-        gameEnded = true;
         PlayerController player = GetPlayer(playerId);
+
+        // check if I'm the player who lost
+        if (player.photonView.IsMine)
+            CloudManager.instance.DecreaseRank();
+        else
+            CloudManager.instance.IncreaseRank();
+
+        gameEnded = true;
         GameUI.instance.SetLoseText(player.photonPlayer.NickName);
     }
 

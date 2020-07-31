@@ -38,6 +38,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public float jumpForce;
     public float turnSmoothTime = 0.1f;
 
+    public static PlayerController instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
     // called when the player object is instantiated
     [PunRPC]
     public void Initialize(Player player)

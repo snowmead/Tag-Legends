@@ -1,0 +1,26 @@
+{
+	"AchievementIDs":[],
+	"LeaderboardIDs":[
+		{
+			"InternalID":"RankingScore",
+			"AppleID":"",
+			"GoogleID":"CgkIwNa2m8MOEAIQAA"
+		}
+	],
+	"CloudVariables":[
+		{
+			"Key":"RankScore",
+			"Type":"0",
+			"DefaultValue":"0",
+			"PersistenceType":"0",
+			"AllowNegative":false
+		}
+	],
+	"AppleSupported":false,
+	"GoogleSupported":true,
+	"GoogleAppID":"499079031616",
+	"GoogleSetupRun":true,
+	"DebugModeEnabled":false,
+	"Version":"2.6.8",
+	"SettingsLocation":"0"
+}
