@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CloudOnce;
-using TMPro;
 
 public class CloudManager : MonoBehaviour
 {
@@ -22,45 +21,50 @@ public class CloudManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // initialize and load cloudonce
         Cloud.OnInitializeComplete += CloudOnceOnInitializeComplete;
         Cloud.OnCloudLoadComplete += CloudOnceLoadComplete;
+
+        // initialize cloudonce with cloudsave and cloudload
         Cloud.Initialize(true, true);
     }
 
+    // called when cloudonce is initialized
     void CloudOnceOnInitializeComplete()
     {
-        //Cloud.OnInitializeComplete -= CloudOnceOnInitializeComplete;
+        // load cloud storage
         Cloud.Storage.Load();
     }
 
+    // on cloudonce load complete, update the menu ui with the player's rank
     void CloudOnceLoadComplete(bool success)
     {
-        Debug.Log("CloudOnce Load Complete");
         Menu.instance.UpdateUI(CloudVariables.RankScore.ToString());
     }
 
+    // get rank of player
     public string GetRank()
     {
         return CloudVariables.RankScore.ToString();
     }
 
+    // increase rank of player who didn't lose the game
     public void IncreaseRank()
     {
-        Debug.Log("Increasing rank");
         CloudVariables.RankScore += 10;
         Save();
     }
 
+    // decrease rank of player who lost the game
     public void DecreaseRank()
     {
-        Debug.Log("Decreasing rank");
         CloudVariables.RankScore -= 10;
         Save();
     }
 
+    // save data to cloud storage
     private void Save()
     {
-        Debug.Log("Saving Cloud Storage");
         Cloud.Storage.Save();
     }
 }
