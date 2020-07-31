@@ -62,6 +62,9 @@ public class Menu : MonoBehaviourPunCallbacks
 
         // set button click audio
         buttonClickAudio = buttonClickAudioObject.GetComponent<AudioSource>();
+
+        // this allows the rank text to appear by setting it everytime we switch from game scene to the menu scene
+        UpdateUI(CloudManager.instance.GetRank());
     }
 
     // called when connection to photon server is successful

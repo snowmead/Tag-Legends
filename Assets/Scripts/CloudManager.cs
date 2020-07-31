@@ -10,26 +10,21 @@ public class CloudManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance != null && instance != this)
+            gameObject.SetActive(false);
+        else { 
+            instance = this;
+            // Don't destroy NetworkManager game object when switching scenes
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        // If an instance already exists and it's not this one - destroy to avoid duplicate NetworkManager object
-        if (instance != null && instance != this)
-            gameObject.SetActive(false);
-        else
-        {
-            // Set the instance
-            instance = this;
-            // Don't destroy NetworkManager game object when switching scenes
-            DontDestroyOnLoad(gameObject);
-
-            Cloud.OnInitializeComplete += CloudOnceOnInitializeComplete;
-            Cloud.OnCloudLoadComplete += CloudOnceLoadComplete;
-            Cloud.Initialize(true, true);
-        }
+        Cloud.OnInitializeComplete += CloudOnceOnInitializeComplete;
+        Cloud.OnCloudLoadComplete += CloudOnceLoadComplete;
+        Cloud.Initialize(true, true);
     }
 
     void CloudOnceOnInitializeComplete()
@@ -42,6 +37,11 @@ public class CloudManager : MonoBehaviour
     {
         Debug.Log("CloudOnce Load Complete");
         Menu.instance.UpdateUI(CloudVariables.RankScore.ToString());
+    }
+
+    public string GetRank()
+    {
+        return CloudVariables.RankScore.ToString();
     }
 
     public void IncreaseRank()

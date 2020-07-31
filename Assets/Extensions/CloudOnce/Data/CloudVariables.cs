@@ -13,7 +13,7 @@ namespace CloudOnce
     /// </summary>
     public static class CloudVariables
     {
-        private static readonly CloudInt s_rankScore = new CloudInt("RankScore", PersistenceType.Highest, 0);
+        private static readonly CloudInt s_rankScore = new CloudInt("RankScore", PersistenceType.Latest, 0);
 
         public static int RankScore
         {

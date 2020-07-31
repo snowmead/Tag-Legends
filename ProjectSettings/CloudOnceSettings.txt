@@ -12,7 +12,7 @@
 			"Key":"RankScore",
 			"Type":"0",
 			"DefaultValue":"0",
-			"PersistenceType":"1",
+			"PersistenceType":"0",
 			"AllowNegative":false
 		}
 	],
