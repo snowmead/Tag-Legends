@@ -52,6 +52,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("OnRoomListUpdate");
 
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            Debug.LogFormat(this, "[{0}] - {1}", i, roomList[i].Name);
+        }
+
         PopulateGrid.instance.PopulateRoomList(roomList);
     }
 
@@ -61,7 +66,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = MAX_PLAYERS;
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank() } };
         roomOptions.CustomRoomPropertiesForLobby = roomPropertiesLobby;
-        
+        roomOptions.IsOpen = true;
+        roomOptions.IsVisible = true;
+
         PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby);
     }
 
@@ -80,6 +87,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("Could not find room to join, creating room...");
+        Debug.Log(returnCode + " " + message);
         CreateRoom("");
     }
 
