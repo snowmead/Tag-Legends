@@ -48,6 +48,11 @@ public class CloudManager : MonoBehaviour
         return CloudVariables.RankScore.ToString();
     }
 
+    public string GetPlayerName()
+    {
+        return Cloud.PlayerDisplayName;
+    }
+
     // increase rank of player who didn't lose the game
     public void IncreaseRank()
     {

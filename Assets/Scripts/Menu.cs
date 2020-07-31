@@ -113,6 +113,11 @@ public class Menu : MonoBehaviourPunCallbacks
         SetScreen(GetScreen(mainOptionsName));
     }
 
+    public void OnQuickPlayButton()
+    {
+        NetworkManager.instance.JoinRandomRoom();
+    }
+
     // called when "Create Room" Button is pressed
     public void OnCreateRoomButton(TMP_InputField roomNameInput)
     {
@@ -127,12 +132,6 @@ public class Menu : MonoBehaviourPunCallbacks
         NetworkManager.instance.JoinRoom(roomNameInput.text);
     }
 
-    // called when Name Input field changes - change the player's nickname
-    public void OnPlayerNameUpdate(TMP_InputField playerNameInput)
-    {
-        PhotonNetwork.NickName = playerNameInput.text;
-    }
-
     // called when a player leaves the room
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
@@ -145,7 +144,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         SetScreen(GetScreen(lobbyName));
-
+        PhotonNetwork.NickName = CloudManager.instance.GetPlayerName();
         // send an rpc call to update all the other clients that this player has joined the room
         // update everyone elses lobby ui
         photonView.RPC("UpdateLobbyUI", RpcTarget.All);
