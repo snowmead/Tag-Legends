@@ -11,6 +11,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager instance;
     readonly TypedLobby typedLobby = new TypedLobby("SqlTypedLobby", LobbyType.SqlLobby);
+    public const string ELO_PROP_KEY = "C0";
+    public const int MAX_PLAYERS = 5;
+    string[] roomPropertiesLobby = { ELO_PROP_KEY };
+    string matchmakingSqlQuery = "C0 BETWEEN -50 AND 475";
 
     private void Awake()
     {
@@ -33,7 +37,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        GetListOfRooms("");
+        GetListOfRooms("SqlTypedLobby");
     }
 
     // get list of rooms based on string query
@@ -41,7 +45,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("GetListRooms");
 
-        PhotonNetwork.GetCustomRoomList(typedLobby, query);
+        PhotonNetwork.GetCustomRoomList(typedLobby, matchmakingSqlQuery);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -54,7 +58,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreateRoom(string roomName)
     {
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 5;
+        roomOptions.MaxPlayers = MAX_PLAYERS;
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank() } };
+        roomOptions.CustomRoomPropertiesForLobby = roomPropertiesLobby;
         
         PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby);
     }
@@ -66,7 +72,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void JoinRandomRoom()
     {
-        PhotonNetwork.JoinRandomRoom();
+        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank() } };
+
+        PhotonNetwork.JoinRandomRoom(customRoomProperties, MAX_PLAYERS, MatchmakingMode.FillRoom, typedLobby, matchmakingSqlQuery);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)

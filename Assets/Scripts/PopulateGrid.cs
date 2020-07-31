@@ -21,7 +21,7 @@ public class PopulateGrid : MonoBehaviour
 
     public void ListRooms()
     {
-        NetworkManager.instance.GetListOfRooms("");
+        NetworkManager.instance.GetListOfRooms("SqlTypedLobby");
     }
 
     public void PopulateRoomList(List<RoomInfo> roomList)
