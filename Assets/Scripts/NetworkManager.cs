@@ -14,7 +14,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public const string ELO_PROP_KEY = "C0";
     public const int MAX_PLAYERS = 5;
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
-    string matchmakingSqlQuery = "C0 BETWEEN -50 AND 475";
+    string matchmakingSqlQuery = "C0 == -10";
 
     private void Awake()
     {
@@ -44,13 +44,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void GetListOfRooms(string query)
     {
         Debug.Log("GetListRooms");
-
         PhotonNetwork.GetCustomRoomList(typedLobby, matchmakingSqlQuery);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log("OnRoomListUpdate");
+        Debug.Log("OnRoomListUpdate " + roomList.Count);
 
         for (int i = 0; i < roomList.Count; i++)
         {
@@ -62,9 +61,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void CreateRoom(string roomName)
     {
+        int rank;
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = MAX_PLAYERS;
-        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank() } };
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, int.TryParse(CloudManager.instance.GetRank(), out rank) } };
         roomOptions.CustomRoomPropertiesForLobby = roomPropertiesLobby;
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
@@ -79,7 +79,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void JoinRandomRoom()
     {
-        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank() } };
+        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, -10 } };
 
         PhotonNetwork.JoinRandomRoom(customRoomProperties, MAX_PLAYERS, MatchmakingMode.FillRoom, typedLobby, matchmakingSqlQuery);
     }
