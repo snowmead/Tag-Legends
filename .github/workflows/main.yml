@@ -36,12 +36,12 @@ jobs:
       uses: webbertakken/unity-test-runner@v1.3
       with:
         projectPath: Tag-Royale
-        unityVersion: 2019.2.11f1
+        unityVersion: 2019.4.4f1
     
     # Build
     - name: Unity - Builder
       uses: webbertakken/unity-builder@v1.1
       with:
         projectPath: Tag-Royale
-        unityVersion: 2019.2.11f1
+        unityVersion: 2019.4.4f1
         targetPlatform: Android
