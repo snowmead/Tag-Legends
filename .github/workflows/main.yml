@@ -45,3 +45,9 @@ jobs:
         projectPath: Tag-Royale
         unityVersion: 2019.2.11f1
         targetPlatform: Android
+        
+    # Output
+    - uses: actions/upload-artifact@v1
+      with:
+        name: Build
+        path: build
