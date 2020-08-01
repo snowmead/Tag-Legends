@@ -14,7 +14,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public const string ELO_PROP_KEY = "C0";
     public const int MAX_PLAYERS = 5;
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
-    string matchmakingSqlQuery = "C0 BETWEEN -10 AND 100";
+    string matchmakingSqlQuery;
 
     private void Awake()
     {
@@ -32,6 +32,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        matchmakingSqlQuery = "C0 BETWEEN -100 + " + CloudManager.instance.GetRank() + " AND 100 + " + CloudManager.instance.GetRank();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -69,7 +70,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void JoinRandomRoom()
     {
-        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, -10 } };
+        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank() } };
 
         PhotonNetwork.JoinRandomRoom(customRoomProperties, MAX_PLAYERS, MatchmakingMode.FillRoom, typedLobby, matchmakingSqlQuery);
     }

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public PlayerController[] players;
     public int taggedPlayer;
     private int playersInGame;
+    private int playersLeftInGame;
 
     [HideInInspector]
     PlayerController playerScript;
@@ -132,14 +133,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void GameOver(int playerId)
     {
-        PlayerController player = GetPlayer(playerId);
-
+        PlayerController player = GetPlayer(playerId);      
         // check if I'm the player who lost
-        if (player.photonView.IsMine)
+        /*if (player.photonView.IsMine)
             CloudManager.instance.DecreaseRank();
         else
             CloudManager.instance.IncreaseRank();
-
+        */
+        if (player.photonView.IsMine)
+        {
+            CloudManager.instance.RankModifier(playersInGame);
+        }
+        playersInGame--;
         gameEnded = true;
         GameUI.instance.SetLoseText(player.photonPlayer.NickName);
     }
