@@ -19,6 +19,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Install and prettier
+      run: |
+        sudo apt-get remove docker docker-engine docker.io containerd runc
+        sudo apt-get update
+        sudo apt-get install docker-ce docker-ce-cli containerd.io
+        
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout repository
       uses: actions/checkout@v2
