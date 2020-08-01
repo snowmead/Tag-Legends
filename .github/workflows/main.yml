@@ -25,6 +25,19 @@ jobs:
       with:
         lfs: true
     
+    # Cache
+    - uses: actions/cache@v1.1.0
+      with:
+        path: Tag-Royale/Library
+        key: Library-test-project-WebGL
+
+    # Test
+    - name: Run tests
+      uses: webbertakken/unity-test-runner@v1.3
+      with:
+        projectPath: Tag-Royale
+        unityVersion: 2019.2.11f1
+    
     # Build
     - name: Unity - Builder
       uses: webbertakken/unity-builder@v1.1
