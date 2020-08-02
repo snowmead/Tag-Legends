@@ -14,6 +14,7 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Screens")]
     public GameObject[] screens;
     private const string mainOptionsName = "MainOptions";
+    private const string CharacterScreenName = "CharacterScreen";
     private const string playOptionsName = "PlayOptions";
     private const string settings = "Settings";
     private const string lobbyName = "LobbyScreen";
@@ -21,6 +22,12 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Play Options Screen")]
     public Button createRoomButton;
     public Button joinRoomButton;
+    
+    [Header("Character Screen")]
+    public GameObject berserker;
+    public GameObject frostMage;
+    public GameObject ninja;
+    public GameObject illusionist;
 
     [Header("Settings Screen")]
     public Slider volumeSlider;
@@ -74,6 +81,18 @@ public class Menu : MonoBehaviourPunCallbacks
         joinRoomButton.interactable = true;
     }
 
+    /**
+     * FUNCTION TOOLS
+     * 
+     */
+
+    // called when "BackToMenu" Button is pressed
+    public void BackToMainOptions()
+    {
+        buttonClickAudio.Play();
+        SetScreen(GetScreen(mainOptionsName));
+    }
+
     // get screen game object using screen name
     public GameObject GetScreen(string screenName)
     {
@@ -92,12 +111,55 @@ public class Menu : MonoBehaviourPunCallbacks
         }
     }
 
+    public void UpdateUI(string rank)
+    {
+        rankScore.text = rank;
+    }
+
+    public void OnExitButton()
+    {
+        Application.Quit();
+    }
+
+    /**
+     * CHARACTERS SECTION
+     * 
+     */
+
+    public void changeCharacter(string chosenClass)
+    {
+        switch(class)
+    }
+
+    /**
+     * SETTINGS SECTION
+     * 
+     */
+
+    public void AdjustVolume(Slider volume)
+    {
+        audioSource.volume = volume.value;
+    }
+
+
+    /**
+     * MAIN OPTIONS SECTION
+     * 
+     */
+
     // called when "Play" Button is pressed
     public void OnPlayButton()
     {
         buttonClickAudio.Play();
         SetScreen(GetScreen(playOptionsName));
         NetworkManager.instance.GetListOfRooms();
+    }
+
+    // called when "Character" Button is pressed
+    public void OnCharacterButton()
+    {
+        buttonClickAudio.Play();
+        SetScreen(GetScreen(CharacterScreenName));
     }
 
     // called when "Settings" Button is pressed
@@ -107,15 +169,14 @@ public class Menu : MonoBehaviourPunCallbacks
         SetScreen(GetScreen(settings));
     }
 
-    // called when "BackToMenu" Button is pressed
-    public void BackToMainOptions()
-    {
-        buttonClickAudio.Play();
-        SetScreen(GetScreen(mainOptionsName));
-    }
+    /**
+     * PLAY OPTIONS SECTION
+     * 
+     */
 
     public void OnQuickPlayButton()
     {
+        buttonClickAudio.Play();
         NetworkManager.instance.JoinRandomRoom();
     }
 
@@ -151,25 +212,6 @@ public class Menu : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateLobbyUI", RpcTarget.All);
     }
 
-    // updates the lobby UI to show player list and host buttons
-    [PunRPC]
-    public void UpdateLobbyUI()
-    {
-        playerListText.text = "";
-
-        // display all the players currently in the lobby
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            playerListText.text += player.NickName + "\n";
-        }
-
-        // only the host can start the game
-        if (PhotonNetwork.IsMasterClient)
-            startGameButton.interactable = true;
-        else
-            startGameButton.interactable = false;
-    }
-
     // called when the "Leave Lobby" button is pressed
     public void OnLeaveLobbyButton()
     {
@@ -190,18 +232,22 @@ public class Menu : MonoBehaviourPunCallbacks
         NetworkManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "Game");
     }
 
-    public void AdjustVolume(Slider volume)
+    // updates the lobby UI to show player list and host buttons
+    [PunRPC]
+    public void UpdateLobbyUI()
     {
-        audioSource.volume = volume.value;
-    }
+        playerListText.text = "";
 
-    public void UpdateUI(string rank)
-    {
-        rankScore.text = rank;
-    }
+        // display all the players currently in the lobby
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            playerListText.text += player.NickName + "\n";
+        }
 
-    public void OnExitButton()
-    {
-        Application.Quit();
+        // only the host can start the game
+        if (PhotonNetwork.IsMasterClient)
+            startGameButton.interactable = true;
+        else
+            startGameButton.interactable = false;
     }
 }

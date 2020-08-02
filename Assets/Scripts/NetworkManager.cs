@@ -70,7 +70,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void JoinRandomRoom()
     {
         ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, -10 } };
-
         PhotonNetwork.JoinRandomRoom(customRoomProperties, MAX_PLAYERS, MatchmakingMode.FillRoom, typedLobby, matchmakingSqlQuery);
     }
 
