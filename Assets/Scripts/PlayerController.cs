@@ -166,6 +166,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (tagIndicator.activeInHierarchy)
                 // increase current tag time every second
                 curTagTime += Time.deltaTime;
+                //curTagTime += 1.0f / GameManager.instance.timeToLose * Time.deltaTime;
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
