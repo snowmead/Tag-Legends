@@ -15,6 +15,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public const int MAX_PLAYERS = 5;
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
     string matchmakingSqlQuery;
+    public bool rankedGame = false;
 
     private void Awake()
     {
@@ -55,23 +56,44 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = MAX_PLAYERS;
-        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, rank } };
-        roomOptions.CustomRoomPropertiesForLobby = roomPropertiesLobby;
+
+        // if it's a ranked game, add the elo to the room
+        if (rankedGame)
+        {
+            roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, rank } };
+            roomOptions.CustomRoomPropertiesForLobby = roomPropertiesLobby;
+
+        }
+
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
 
         PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby);
     }
 
+    // join specific unranked room
     public void JoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
     }
 
-    public void JoinRandomRoom()
+    // join random unranked room
+    public void JoinRandomRoomUnranked()
     {
+        rankedGame = false;
+        PhotonNetwork.JoinRandomRoom();
+    }
+
+    // join random ranked room
+    public void JoinRandomRoomRanked()
+    {
+        // set ranked game to true
+        rankedGame = true;
+
+        // set custom room properties - elo
         ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank() } };
 
+        // join random room
         PhotonNetwork.JoinRandomRoom(customRoomProperties, MAX_PLAYERS, MatchmakingMode.FillRoom, typedLobby, matchmakingSqlQuery);
     }
 

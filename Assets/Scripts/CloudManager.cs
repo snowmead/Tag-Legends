@@ -77,20 +77,26 @@ public class CloudManager : MonoBehaviour
 
     public int getRankModifier(int playersInGame)
     {
-        int eloMod = 0;
+        int eloMod;
         switch (playersInGame)
         {          
-            case 1: eloMod = 10;
+            case 1:
+                eloMod = 10;
                 break;
-            case 2: eloMod = 5;
+            case 2:
+                eloMod = 5;
                 break;
-            case 3: eloMod = 0;
+            case 3:
+                eloMod = 0;
                 break;
-            case 4: eloMod = -5;
+            case 4:
+                eloMod = -5;
                 break;
-            case 5: eloMod = -10;
+            case 5:
+                eloMod = -10;
                 break;
-            default: eloMod = 0;
+            default:
+                eloMod = 0;
                 break;           
         }
         return eloMod;
