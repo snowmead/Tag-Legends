@@ -24,10 +24,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public Button joinRoomButton;
     
     [Header("Character Screen")]
-    public GameObject berserker;
-    public GameObject frostMage;
-    public GameObject ninja;
-    public GameObject illusionist;
+    private GameObject characterChosen;
     
     public TextMeshProUGUI gameTypeTitle;
     private const string rankedGameTitle = "Ranked Game";
@@ -43,7 +40,6 @@ public class Menu : MonoBehaviourPunCallbacks
     public Button startGameButton;
 
     [Header("Player Preview")]
-    public GameObject playerPreview;
     private Animator animator;
     public TextMeshProUGUI rankScore;
 
@@ -59,8 +55,10 @@ public class Menu : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/BerserkerPreview") as GameObject);
+
         // set the player preview in a kneeling animation
-        animator = playerPreview.GetComponent<Animator>();
+        animator = characterChosen.GetComponent<Animator>();
         animator.SetBool("InMainMenu", true);
 
         // can't create room or join rooms until connected to the master
@@ -130,9 +128,39 @@ public class Menu : MonoBehaviourPunCallbacks
      * 
      */
 
-    public void OnChangeCharacter(string chosenClass)
+    public void OnBerserkerClassChosen()
     {
-        
+        Destroy(characterChosen);
+        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/BerserkerPreview") as GameObject);
+        InitializeCharacterAnimation();
+    }
+
+    public void OnFrostMageClassChosen()
+    {
+        Destroy(characterChosen);
+        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/FrostMagePreview") as GameObject);
+        InitializeCharacterAnimation();
+    }
+
+    public void OnNinjaClassChosen()
+    {
+        Destroy(characterChosen);
+        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/NinjaPreview") as GameObject);
+        InitializeCharacterAnimation();
+    }
+
+    public void OnIllusionistClassChosen()
+    {
+        Destroy(characterChosen);
+        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/IllusionistPreview") as GameObject);
+        InitializeCharacterAnimation();
+    }
+
+    private void InitializeCharacterAnimation()
+    {
+        // set the player preview in a kneeling animation
+        animator = characterChosen.GetComponent<Animator>();
+        animator.SetBool("InMainMenu", true);
     }
 
     /**
