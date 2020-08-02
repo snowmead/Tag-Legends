@@ -56,6 +56,7 @@ public class CloudManager : MonoBehaviour
     // increase rank of player who didn't lose the game
     public void IncreaseRank()
     {
+
         CloudVariables.RankScore += 10;
         Save();
     }
@@ -65,6 +66,40 @@ public class CloudManager : MonoBehaviour
     {
         CloudVariables.RankScore -= 10;
         Save();
+    }
+
+    // increase rank of player who didn't lose the game
+    public void RankModifier(int playersInGame)
+    {
+        CloudVariables.RankScore += getRankModifier(playersInGame);
+        Save();
+    }
+
+    public int getRankModifier(int playersInGame)
+    {
+        int eloMod;
+        switch (playersInGame)
+        {          
+            case 1:
+                eloMod = 10;
+                break;
+            case 2:
+                eloMod = 5;
+                break;
+            case 3:
+                eloMod = 0;
+                break;
+            case 4:
+                eloMod = -5;
+                break;
+            case 5:
+                eloMod = -10;
+                break;
+            default:
+                eloMod = 0;
+                break;           
+        }
+        return eloMod;
     }
 
     // save data to cloud storage
