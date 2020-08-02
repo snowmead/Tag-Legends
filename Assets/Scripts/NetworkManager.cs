@@ -45,7 +45,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        if(roomList.Count > 0)
+        if (roomList.Count > 0)
             PopulateGrid.instance.PopulateRoomList(roomList);
     }
 

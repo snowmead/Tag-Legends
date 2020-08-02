@@ -130,9 +130,9 @@ public class Menu : MonoBehaviourPunCallbacks
      * 
      */
 
-    public void changeCharacter(string chosenClass)
+    public void OnChangeCharacter(string chosenClass)
     {
-        switch(class)
+        
     }
 
     /**

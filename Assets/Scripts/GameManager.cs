@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // set players maximum size to the number of players who were originally in the room lobby
         players = new PlayerController[PhotonNetwork.PlayerList.Length];
-        
+
         // send rpc call to all players to spawn his player in their game
         // rpc target is set to AllBuffered since not all players will be loaded in at the same time
         photonView.RPC("ImInGame", RpcTarget.AllBuffered);
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         // set to true
         // player controller will no longer call this method from it's update function
         countdownStarted = true;
-        
+
         // begin countdown for each player
         GameUI.instance.BeginCountdown(3);
     }
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void GameOver(int playerId)
     {
         // get player
-        PlayerController player = GetPlayer(playerId);      
+        PlayerController player = GetPlayer(playerId);
 
         // if it is me, modify my rank
         if (player.photonView.IsMine && NetworkManager.instance.rankedGame)
