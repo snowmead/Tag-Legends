@@ -44,7 +44,6 @@ public class GameUI : MonoBehaviour
             {
                 container.obj.SetActive(true);
                 container.nameText.text = PhotonNetwork.PlayerList[x].NickName;
-                container.tagTimeSlider.maxValue = GameManager.instance.timeToLose;
             }
             else
                 container.obj.SetActive(false);
@@ -58,7 +57,6 @@ public class GameUI : MonoBehaviour
         for (int x = 0; x < GameManager.instance.players.Length; ++x)
         {
             if (GameManager.instance.players[x] != null) { 
-                playerContainers[x].tagTimeSlider.value = GameManager.instance.players[x].curTagTime;
                 playerContainers[x].timer.fillAmount = 1.0f / GameManager.instance.timeToLose  * GameManager.instance.players[x].curTagTime;
             }
         }
@@ -121,6 +119,5 @@ public class PlayerUIContainer
 {
     public GameObject obj;
     public TextMeshProUGUI nameText;
-    public Slider tagTimeSlider;
     public Image timer;
 }
