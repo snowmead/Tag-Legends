@@ -14,7 +14,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public const string ELO_PROP_KEY = "C0";
     public const int MAX_PLAYERS = 5;
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
-    string matchmakingSqlQuery = "C0 BETWEEN -10 AND 100";
+    string matchmakingSqlQuery = "C0 BETWEEN -1000 AND 1000";
 
     private void Awake()
     {
