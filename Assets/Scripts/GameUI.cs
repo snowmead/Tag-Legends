@@ -42,7 +42,6 @@ public class GameUI : MonoBehaviour
             // only enable and modify the UI containers we need
             if (x < PhotonNetwork.PlayerList.Length)
             {
-                container.obj.SetActive(true);
                 container.nameText.text = PhotonNetwork.PlayerList[x].NickName;
                 Debug.Log(x);
                 if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
@@ -61,7 +60,7 @@ public class GameUI : MonoBehaviour
         // loop through all of the players
         for (int x = 0; x < GameManager.instance.players.Length; ++x)
         {
-                playerContainers[x].timer.fillAmount = 1.0f / GameManager.instance.timeToLose  * GameManager.instance.players[x].curTagTime;
+            playerContainers[x].timer.fillAmount = 1.0f / GameManager.instance.timeToLose  * GameManager.instance.players[x].curTagTime;
         }
     }
 

@@ -8359,7 +8359,6 @@ MonoBehaviour:
   players: []
   taggedPlayer: 0
   countdownStarted: 0
-  gameUI: {fileID: 0}
 --- !u!4 &828072266
 Transform:
   m_ObjectHideFlags: 0
@@ -8386,7 +8385,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd7220b3a7ae1f44a0c1a8c65a4c48b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerContainers: []
+  playerContainers:
+  - obj: {fileID: 828800917}
+    nameText: {fileID: 1804848321}
+    timer: {fileID: 810411187}
+  - obj: {fileID: 1655278625}
+    nameText: {fileID: 213141717}
+    timer: {fileID: 697979854}
+  - obj: {fileID: 1590969154}
+    nameText: {fileID: 1539251573}
+    timer: {fileID: 820351665}
+  - obj: {fileID: 854278186}
+    nameText: {fileID: 2049406411}
+    timer: {fileID: 2073122904}
+  - obj: {fileID: 1864250058}
+    nameText: {fileID: 1108110898}
+    timer: {fileID: 1766274137}
   loseText: {fileID: 668599003}
   countdownText: {fileID: 559546659}
   menu: {fileID: 732626409}
