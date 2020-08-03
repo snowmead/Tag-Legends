@@ -21,6 +21,9 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Play Options Screen")]
     public Button createRoomButton;
     public Button joinRoomButton;
+    public TextMeshProUGUI gameTypeTitle;
+    private const string rankedGameTitle = "Ranked Game";
+    private const string unrankedGameTitle = "Unranked Game";
 
     [Header("Settings Screen")]
     public Slider volumeSlider;
@@ -116,7 +119,12 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void OnQuickPlayButton()
     {
-        NetworkManager.instance.JoinRandomRoom();
+        NetworkManager.instance.JoinRandomRoomUnranked();
+    }
+
+    public void OnRankedPlayButton()
+    {
+        NetworkManager.instance.JoinRandomRoomRanked();
     }
 
     // called when "Create Room" Button is pressed
@@ -146,6 +154,15 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         SetScreen(GetScreen(lobbyName));
         PhotonNetwork.NickName = CloudManager.instance.GetPlayerName();
+        if (NetworkManager.instance.rankedGame)
+        {
+            gameTypeTitle.text = rankedGameTitle;
+        }
+        else
+        {
+            gameTypeTitle.text = unrankedGameTitle;    
+        }
+
         // send an rpc call to update all the other clients that this player has joined the room
         // update everyone elses lobby ui
         photonView.RPC("UpdateLobbyUI", RpcTarget.All);
