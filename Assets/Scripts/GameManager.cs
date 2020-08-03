@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int taggedPlayer;
     private int playersInGame;
     private int playersLeftInGame;
-    public GameObject Berserker;
+    GameObject chosenClass;
 
     [HideInInspector]
     PlayerController playerScript;
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void SpawnPlayer()
     {
         // get player's chosen class to instantiate the correct class
-        GameObject chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
+        chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
         chosenClass.SetActive(false);
 
         // instantiate the player accross the network
@@ -176,5 +176,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
         NetworkManager.instance.ChangeScene("Menu");
+
+        // set chosen preview class game object active so that we can access it in the main menu
+        chosenClass.SetActive(true);
     }
 }

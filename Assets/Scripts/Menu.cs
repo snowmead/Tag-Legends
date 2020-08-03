@@ -55,7 +55,21 @@ public class Menu : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/BerserkerPreview") as GameObject);
+        // find already chosen class (this may be found when we come back from a game and go back to the main menu)
+        // we use this to preserve the same class he already chose
+        GameObject classAlreadyChosen = GameObject.FindGameObjectWithTag("ChosenClass");
+
+        // check if a class was already chosen
+        if (classAlreadyChosen != null) {
+            // set as the chosen character
+            characterChosen = classAlreadyChosen;            
+        } 
+        else
+        {
+            // instantiate new character class object and set the chosen character and dont destroy on load to bring to the game scene
+            characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/BerserkerPreview") as GameObject);
+            DontDestroyOnLoad(characterChosen);
+        }
 
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
@@ -128,6 +142,7 @@ public class Menu : MonoBehaviourPunCallbacks
      * 
      */
 
+    // called when "Berserker" Button is pressed
     public void OnBerserkerClassChosen()
     {
         Destroy(characterChosen);
@@ -135,6 +150,7 @@ public class Menu : MonoBehaviourPunCallbacks
         InitializeChosenClass();
     }
 
+    // called when "Frost Mage" Button is pressed
     public void OnFrostMageClassChosen()
     {
         Destroy(characterChosen);
@@ -142,6 +158,7 @@ public class Menu : MonoBehaviourPunCallbacks
         InitializeChosenClass();
     }
 
+    // called when "Ninja" Button is pressed
     public void OnNinjaClassChosen()
     {
         Destroy(characterChosen);
@@ -149,6 +166,7 @@ public class Menu : MonoBehaviourPunCallbacks
         InitializeChosenClass();
     }
 
+    // called when "Illusionist" Button is pressed
     public void OnIllusionistClassChosen()
     {
         Destroy(characterChosen);
@@ -156,6 +174,7 @@ public class Menu : MonoBehaviourPunCallbacks
         InitializeChosenClass();
     }
 
+    // called when "BackToMenu" Button is pressed
     private void InitializeChosenClass()
     {
 
