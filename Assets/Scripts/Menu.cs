@@ -71,6 +71,8 @@ public class Menu : MonoBehaviourPunCallbacks
             DontDestroyOnLoad(characterChosen);
         }
 
+        InitializeChosenClass("Berserker");
+
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
         animator.SetBool("InMainMenu", true);
@@ -147,7 +149,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/BerserkerPreview") as GameObject);
-        InitializeChosenClass();
+        InitializeChosenClass("Berserker");
     }
 
     // called when "Frost Mage" Button is pressed
@@ -155,7 +157,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/FrostMagePreview") as GameObject);
-        InitializeChosenClass();
+        InitializeChosenClass("FrostMage");
     }
 
     // called when "Ninja" Button is pressed
@@ -163,7 +165,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/NinjaPreview") as GameObject);
-        InitializeChosenClass();
+        InitializeChosenClass("Ninja");
     }
 
     // called when "Illusionist" Button is pressed
@@ -171,18 +173,33 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/IllusionistPreview") as GameObject);
-        InitializeChosenClass();
+        InitializeChosenClass("Illusionist");
     }
 
     // called when "BackToMenu" Button is pressed
-    private void InitializeChosenClass()
+    private void InitializeChosenClass(string classAnimBoolVar)
     {
-
         DontDestroyOnLoad(characterChosen);
+        switchClassAnimator(classAnimBoolVar);
+    }
 
+    private void switchClassAnimator(string classAnimBoolVar)
+    {
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
         animator.SetBool("InMainMenu", true);
+
+        // reset all bool variables in animator and set the chosen class bool variable to true
+        // switch state machines in the animator using these values
+        animator.SetBool(classAnimBoolVar, true);
+        /*string[] classes = { "Berserker", "FrostMage", "Ninja", "Illusionist" };
+        foreach (string classInList in classes)
+        {
+            if(classInList != classAnimBoolVar)
+                animator.SetBool(classInList, false);
+            else
+                animator.SetBool(classAnimBoolVar, true);
+        }*/
     }
 
     /**

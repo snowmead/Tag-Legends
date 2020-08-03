@@ -66,30 +66,44 @@ public class GameManager : MonoBehaviourPunCallbacks
         chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
         chosenClass.SetActive(false);
 
+        string activeClass;
         // instantiate the player accross the network
         switch (chosenClass.name)
         {
             case "BerserkerPreview(Clone)":
-                character = PhotonNetwork.Instantiate("Berserker", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                activeClass = "Berserker";
+                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
                 break;
             case "FrostMagePreview(Clone)":
-                character = PhotonNetwork.Instantiate("FrostMage", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                activeClass = "FrostMage";
+                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
                 break;
             case "NinjaPreview(Clone)":
-                character = PhotonNetwork.Instantiate("Ninja", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                activeClass = "Ninja";
+                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
                 break;
             case "IllusionistPreview(Clone)":
-                character = PhotonNetwork.Instantiate("Illusionist", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                activeClass = "Illusionist";
+                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
                 break;
 
-        }
-
+        }    
 
         // get the player script
         playerScript = character.GetComponent<PlayerController>();
 
         // intialize the player
         playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+    }
+
+    private void setClassAnimator(string activeClass)
+    {
+        Animator animator = character.GetComponent<Animator>();
+        animator.SetBool(activeClass, true);
     }
 
     // returns the player of the requested id
