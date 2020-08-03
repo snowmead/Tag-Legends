@@ -7374,7 +7374,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 75
+  m_Spacing: 110
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -8404,6 +8404,7 @@ MonoBehaviour:
   loseText: {fileID: 668599003}
   countdownText: {fileID: 559546659}
   menu: {fileID: 732626409}
+  playersList: {fileID: 731826288}
 --- !u!1 &828800917
 GameObject:
   m_ObjectHideFlags: 0
