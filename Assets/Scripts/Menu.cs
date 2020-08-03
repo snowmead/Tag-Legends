@@ -132,32 +132,35 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/BerserkerPreview") as GameObject);
-        InitializeCharacterAnimation();
+        InitializeChosenClass();
     }
 
     public void OnFrostMageClassChosen()
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/FrostMagePreview") as GameObject);
-        InitializeCharacterAnimation();
+        InitializeChosenClass();
     }
 
     public void OnNinjaClassChosen()
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/NinjaPreview") as GameObject);
-        InitializeCharacterAnimation();
+        InitializeChosenClass();
     }
 
     public void OnIllusionistClassChosen()
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/IllusionistPreview") as GameObject);
-        InitializeCharacterAnimation();
+        InitializeChosenClass();
     }
 
-    private void InitializeCharacterAnimation()
+    private void InitializeChosenClass()
     {
+
+        DontDestroyOnLoad(characterChosen);
+
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
         animator.SetBool("InMainMenu", true);

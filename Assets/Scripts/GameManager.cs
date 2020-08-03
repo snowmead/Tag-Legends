@@ -17,12 +17,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     public float taggedTime;
 
     [Header("Players")]
-    public string playerPrefabLocation;
+    public GameObject character;
     public Transform[] spawnPoints;
     public PlayerController[] players;
     public int taggedPlayer;
     private int playersInGame;
     private int playersLeftInGame;
+    public GameObject Berserker;
 
     [HideInInspector]
     PlayerController playerScript;
@@ -61,11 +62,31 @@ public class GameManager : MonoBehaviourPunCallbacks
     // spawns a player and initializes it
     void SpawnPlayer()
     {
+        // get player's chosen class to instantiate the correct class
+        GameObject chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
+        chosenClass.SetActive(false);
+
         // instantiate the player accross the network
-        GameObject playerObj = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+        switch (chosenClass.name)
+        {
+            case "Berserker":
+                character = PhotonNetwork.Instantiate("Berserker", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                break;
+            case "FrostMage":
+                character = PhotonNetwork.Instantiate("FrostMage", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                break;
+            case "Ninja":
+                character = PhotonNetwork.Instantiate("Ninja", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                break;
+            case "Illusionist":
+                character = PhotonNetwork.Instantiate("Illusionist", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                break;
+
+        }
+
 
         // get the player script
-        playerScript = playerObj.GetComponent<PlayerController>();
+        playerScript = character.GetComponent<PlayerController>();
 
         // intialize the player
         playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);

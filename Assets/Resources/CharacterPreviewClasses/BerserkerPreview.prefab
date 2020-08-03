@@ -7416,7 +7416,7 @@ GameObject:
   - component: {fileID: 792385435278365791}
   m_Layer: 0
   m_Name: BerserkerPreview
-  m_TagString: Player
+  m_TagString: ChosenClass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
