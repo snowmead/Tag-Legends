@@ -70,18 +70,21 @@ public class GameUI : MonoBehaviour
 
     public void BeginCountdown(int seconds)
     {
+        StartCoroutine(Countdown(seconds));
+    }
+
+    public void SetPlayerVingettes()
+    {
         // Game started, set player vingettes
         for (int x = 0; x < PhotonNetwork.PlayerList.Length; ++x)
         {
             if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
             {
-                PlayerUIContainer container = playerContainers[x];               
+                PlayerUIContainer container = playerContainers[x];
                 container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
                 container.obj.gameObject.transform.SetAsFirstSibling();
             }
         }
-
-        StartCoroutine(Countdown(seconds));
     }
 
     // begin 3... 2... 1... Go! Countdown

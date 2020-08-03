@@ -122,8 +122,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         GameUI.instance.BeginCountdown(3);
     }
 
-    // start the game
-    public void StartGame()
+    // Called when all players are ready and loaded in
+    [PunRPC]
+    void UpdateInGameUI()
+    {
+        GameUI.instance.SetPlayerVingettes();
+    }
+
+        // start the game
+        public void StartGame()
     {
         // send rpc call to all players to begin their game
         playerScript.photonView.RPC("BeginGame", RpcTarget.All);
