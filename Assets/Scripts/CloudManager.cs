@@ -11,7 +11,8 @@ public class CloudManager : MonoBehaviour
     {
         if (instance != null && instance != this)
             gameObject.SetActive(false);
-        else { 
+        else
+        {
             instance = this;
             // Don't destroy NetworkManager game object when switching scenes
             DontDestroyOnLoad(gameObject);
@@ -79,7 +80,7 @@ public class CloudManager : MonoBehaviour
     {
         int eloMod;
         switch (playersInGame)
-        {          
+        {
             case 1:
                 eloMod = 10;
                 break;
@@ -97,7 +98,7 @@ public class CloudManager : MonoBehaviour
                 break;
             default:
                 eloMod = 0;
-                break;           
+                break;
         }
         return eloMod;
     }
