@@ -45,7 +45,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        if(roomList.Count > 0)
+        if (roomList.Count > 0)
             PopulateGrid.instance.PopulateRoomList(roomList);
     }
 
@@ -69,6 +69,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
 
         PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby);
+    }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 
     // join specific unranked room

@@ -17,12 +17,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     public float taggedTime;
 
     [Header("Players")]
-    public string playerPrefabLocation;
+    public GameObject character;
     public Transform[] spawnPoints;
     public PlayerController[] players;
     public int taggedPlayer;
     private int playersInGame;
     private int playersLeftInGame;
+    GameObject chosenClass;
 
     [HideInInspector]
     PlayerController playerScript;
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // set players maximum size to the number of players who were originally in the room lobby
         players = new PlayerController[PhotonNetwork.PlayerList.Length];
-        
+
         // send rpc call to all players to spawn his player in their game
         // rpc target is set to AllBuffered since not all players will be loaded in at the same time
         photonView.RPC("ImInGame", RpcTarget.AllBuffered);
@@ -61,14 +62,48 @@ public class GameManager : MonoBehaviourPunCallbacks
     // spawns a player and initializes it
     void SpawnPlayer()
     {
+        // get player's chosen class to instantiate the correct class
+        chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
+        chosenClass.SetActive(false);
+
+        string activeClass;
         // instantiate the player accross the network
-        GameObject playerObj = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+        switch (chosenClass.name)
+        {
+            case "BerserkerPreview(Clone)":
+                activeClass = "Berserker";
+                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
+                break;
+            case "FrostMagePreview(Clone)":
+                activeClass = "FrostMage";
+                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
+                break;
+            case "NinjaPreview(Clone)":
+                activeClass = "Ninja";
+                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
+                break;
+            case "IllusionistPreview(Clone)":
+                activeClass = "Illusionist";
+                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
+                break;
+
+        }    
 
         // get the player script
-        playerScript = playerObj.GetComponent<PlayerController>();
+        playerScript = character.GetComponent<PlayerController>();
 
         // intialize the player
         playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+    }
+
+    private void setClassAnimator(string activeClass)
+    {
+        Animator animator = character.GetComponent<Animator>();
+        animator.SetBool(activeClass, true);
     }
 
     // returns the player of the requested id
@@ -117,7 +152,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         // set to true
         // player controller will no longer call this method from it's update function
         countdownStarted = true;
-        
+
         // begin countdown for each player
         GameUI.instance.BeginCountdown(3);
     }
@@ -134,7 +169,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void GameOver(int playerId)
     {
         // get player
-        PlayerController player = GetPlayer(playerId);      
+        PlayerController player = GetPlayer(playerId);
 
         // if it is me, modify my rank
         if (player.photonView.IsMine && NetworkManager.instance.rankedGame)
@@ -155,5 +190,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
         NetworkManager.instance.ChangeScene("Menu");
+
+        // set chosen preview class game object active so that we can access it in the main menu
+        chosenClass.SetActive(true);
     }
 }
