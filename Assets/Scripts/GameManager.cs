@@ -69,16 +69,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         // instantiate the player accross the network
         switch (chosenClass.name)
         {
-            case "Berserker":
+            case "BerserkerPreview(Clone)":
                 character = PhotonNetwork.Instantiate("Berserker", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 break;
-            case "FrostMage":
+            case "FrostMagePreview(Clone)":
                 character = PhotonNetwork.Instantiate("FrostMage", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 break;
-            case "Ninja":
+            case "NinjaPreview(Clone)":
                 character = PhotonNetwork.Instantiate("Ninja", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 break;
-            case "Illusionist":
+            case "IllusionistPreview(Clone)":
                 character = PhotonNetwork.Instantiate("Illusionist", spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 break;
 
