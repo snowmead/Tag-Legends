@@ -71,6 +71,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby);
     }
 
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
     // join specific unranked room
     public void JoinRoom(string roomName)
     {

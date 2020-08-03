@@ -301,7 +301,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnLeaveLobbyButton()
     {
         buttonClickAudio.Play();
-        PhotonNetwork.LeaveRoom();
+        NetworkManager.instance.LeaveRoom();
         SetScreen(GetScreen(playOptionsName));
     }
 
