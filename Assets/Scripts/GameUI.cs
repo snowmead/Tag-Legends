@@ -44,7 +44,6 @@ public class GameUI : MonoBehaviour
             {
                 container.obj.SetActive(true);
                 container.nameText.text = PhotonNetwork.PlayerList[x].NickName;
-                container.tagTimeSlider.maxValue = GameManager.instance.timeToLose;
             }
             else
                 container.obj.SetActive(false);
@@ -58,7 +57,7 @@ public class GameUI : MonoBehaviour
         for (int x = 0; x < GameManager.instance.players.Length; ++x)
         {
             if (GameManager.instance.players[x] != null)
-                playerContainers[x].tagTimeSlider.value = GameManager.instance.players[x].curTagTime;
+                playerContainers[x].timer.fillAmount = 1.0f / GameManager.instance.timeToLose  * GameManager.instance.players[x].curTagTime;
         }
     }
 
@@ -72,6 +71,20 @@ public class GameUI : MonoBehaviour
     public void BeginCountdown(int seconds)
     {
         StartCoroutine(Countdown(seconds));
+    }
+
+    public void SetPlayerVingettes()
+    {
+        // Game started, set player vingettes
+        for (int x = 0; x < PhotonNetwork.PlayerList.Length; ++x)
+        {
+            if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
+            {
+                PlayerUIContainer container = playerContainers[x];
+                container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+                container.obj.gameObject.transform.SetAsFirstSibling();
+            }
+        }
     }
 
     // begin 3... 2... 1... Go! Countdown
@@ -119,5 +132,5 @@ public class PlayerUIContainer
 {
     public GameObject obj;
     public TextMeshProUGUI nameText;
-    public Slider tagTimeSlider;
+    public Image timer;
 }
