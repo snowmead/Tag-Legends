@@ -192,14 +192,6 @@ public class Menu : MonoBehaviourPunCallbacks
         // reset all bool variables in animator and set the chosen class bool variable to true
         // switch state machines in the animator using these values
         animator.SetBool(classAnimBoolVar, true);
-        /*string[] classes = { "Berserker", "FrostMage", "Ninja", "Illusionist" };
-        foreach (string classInList in classes)
-        {
-            if(classInList != classAnimBoolVar)
-                animator.SetBool(classInList, false);
-            else
-                animator.SetBool(classAnimBoolVar, true);
-        }*/
     }
 
     /**
