@@ -45,12 +45,9 @@ public class GameUI : MonoBehaviour
                 container.obj.SetActive(true);
                 container.nameText.text = PhotonNetwork.PlayerList[x].NickName;
                 Debug.Log(x);
-                Debug.Log(PhotonNetwork.PlayerList);
-                Debug.Log(GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine);
-                Debug.Log(GameManager.instance.players[x].id);
                 if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
                 {
-                    container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+                    container.obj.gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                 }
             }
             else
@@ -64,9 +61,7 @@ public class GameUI : MonoBehaviour
         // loop through all of the players
         for (int x = 0; x < GameManager.instance.players.Length; ++x)
         {
-            if (GameManager.instance.players[x] != null) { 
                 playerContainers[x].timer.fillAmount = 1.0f / GameManager.instance.timeToLose  * GameManager.instance.players[x].curTagTime;
-            }
         }
     }
 

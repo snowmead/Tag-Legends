@@ -73,11 +73,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
+            GameObject.Find("UselessCamera").SetActive(false);
             cam.gameObject.SetActive(true);
             rig.isKinematic = false;
         }
 
-        GameObject.Find("UselessCamera").SetActive(false);
+
     }
 
     // start is called before the first frame update
