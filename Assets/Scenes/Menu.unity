@@ -6431,7 +6431,7 @@ MonoBehaviour:
   - {fileID: 340138936}
   createRoomButton: {fileID: 1849320241}
   joinRoomButton: {fileID: 521302101}
-  gameTypeTitle: {fileID: 0}
+  gameTypeTitle: {fileID: 818105446}
   volumeSlider: {fileID: 887193205}
   cam: {fileID: 131016641}
   playerListText: {fileID: 241315553}
