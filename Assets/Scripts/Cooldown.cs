@@ -5,17 +5,23 @@ using UnityEngine;
 public class Cooldown : MonoBehaviour
 {
     // cooldown time of ability
-    public float cooldownTime = 2f;
+    /*public float cooldownTime = 7f;
 
     // next time we can fire the ability
-    public float nextFireTime = 0f;
+    public float nextFireTime = 0f;*/
 
     public GameObject ability;
+    public GameObject particle;
 
     private void Update()
     {
+        if(particle == null)
+        {
+            Destroy(ability);
+        }
+
         // if the current time is greater then nextFireTime - cooldown has expired
-        if (Time.time > nextFireTime)
+        /*if (Time.time > nextFireTime)
         {
             ability.SetActive(true);
 
@@ -29,6 +35,6 @@ public class Cooldown : MonoBehaviour
         else
         {
             ability.SetActive(false);
-        }
+        }*/
     }
 }

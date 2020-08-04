@@ -65,28 +65,35 @@ public class GameManager : MonoBehaviourPunCallbacks
         chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
         chosenClass.SetActive(false);
 
+        string characterResourceFolder = "Character/";
         string activeClass;
+        string prefabName;
+
         // instantiate the player accross the network
         switch (chosenClass.name)
         {
             case "BerserkerPreview(Clone)":
                 activeClass = "Berserker";
-                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
             case "FrostMagePreview(Clone)":
                 activeClass = "FrostMage";
-                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
             case "NinjaPreview(Clone)":
                 activeClass = "Ninja";
-                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
             case "IllusionistPreview(Clone)":
                 activeClass = "Illusionist";
-                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
 

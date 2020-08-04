@@ -108,12 +108,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Could not find room to join, creating room...");
         Debug.Log(returnCode + " " + message);
+
+        // create a room if unable to join one
         CreateRoom("");
     }
 
     [PunRPC]
     public void ChangeScene(string sceneName)
     {
+        // when a game has started - make the room impossible to join
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        // load game scene
         PhotonNetwork.LoadLevel(sceneName);
     }
 }

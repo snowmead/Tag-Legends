@@ -107,4 +107,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
             animator.SetBool("Jump", true);
         }
     }
+
+    public void OnParticleTrigger()
+    {
+        Debug.Log("INSIDE");
+    }
 }
