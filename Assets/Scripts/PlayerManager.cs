@@ -89,6 +89,43 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    private void Update()
+    {
+        // only the master client decides when the game has ended
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // check if the curTagTime is greater then the max time allowed before losing
+            if (curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded)
+            {
+                // end the game for all players
+                GameManager.instance.gameEnded = true;
+                GameManager.instance.photonView.RPC("GameOver", RpcTarget.All, PlayerManager.instance.id);
+            }
+        }
+
+        // only the master client decides when to start the game
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // check if all players have initialized their player in the game
+            if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.instance.countdownStarted)
+            {
+                // update player vingettes in UI
+                GameManager.instance.photonView.RPC("UpdateInGameUI", RpcTarget.All);
+                // start the game for all players
+                GameManager.instance.photonView.RPC("StartCountdown", RpcTarget.All);
+            }
+        }
+
+        // when the game has started start tag timer
+        if (startGame)
+        {
+            // track the amount of time we're tagged
+            if (tagIndicator.activeInHierarchy)
+                // increase current tag time every second
+                curTagTime += Time.deltaTime;
+        }
+    }
+
     // called when all the players are ready to play and the countdown was done
     [PunRPC]
     public void BeginGame()

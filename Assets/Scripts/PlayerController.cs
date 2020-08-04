@@ -45,24 +45,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // check if the game is started
         if (PlayerManager.instance.startGame)
         {
-            // only the master client decides when the game has ended
-            if (PhotonNetwork.IsMasterClient)
-            {
-                // check if the curTagTime is greater then the max time allowed before losing
-                if (PlayerManager.instance.curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded)
-                {
-                    // end the game for all players
-                    GameManager.instance.gameEnded = true;
-                    GameManager.instance.photonView.RPC("GameOver", RpcTarget.All, PlayerManager.instance.id);
-                }
-            }
-
-            // if game ended
-            if (GameManager.instance.gameEnded)
-            {
-                // set player animation to idle
-            }
-
             // only move my player
             if (photonView.IsMine)
             {
@@ -110,28 +92,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
 
-            // track the amount of time we're tagged
-            if (PlayerManager.instance.tagIndicator.activeInHierarchy)
-                // increase current tag time every second
-                PlayerManager.instance.curTagTime += Time.deltaTime;
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 GameUI.instance.EscapeMenu();
             }
         } 
-        // only the master client decides when to start the game
-        else if (PhotonNetwork.IsMasterClient)
-        {
-            // check if all players have initialized their player in the game
-            if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.instance.countdownStarted)
-            {
-                // update player vingettes in UI
-                GameManager.instance.photonView.RPC("UpdateInGameUI", RpcTarget.All);
-                // start the game for all players
-                GameManager.instance.photonView.RPC("StartCountdown", RpcTarget.All);
-            }
-        }
     }
 
     public void OnJumpButton()
