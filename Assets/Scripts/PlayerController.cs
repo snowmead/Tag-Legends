@@ -149,11 +149,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     {
                         animator.SetBool("Sprint", false);
                     }
-
-                    if (Input.GetButtonDown("Jump"))
-                    {
-                        Jump();
-                    }
                 }
                 else
                 {
@@ -185,7 +180,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    public void Jump()
+    public void OnJumpButton()
     {
         if (grounded)
         {
