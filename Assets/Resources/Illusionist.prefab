@@ -4022,7 +4022,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6020658887230413105}
-  - component: {fileID: 5592154681616849248}
+  - component: {fileID: 5252949661821469461}
+  - component: {fileID: 3271444849461973191}
   - component: {fileID: 8858832849403754350}
   - component: {fileID: 7257471007249144088}
   - component: {fileID: 4399839141658533809}
@@ -4055,7 +4056,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
---- !u!114 &5592154681616849248
+--- !u!114 &5252949661821469461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4077,7 +4078,25 @@ MonoBehaviour:
   inputVector: {x: 0, y: 0, z: 0}
   jumpForce: 0
   turnSmoothTime: 0.1
-  joystick: {fileID: 0}
+  joystick: {fileID: 8860965874575042691}
+--- !u!114 &3271444849461973191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072363635181956858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c8073db9bcba3c4d81b7269d0773aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  curTagTime: 0
+  startGame: 0
+  rig: {fileID: 4399839141658533809}
+  cam: {fileID: 8300184526464855807}
+  tagIndicator: {fileID: 2837360571082093167}
 --- !u!114 &8858832849403754350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4097,7 +4116,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7257471007249144088}
-  - {fileID: 5592154681616849248}
+  - {fileID: 3271444849461973191}
   - {fileID: 9025719808171097228}
   viewIdField: 0
   InstantiationId: 0
@@ -4180,16 +4199,16 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: Idle
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Berserker
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: FrostMage
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Ninja
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Illusionist
   m_SynchronizeLayers:
   - SynchronizeType: 2
@@ -15089,7 +15108,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5252949661821469461}
         m_MethodName: OnJumpButton
         m_Mode: 1
         m_Arguments:

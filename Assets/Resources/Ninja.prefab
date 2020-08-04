@@ -6303,7 +6303,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7568605156436343406}
         m_MethodName: OnJumpButton
         m_Mode: 1
         m_Arguments:
@@ -8894,7 +8894,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 537719213015539572}
-  - component: {fileID: 1828640190106967845}
+  - component: {fileID: 7568605156436343406}
+  - component: {fileID: 4888660341596309322}
   - component: {fileID: 3317767642976022827}
   - component: {fileID: 3480234610759262045}
   - component: {fileID: 7634920777060571636}
@@ -8927,7 +8928,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
---- !u!114 &1828640190106967845
+--- !u!114 &7568605156436343406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8949,7 +8950,25 @@ MonoBehaviour:
   inputVector: {x: 0, y: 0, z: 0}
   jumpForce: 0
   turnSmoothTime: 0.1
-  joystick: {fileID: 0}
+  joystick: {fileID: 3263827992960966699}
+--- !u!114 &4888660341596309322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204316337038321855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c8073db9bcba3c4d81b7269d0773aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  curTagTime: 0
+  startGame: 0
+  rig: {fileID: 7634920777060571636}
+  cam: {fileID: 2867627773067454650}
+  tagIndicator: {fileID: 8330434410064606250}
 --- !u!114 &3317767642976022827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8969,7 +8988,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3480234610759262045}
-  - {fileID: 1828640190106967845}
+  - {fileID: 4888660341596309322}
   - {fileID: 3006783621695929033}
   viewIdField: 0
   InstantiationId: 0
@@ -9052,16 +9071,16 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: Idle
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Berserker
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: FrostMage
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Ninja
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Illusionist
   m_SynchronizeLayers:
   - SynchronizeType: 2

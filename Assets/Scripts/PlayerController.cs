@@ -9,7 +9,7 @@ using System.Numerics;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 
-public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     [Header("Components")]
     public Rigidbody rig;
@@ -106,10 +106,5 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             rig.velocity = new Vector3(0f, 6f, 0f);
             animator.SetBool("Jump", true);
         }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
     }
 }

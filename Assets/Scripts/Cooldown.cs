@@ -17,13 +17,11 @@ public class Cooldown : MonoBehaviour
         // if the current time is greater then nextFireTime - cooldown has expired
         if (Time.time > nextFireTime)
         {
-            Debug.Log("Activate ability");
             ability.SetActive(true);
 
             // clicked on ability
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Ability used! Cooldown started!");
                 // next fire time is the current time plus the ability cooldown
                 nextFireTime = Time.time + cooldownTime;
             }
