@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public Rigidbody rig;
     public Camera cam;
     public GameObject tagIndicator;
+    public GameObject playerUI;
 
     public static PlayerManager instance;
 
@@ -48,6 +49,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             // disable all other player's cameras
             cam.gameObject.SetActive(false);
             rig.isKinematic = true;
+            playerUI.SetActive(false);
         }
         else
         {
@@ -109,10 +111,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             // check if all players have initialized their player in the game
             if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.instance.countdownStarted)
             {
-                // update player vingettes in UI
-                GameManager.instance.photonView.RPC("UpdateInGameUI", RpcTarget.All);
                 // start the game for all players
                 GameManager.instance.photonView.RPC("StartCountdown", RpcTarget.All);
+
+                // update player vingettes in UI
+                GameManager.instance.photonView.RPC("UpdateInGameUI", RpcTarget.All);
             }
         }
 

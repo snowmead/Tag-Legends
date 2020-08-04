@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                     // Animatioms
                     if(Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1 || Mathf.Abs(joystick.Vertical) > .1 || Mathf.Abs(joystick.Horizontal) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
-                {
+                    {
                         animator.SetBool("Sprint", true);
                     }
                     else
@@ -101,10 +101,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public void OnJumpButton()
     {
-        if (grounded)
+        if (photonView.IsMine)
         {
-            rig.velocity = new Vector3(0f, 6f, 0f);
-            animator.SetBool("Jump", true);
+            if (grounded)
+            {
+                rig.velocity = new Vector3(0f, 6f, 0f);
+                animator.SetBool("Jump", true);
+            }
         }
     }
 }

@@ -3294,6 +3294,7 @@ MonoBehaviour:
   rig: {fileID: 4254306114376672883}
   cam: {fileID: 8445699986728589117}
   tagIndicator: {fileID: 2406433847795714989}
+  playerUI: {fileID: 4107982392694283977}
 --- !u!114 &9004366053309845164
 MonoBehaviour:
   m_ObjectHideFlags: 0
