@@ -12339,7 +12339,7 @@ GameObject:
   - component: {fileID: 3620914747266902439}
   - component: {fileID: 729381276871998146}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: TagIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

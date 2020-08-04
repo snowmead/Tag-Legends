@@ -131,7 +131,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public void BeginGame()
     {
         // start the game
-        // update function will now have player movement
+        // update function will now have player movement and tag time counter
         startGame = true;
     }
 
