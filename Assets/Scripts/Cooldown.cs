@@ -14,9 +14,6 @@ public class Cooldown : MonoBehaviour
 
     private void Update()
     {
-
-
-        Debug.Log(Time.time +  " " +  nextFireTime);
         // if the current time is greater then nextFireTime - cooldown has expired
         if (Time.time > nextFireTime)
         {
@@ -33,7 +30,6 @@ public class Cooldown : MonoBehaviour
         } 
         else
         {
-            Debug.Log("Deactivate ability");
             ability.SetActive(false);
         }
     }
