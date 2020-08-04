@@ -19,7 +19,10 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
 
     public void GroundSlam()
     {
-        PhotonNetwork.Instantiate(berserkerAbilityResourceLocation + "GroundSlam", transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(
+            berserkerAbilityResourceLocation + "GroundSlam", transform.position, 
+            Quaternion.Euler(-90, Quaternion.identity.eulerAngles.y, Quaternion.identity.eulerAngles.z)
+            );
     }
 
     public void Shout()
