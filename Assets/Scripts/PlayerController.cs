@@ -101,13 +101,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public void OnJumpButton()
     {
-        if (photonView.IsMine)
+        if (grounded)
         {
-            if (grounded)
-            {
-                rig.velocity = new Vector3(0f, 6f, 0f);
-                animator.SetBool("Jump", true);
-            }
+            rig.velocity = new Vector3(0f, 6f, 0f);
+            animator.SetBool("Jump", true);
         }
     }
 }
