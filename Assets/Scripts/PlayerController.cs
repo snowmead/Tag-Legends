@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public const float speedConstant = 0.15f;
     public float speed = 10f;
     public Vector3 inputVector;
-
+    public Camera cam;
     public float jumpForce;
     public float turnSmoothTime = 0.1f;
 
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 float horizontal = Input.GetAxis("Horizontal") + joystick.Horizontal;
                 float vertical = Input.GetAxis("Vertical") + joystick.Vertical;
 
-                Vector3 joystickDirection = PlayerManager.instance.cam.transform.rotation * new Vector3(horizontal, 0, vertical);
+                Vector3 joystickDirection = cam.transform.rotation * new Vector3(horizontal, 0, vertical);
 
                 horizontal = joystickDirection.x;
                 vertical = joystickDirection.z;
