@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class GroundSlam : MonoBehaviour
+public class GroundSlam : MonoBehaviourPunCallbacks
 {
     private void Awake()
     {
@@ -16,21 +17,27 @@ public class GroundSlam : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        GameObject otherObject = other.transform.root.gameObject;
-        if (otherObject.tag == "Player")
+        if (!photonView.IsMine)
         {
-            PlayerManager player = otherObject.GetComponent<PlayerManager>();
-            player.rig.drag = 20f;
+            GameObject otherObject = other.transform.root.gameObject;
+            if (otherObject.tag == "Player")
+            {
+                PlayerManager player = otherObject.GetComponent<PlayerManager>();
+                player.rig.drag = 20f;
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        GameObject otherObject = other.transform.root.gameObject;
-        if (otherObject.tag == "Player")
+        if(!photonView.IsMine)
         {
-            PlayerManager player = otherObject.GetComponent<PlayerManager>();
-            player.rig.drag = 0f;
+            GameObject otherObject = other.transform.root.gameObject;
+            if (otherObject.tag == "Player")
+            {
+                PlayerManager player = otherObject.GetComponent<PlayerManager>();
+                player.rig.drag = 0f;
+            }
         }
     }
 }

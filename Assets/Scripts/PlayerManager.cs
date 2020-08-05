@@ -90,21 +90,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    /*private void OnTriggerStay(Collider other)
-    {
-        if (GameManager.instance.isGroundSlamActive)
-        {
-            rig.drag = 20f;
-
-            Debug.Log("ITS ACTIVE" + other.gameObject.tag );
-            if (other.gameObject.tag == "GroundSlam")
-            {
-                Debug.Log("HIT GROUNDSLAM");
-                rig.drag = 20f;
-            }
-        }
-    }*/
-
     private void Update()
     {
         // only the master client decides when the game has ended
