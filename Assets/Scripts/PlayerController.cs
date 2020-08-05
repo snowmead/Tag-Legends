@@ -51,11 +51,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 // Get movement vertices
                 float horizontal = Input.GetAxis("Horizontal") + joystick.Horizontal;
                 float vertical = Input.GetAxis("Vertical") + joystick.Vertical;
+
+                Vector3 joystickDirection = PlayerManager.instance.cam.transform.rotation * new Vector3(horizontal, 0, vertical);
+
+                horizontal = joystickDirection.x;
+                vertical = joystickDirection.z;
+
                 Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
                 float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
                 inputVector = direction * speed * Time.deltaTime;
 
-                if(!GameManager.instance.isGroundSlamActive)
+                if (!GameManager.instance.isGroundSlamActive)
                 {
                     rig.drag = 0f;
                 }
@@ -82,7 +88,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     }
 
                     // Animatioms
-                    if(Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1 || Mathf.Abs(joystick.Vertical) > .1 || Mathf.Abs(joystick.Horizontal) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
+                    if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1 || Mathf.Abs(joystick.Vertical) > .1 || Mathf.Abs(joystick.Horizontal) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
                     {
                         animator.SetBool("Sprint", true);
                     }
@@ -101,7 +107,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 GameUI.instance.EscapeMenu();
             }
-        } 
+        }
     }
 
     public void OnJumpButton()
