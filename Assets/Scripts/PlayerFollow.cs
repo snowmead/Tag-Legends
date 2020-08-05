@@ -17,7 +17,8 @@ public class PlayerFollow : MonoBehaviour
     public float mousePos;
     public float screenWidth;
     public float screenHeight;
-    private float timeCounter = 0;    
+    private float timeCounter = 0; 
+    private float touchDir = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +40,7 @@ public class PlayerFollow : MonoBehaviour
         if (LookAtPlayer)
             transform.LookAt(PlayerTransform);
 
-        if(Input.GetMouseButton(0) && Input.mousePosition.y > (Screen.height * 0.5f)) // 250 is right above the joystick
+        if(Input.GetMouseButton(0) && Input.mousePosition.y > (Screen.height * 0.5f))
         {
 
             input = Input.GetAxis("Mouse X");
@@ -62,22 +63,21 @@ public class PlayerFollow : MonoBehaviour
         }
 
         if (Input.touchCount > 0)
-        {
-            int touchDir = 0;
-            if (Input.GetTouch(1).position.x > 0 && Input.GetTouch(1).position.y > (Screen.height * 0.5f))
+        {            
+            if (Input.GetTouch(0).position.x > 0.0f && Input.GetTouch(0).position.y > (Screen.height * 0.5f))
             {
-                touchDir = 1;
+                touchDir = 1.0f;
             }
-            else if (Input.GetTouch(1).position.x < 0 && Input.GetTouch(1).position.y > (Screen.height * 0.5f))
+            else if (Input.GetTouch(0).position.x < 0.0f && Input.GetTouch(0).position.y > (Screen.height * 0.5f))
             {
-                touchDir = -1;
+                touchDir = -1.0f;
             }
             else
             {
-                touchDir = 0;
+                touchDir = 0.0f;
             }
 
-            if (touchDir > 0)
+            if (touchDir > 0.0f)
             {
                 speed = Mathf.Abs(touchDir) + 1.0f;
                 timeCounter += speed * Time.deltaTime;
@@ -85,7 +85,7 @@ public class PlayerFollow : MonoBehaviour
                 cameraOffset.z = Mathf.Sin(timeCounter) * cameraOffset.y;
             }
 
-            if (touchDir < 0)
+            if (touchDir < 0.0f)
             {
                 speed = Mathf.Abs(touchDir) + 1.0f;
                 timeCounter -= speed * Time.deltaTime;
