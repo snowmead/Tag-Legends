@@ -12853,8 +12853,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerTransform: {fileID: 8201214263334617751}
+  cameraOffset: {x: 0, y: 0, z: 0}
   SmoothFactor: 1
   LookAtPlayer: 1
+  speed: 0
+  input: 0
+  mousePos: 0
+  screenWidth: 0
+  screenHeight: 0
 --- !u!1 &7565871695690770463
 GameObject:
   m_ObjectHideFlags: 0

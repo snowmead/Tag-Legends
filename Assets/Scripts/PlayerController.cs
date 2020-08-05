@@ -115,6 +115,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 // Get movement vertices
                 float horizontal = Input.GetAxis("Horizontal") + joystick.Horizontal;
                 float vertical = Input.GetAxis("Vertical") + joystick.Vertical;
+
+                Vector3 joystickDirection = cam.transform.rotation * new Vector3(horizontal, 0, vertical);
+
+                horizontal = joystickDirection.x;
+                vertical = joystickDirection.z;
+
                 Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
                 float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
                 inputVector = direction * speed * Time.deltaTime;
