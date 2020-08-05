@@ -17,15 +17,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     public float taggedTime;
 
     [Header("Players")]
-    public string playerPrefabLocation;
+    public GameObject character;
     public Transform[] spawnPoints;
-    public PlayerController[] players;
+    public PlayerManager[] players;
     public int taggedPlayer;
     private int playersInGame;
+    GameObject chosenClass;
 
     [HideInInspector]
-    PlayerController playerScript;
+    PlayerManager playerManagerScript;
     public bool countdownStarted = false;
+
+    [HideInInspector]
+    public bool isGroundSlamActive = false;
 
     // instance
     public static GameManager instance;
@@ -40,8 +44,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         // set players maximum size to the number of players who were originally in the room lobby
-        players = new PlayerController[PhotonNetwork.PlayerList.Length];
-        
+        players = new PlayerManager[PhotonNetwork.PlayerList.Length];
+
         // send rpc call to all players to spawn his player in their game
         // rpc target is set to AllBuffered since not all players will be loaded in at the same time
         photonView.RPC("ImInGame", RpcTarget.AllBuffered);
@@ -60,30 +64,65 @@ public class GameManager : MonoBehaviourPunCallbacks
     // spawns a player and initializes it
     void SpawnPlayer()
     {
+        // get player's chosen class to instantiate the correct class
+        chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
+        chosenClass.SetActive(false);
+
+        string characterResourceFolder = "Character/";
+        string activeClass;
+        string prefabName;
+
         // instantiate the player accross the network
-        GameObject playerObj = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+        switch (chosenClass.name)
+        {
+            case "BerserkerPreview(Clone)":
+                activeClass = "Berserker";
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
+                break;
+            case "FrostMagePreview(Clone)":
+                activeClass = "FrostMage";
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
+                break;
+            case "NinjaPreview(Clone)":
+                activeClass = "Ninja";
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
+                break;
+            case "IllusionistPreview(Clone)":
+                activeClass = "Illusionist";
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                setClassAnimator(activeClass);
+                break;
+
+        }    
 
         // get the player script
-        playerScript = playerObj.GetComponent<PlayerController>();
+        playerManagerScript = character.GetComponent<PlayerManager>();
 
         // intialize the player
-        playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+        playerManagerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+    }
+
+    private void setClassAnimator(string activeClass)
+    {
+        Animator animator = character.GetComponent<Animator>();
+        animator.SetBool(activeClass, true);
     }
 
     // returns the player of the requested id
-    public PlayerController GetPlayer(int playerId)
+    public PlayerManager GetPlayer(int playerId)
     {
         return players.First(x => x.id == playerId);
     }
-
-    // returns the player of the requested id
-    /*public PlayerController GetPlayer(int playerId)
-    {
-        return players.First(x => x.id == playerId);
-    }*/
 
     // returns the player of the requested GameObject
-    public PlayerController GetPlayer(GameObject playerObj)
+    public PlayerManager GetPlayer(GameObject playerObj)
     {
         return players.First(x => x.gameObject == playerObj);
     }
@@ -116,30 +155,42 @@ public class GameManager : MonoBehaviourPunCallbacks
         // set to true
         // player controller will no longer call this method from it's update function
         countdownStarted = true;
-        
+
         // begin countdown for each player
         GameUI.instance.BeginCountdown(3);
+    }
+
+    // Called when all players are ready and loaded in
+    [PunRPC]
+    void UpdateInGameUI()
+    {
+        GameUI.instance.SetPlayerVingettes();
     }
 
     // start the game
     public void StartGame()
     {
         // send rpc call to all players to begin their game
-        playerScript.photonView.RPC("BeginGame", RpcTarget.All);
+        playerManagerScript.photonView.RPC("BeginGame", RpcTarget.All);
     }
 
     // called when a player was tagged passed the maxed time - player tagged lost
     [PunRPC]
     void GameOver(int playerId)
     {
-        PlayerController player = GetPlayer(playerId);
+        // get player
+        PlayerManager player = GetPlayer(playerId);
 
-        // check if I'm the player who lost
-        if (player.photonView.IsMine)
-            CloudManager.instance.DecreaseRank();
-        else
-            CloudManager.instance.IncreaseRank();
+        // if it is me, modify my rank
+        if (player.photonView.IsMine && NetworkManager.instance.rankedGame)
+        {
+            CloudManager.instance.RankModifier(playersInGame);
+        }
 
+        // reduce the number of players in the game
+        playersInGame--;
+
+        // end the game
         gameEnded = true;
         GameUI.instance.SetLoseText(player.photonPlayer.NickName);
     }
@@ -149,5 +200,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
         NetworkManager.instance.ChangeScene("Menu");
+
+        // set chosen preview class game object active so that we can access it in the main menu
+        chosenClass.SetActive(true);
     }
 }
