@@ -8349,7 +8349,7 @@ MonoBehaviour:
   timeToLose: 50
   invincibleDuration: 1
   taggedTime: 100
-  playerPrefabLocation: Player
+  character: {fileID: 0}
   spawnPoints:
   - {fileID: 324463960}
   - {fileID: 968937392}
@@ -8404,7 +8404,6 @@ MonoBehaviour:
   loseText: {fileID: 668599003}
   countdownText: {fileID: 559546659}
   menu: {fileID: 732626409}
-  playersList: {fileID: 731826288}
 --- !u!1 &828800917
 GameObject:
   m_ObjectHideFlags: 0
@@ -11632,7 +11631,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 46.350002, y: 33.222, z: 3.0000002}
 --- !u!1001 &1112630650
 PrefabInstance:
@@ -22772,7 +22771,7 @@ PrefabInstance:
     - target: {fileID: 746828408646858034, guid: 8865a3c86fc054244b31e21374d48415,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 746828408646858034, guid: 8865a3c86fc054244b31e21374d48415,
         type: 3}
@@ -23964,7 +23963,7 @@ PrefabInstance:
     - target: {fileID: 6303929729091505775, guid: cf1212910ef283446be67a34f681b0c8,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6303929729193296322, guid: cf1212910ef283446be67a34f681b0c8,
         type: 3}
@@ -27814,7 +27813,7 @@ PrefabInstance:
     - target: {fileID: 6304527127650906791, guid: cf1212910ef283446be67a34f681b0c8,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6304527127766388384, guid: cf1212910ef283446be67a34f681b0c8,
         type: 3}
@@ -35226,7 +35225,7 @@ PrefabInstance:
     - target: {fileID: 7157447823630882005, guid: 7ec6fc3e8f1a31240bc5783000b3b69c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7157447823630882005, guid: 7ec6fc3e8f1a31240bc5783000b3b69c,
         type: 3}

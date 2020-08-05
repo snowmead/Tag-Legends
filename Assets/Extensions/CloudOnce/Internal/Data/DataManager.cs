@@ -838,7 +838,6 @@ namespace CloudOnce.Internal
         /// <returns>A random selection of keys from the local <see cref="GameData"/>.</returns>
         public static string[] GetRandomKeysFromGameData()
         {
-            Debug.Log("Simulating OnNewCloudValues with random keys.");
             var rnd = new System.Random();
             var rndItems =
                 s_localGameData.SyncableItems.OrderBy(x => rnd.Next())

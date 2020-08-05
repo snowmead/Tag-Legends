@@ -19,15 +19,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Header("Players")]
     public GameObject character;
     public Transform[] spawnPoints;
-    public PlayerController[] players;
+    public PlayerManager[] players;
     public int taggedPlayer;
     private int playersInGame;
-    private int playersLeftInGame;
     GameObject chosenClass;
 
     [HideInInspector]
-    PlayerController playerScript;
+    PlayerManager playerManagerScript;
     public bool countdownStarted = false;
+
+    [HideInInspector]
+    public bool isGroundSlamActive = false;
 
     // instance
     public static GameManager instance;
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         // set players maximum size to the number of players who were originally in the room lobby
-        players = new PlayerController[PhotonNetwork.PlayerList.Length];
+        players = new PlayerManager[PhotonNetwork.PlayerList.Length];
 
         // send rpc call to all players to spawn his player in their game
         // rpc target is set to AllBuffered since not all players will be loaded in at the same time
@@ -66,38 +68,45 @@ public class GameManager : MonoBehaviourPunCallbacks
         chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
         chosenClass.SetActive(false);
 
+        string characterResourceFolder = "Character/";
         string activeClass;
+        string prefabName;
+
         // instantiate the player accross the network
         switch (chosenClass.name)
         {
             case "BerserkerPreview(Clone)":
                 activeClass = "Berserker";
-                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
             case "FrostMagePreview(Clone)":
                 activeClass = "FrostMage";
-                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
             case "NinjaPreview(Clone)":
                 activeClass = "Ninja";
-                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
             case "IllusionistPreview(Clone)":
                 activeClass = "Illusionist";
-                character = PhotonNetwork.Instantiate(activeClass, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+                prefabName = characterResourceFolder + activeClass + "/" + activeClass;
+                character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
 
         }    
 
         // get the player script
-        playerScript = character.GetComponent<PlayerController>();
+        playerManagerScript = character.GetComponent<PlayerManager>();
 
         // intialize the player
-        playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+        playerManagerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
     }
 
     private void setClassAnimator(string activeClass)
@@ -107,19 +116,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     // returns the player of the requested id
-    public PlayerController GetPlayer(int playerId)
+    public PlayerManager GetPlayer(int playerId)
     {
         return players.First(x => x.id == playerId);
     }
 
-    // returns the player of the requested id
-    /*public PlayerController GetPlayer(int playerId)
-    {
-        return players.First(x => x.id == playerId);
-    }*/
-
     // returns the player of the requested GameObject
-    public PlayerController GetPlayer(GameObject playerObj)
+    public PlayerManager GetPlayer(GameObject playerObj)
     {
         return players.First(x => x.gameObject == playerObj);
     }
@@ -164,11 +167,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         GameUI.instance.SetPlayerVingettes();
     }
 
-        // start the game
-        public void StartGame()
+    // start the game
+    public void StartGame()
     {
         // send rpc call to all players to begin their game
-        playerScript.photonView.RPC("BeginGame", RpcTarget.All);
+        playerManagerScript.photonView.RPC("BeginGame", RpcTarget.All);
     }
 
     // called when a player was tagged passed the maxed time - player tagged lost
@@ -176,7 +179,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void GameOver(int playerId)
     {
         // get player
-        PlayerController player = GetPlayer(playerId);
+        PlayerManager player = GetPlayer(playerId);
 
         // if it is me, modify my rank
         if (player.photonView.IsMine && NetworkManager.instance.rankedGame)
