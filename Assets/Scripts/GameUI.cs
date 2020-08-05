@@ -78,11 +78,12 @@ public class GameUI : MonoBehaviour
         // Game started, set player vingettes
         for (int x = 0; x < PhotonNetwork.PlayerList.Length; ++x)
         {
+            // Increase the size of your own UI vingette and set your image to the top of the player list
             if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
             {
                 PlayerUIContainer container = playerContainers[x];
-                container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
-                container.obj.gameObject.transform.SetAsFirstSibling();
+                container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f); // Increase the size of your vingette
+                container.obj.gameObject.transform.SetAsFirstSibling(); // Set yourself as the first child in the list
             }
         }
     }
