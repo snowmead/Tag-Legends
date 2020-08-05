@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void SpawnPlayer()
     {
         // get player's chosen class to instantiate the correct class
-        chosenClass = GameObject.FindGameObjectWithTag("ChosenClass");
+        chosenClass = GameObject.FindGameObjectWithTag("Player");
         chosenClass.SetActive(false);
 
         string characterResourceFolder = "Character/";
@@ -75,25 +75,25 @@ public class GameManager : MonoBehaviourPunCallbacks
         // instantiate the player accross the network
         switch (chosenClass.name)
         {
-            case "BerserkerPreview(Clone)":
+            case "Berserker(Clone)":
                 activeClass = "Berserker";
                 prefabName = characterResourceFolder + activeClass + "/" + activeClass;
                 character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
-            case "FrostMagePreview(Clone)":
+            case "FrostMage(Clone)":
                 activeClass = "FrostMage";
                 prefabName = characterResourceFolder + activeClass + "/" + activeClass;
                 character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
-            case "NinjaPreview(Clone)":
+            case "Ninja(Clone)":
                 activeClass = "Ninja";
                 prefabName = characterResourceFolder + activeClass + "/" + activeClass;
                 character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
                 setClassAnimator(activeClass);
                 break;
-            case "IllusionistPreview(Clone)":
+            case "Illusionist(Clone)":
                 activeClass = "Illusionist";
                 prefabName = characterResourceFolder + activeClass + "/" + activeClass;
                 character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);

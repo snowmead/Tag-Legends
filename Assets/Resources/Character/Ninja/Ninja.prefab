@@ -3491,8 +3491,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerTransform: {fileID: 537719213015539572}
+  cameraOffset: {x: 0, y: 0, z: 0}
   SmoothFactor: 1
   LookAtPlayer: 1
+  speed: 0
+  input: 0
+  mousePos: 0
+  screenWidth: 0
+  screenHeight: 0
 --- !u!1 &2186968301895710204
 GameObject:
   m_ObjectHideFlags: 0
@@ -8896,6 +8902,7 @@ GameObject:
   - component: {fileID: 537719213015539572}
   - component: {fileID: 7568605156436343406}
   - component: {fileID: 4888660341596309322}
+  - component: {fileID: 3331286559029897842}
   - component: {fileID: 3317767642976022827}
   - component: {fileID: 3480234610759262045}
   - component: {fileID: 7634920777060571636}
@@ -8915,8 +8922,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5204316337038321855}
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: -8.19495, y: 0.14933294, z: -9.891857}
+  m_LocalRotation: {x: 0, y: -0.9381762, z: 0, w: 0.34615812}
+  m_LocalPosition: {x: 32.479, y: 26.586, z: 31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4951403970891790326}
@@ -8927,7 +8934,7 @@ Transform:
   - {fileID: 2136020551048629583}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -139.495, z: 0}
 --- !u!114 &7568605156436343406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8948,6 +8955,7 @@ MonoBehaviour:
     m_Bits: 256
   speed: 4
   inputVector: {x: 0, y: 0, z: 0}
+  cam: {fileID: 0}
   jumpForce: 0
   turnSmoothTime: 0.1
   joystick: {fileID: 3263827992960966699}
@@ -8970,6 +8978,18 @@ MonoBehaviour:
   cam: {fileID: 2867627773067454650}
   tagIndicator: {fileID: 8330434410064606250}
   playerUI: {fileID: 3263827992015952168}
+--- !u!114 &3331286559029897842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204316337038321855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70fe405956888f34482b52ac2965b046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3317767642976022827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9083,6 +9103,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: Illusionist
+  - Type: 9
+    SynchronizeType: 0
+    Name: GroundSlam
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
