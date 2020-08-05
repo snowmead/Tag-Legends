@@ -34,7 +34,7 @@ Transform:
   m_LocalScale: {x: 10.598, y: 3.100946, z: 10.597997}
   m_Children: []
   m_Father: {fileID: 6997266306933178167}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &789546585539821270
 MonoBehaviour:
@@ -174,7 +174,8 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7290152590263890265}
   m_Father: {fileID: 6997266306933178167}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -188,11 +189,11 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -1441,7 +1442,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -1449,7 +1450,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 0.4433962, g: 0.13594696, b: 0.2447569, a: 1}
         key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -5074,7 +5075,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1662855921783404287}
-  - {fileID: 7290152590263890265}
   - {fileID: 1537827077848806425}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -5104,13 +5104,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7290152590263890244}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.04225716}
+  m_LocalScale: {x: 1, y: 1, z: 0.042257156}
   m_Children:
   - {fileID: 6721595025056798637}
-  m_Father: {fileID: 6997266306933178167}
-  m_RootOrder: 1
+  m_Father: {fileID: 1662855921783404287}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &7290152590263890246
 ParticleSystem:
@@ -5120,7 +5120,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7290152590263890244}
   serializedVersion: 6
-  lengthInSec: 30
+  lengthInSec: 8
   simulationSpeed: 5
   stopAction: 2
   cullingMode: 0
