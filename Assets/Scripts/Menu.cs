@@ -57,21 +57,22 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         // find already chosen class (this may be found when we come back from a game and go back to the main menu)
         // we use this to preserve the same class he already chose
-        GameObject classAlreadyChosen = GameObject.FindGameObjectWithTag("ChosenClass");
+        GameObject classAlreadyChosen = GameObject.FindGameObjectWithTag("Player");
 
         // check if a class was already chosen
         if (classAlreadyChosen != null) {
             // set as the chosen character
-            characterChosen = classAlreadyChosen;            
+            characterChosen = classAlreadyChosen;
+            //Debug.Log(characterChosen.name.ToString().Replace("(Clone)", string.Empty));
+            switchClassAnimator(characterChosen.name.Replace("(Clone)", string.Empty));
         } 
         else
         {
             // instantiate new character class object and set the chosen character and dont destroy on load to bring to the game scene
-            characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/BerserkerPreview") as GameObject);
+            characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
+            InitializeChosenClass("Berserker");
             DontDestroyOnLoad(characterChosen);
-        }
-
-        InitializeChosenClass("Berserker");
+        }       
 
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
@@ -148,7 +149,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnBerserkerClassChosen()
     {
         Destroy(characterChosen);
-        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/BerserkerPreview") as GameObject);
+        characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
         InitializeChosenClass("Berserker");
     }
 
@@ -156,7 +157,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnFrostMageClassChosen()
     {
         Destroy(characterChosen);
-        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/FrostMagePreview") as GameObject);
+        characterChosen = Instantiate(Resources.Load("Character/FrostMage/FrostMage") as GameObject);
         InitializeChosenClass("FrostMage");
     }
 
@@ -164,7 +165,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnNinjaClassChosen()
     {
         Destroy(characterChosen);
-        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/NinjaPreview") as GameObject);
+        characterChosen = Instantiate(Resources.Load("Character/Ninja/Ninja") as GameObject);
         InitializeChosenClass("Ninja");
     }
 
@@ -172,15 +173,44 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnIllusionistClassChosen()
     {
         Destroy(characterChosen);
-        characterChosen = Instantiate(Resources.Load("CharacterPreviewClasses/IllusionistPreview") as GameObject);
+        characterChosen = Instantiate(Resources.Load("Character/Illusionist/Illusionist") as GameObject);
         InitializeChosenClass("Illusionist");
     }
 
+    // Remove all components on the player prefab to set up the character preview
+    public void SetupPlayerPreview(string className)
+    {
+        characterChosen.GetComponent<PlayerController>().enabled = false;
+        characterChosen.GetComponent<PlayerManager>().enabled = false;
+        switch (className)
+        {
+            case "Berserker":
+                characterChosen.GetComponent<BerserkerAbilities>().enabled = false;
+                break;
+            case "FrostMage":
+                characterChosen.GetComponent<FrostMageAbilities>().enabled = false;
+                break;
+            case "Ninja":
+                characterChosen.GetComponent<NinjaAbilities>().enabled = false;
+                break;
+            case "Illusionist":
+                characterChosen.GetComponent<IllusionistAbilities>().enabled = false;
+                break;
+        }
+
+        characterChosen.GetComponent<PhotonView>().enabled = false;
+        characterChosen.GetComponent<PhotonAnimatorView>().enabled = false;
+        characterChosen.GetComponent<PhotonTransformView>().enabled = false;
+        characterChosen.transform.GetChild(2).gameObject.SetActive(false);
+        characterChosen.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+    }
+
     // called when "BackToMenu" Button is pressed
-    private void InitializeChosenClass(string classAnimBoolVar)
+    private void InitializeChosenClass(string className)
     {
         DontDestroyOnLoad(characterChosen);
-        switchClassAnimator(classAnimBoolVar);
+        switchClassAnimator(className);
+        SetupPlayerPreview(className);
     }
 
     private void switchClassAnimator(string classAnimBoolVar)
