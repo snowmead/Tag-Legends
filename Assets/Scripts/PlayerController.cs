@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
                 inputVector = direction * speed * Time.deltaTime;
 
+                if(!GameManager.instance.isGroundSlamActive)
+                {
+                    rig.drag = 0f;
+                }
+
                 // check if my player is grounded
                 grounded = Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.down), 1.2f, groundLayer);
 

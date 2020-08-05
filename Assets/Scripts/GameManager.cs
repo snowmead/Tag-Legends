@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     PlayerManager playerManagerScript;
     public bool countdownStarted = false;
 
+    [HideInInspector]
+    public bool isGroundSlamActive = false;
+
     // instance
     public static GameManager instance;
 

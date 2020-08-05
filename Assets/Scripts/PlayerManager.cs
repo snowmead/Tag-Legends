@@ -20,7 +20,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public static PlayerManager instance;
 
-
     void Awake()
     {
         instance = this;
@@ -68,7 +67,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             tagIndicator.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider other)
     {
         // only the client controlling this player will check for collisions
         // client based collision detection
@@ -76,10 +75,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             return;
 
         // did we hit another player's tag range circle?
-        if (collision.gameObject.CompareTag("TagCircle"))
+        if (other.gameObject.CompareTag("TagCircle"))
         {
             // are they tag?
-            if (collision.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
+            if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
             {
                 // can we get tagged?
                 if (GameManager.instance.CanGetTagged())
@@ -90,6 +89,21 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
     }
+
+    /*private void OnTriggerStay(Collider other)
+    {
+        if (GameManager.instance.isGroundSlamActive)
+        {
+            rig.drag = 20f;
+
+            Debug.Log("ITS ACTIVE" + other.gameObject.tag );
+            if (other.gameObject.tag == "GroundSlam")
+            {
+                Debug.Log("HIT GROUNDSLAM");
+                rig.drag = 20f;
+            }
+        }
+    }*/
 
     private void Update()
     {
