@@ -307,6 +307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4276461ebaf2c0047add5a02f26b18e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 5070987890500944971}
+  rig: {fileID: 3941087024483764008}
 --- !u!114 &4531884214979795451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,6 +422,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: Illusionist
+  - Type: 9
+    SynchronizeType: 2
+    Name: GroundSlam
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
