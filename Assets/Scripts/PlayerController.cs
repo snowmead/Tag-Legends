@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Numerics;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
+using System.Reflection.Emit;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -61,9 +62,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
                 inputVector = direction * speed * Time.deltaTime;
 
+                // disable groundSlam effect completely to avoid any drag that stays after it dissapears
                 if (!GameManager.instance.isGroundSlamActive)
                 {
                     rig.drag = 0f;
+                }
+
+                // if shout is active - set fear animation and set kinematic to true
+                if (PlayerManager.instance.isShoutActive)
+                {
+                    animator.SetBool("ShoutActive", true);
+                    rig.isKinematic = true;
                 }
 
                 // check if my player is grounded
@@ -117,10 +126,5 @@ public class PlayerController : MonoBehaviourPunCallbacks
             rig.velocity = new Vector3(0f, 6f, 0f);
             animator.SetBool("Jump", true);
         }
-    }
-
-    public void OnParticleTrigger()
-    {
-        Debug.Log("INSIDE");
     }
 }

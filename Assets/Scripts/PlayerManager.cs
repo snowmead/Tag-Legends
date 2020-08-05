@@ -18,6 +18,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject tagIndicator;
     public GameObject playerUI;
 
+    [Header("Abilities")]
+    public bool isShoutActive = false;
+    public float startFearedFromShoutAbility;
+    public float endFearFromShoutAbility = 0f;
+
     public static PlayerManager instance;
 
     void Awake()
@@ -126,6 +131,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 // increase current tag time every second
                 curTagTime += Time.deltaTime;
         }
+
+        if(Time.deltaTime > endFearFromShoutAbility)
+        {
+            isShoutActive = false;
+            PlayerController.instance.animator.SetBool("ShoutActive", false);
+        }
     }
 
     // called when all the players are ready to play and the countdown was done
@@ -135,6 +146,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // start the game
         // update function will now have player movement and tag time counter
         startGame = true;
+    }
+
+    public void SetShoutActive()
+    {
+        isShoutActive = true;
+        startFearedFromShoutAbility = Time.deltaTime;
+        endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.instance.shoutDurationEffect;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

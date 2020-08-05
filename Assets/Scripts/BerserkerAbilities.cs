@@ -5,9 +5,20 @@ using UnityEngine;
 
 public class BerserkerAbilities : MonoBehaviourPunCallbacks
 {
+    [Header("Config")]
     public Animator animator;
     public Rigidbody rig;
     private string berserkerAbilityResourceLocation = "Character/Berserker/";
+
+    [Header("Ability Modifiers")]
+    public float shoutDurationEffect = 10f;
+
+    public static BerserkerAbilities instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void Leap()
     {
@@ -39,6 +50,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
 
     public void Shout()
     {
-        PhotonNetwork.Instantiate(berserkerAbilityResourceLocation + "Shout", transform.position, Quaternion.identity);
+        animator.SetTrigger("Shout");
+        AbilityManager.instance.photonView.RPC("BerserkerShout", RpcTarget.Others);
     }
 }

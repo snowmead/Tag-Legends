@@ -4025,6 +4025,7 @@ GameObject:
   - component: {fileID: 5252949661821469461}
   - component: {fileID: 3271444849461973191}
   - component: {fileID: 6756830938186484028}
+  - component: {fileID: 6331903576742411868}
   - component: {fileID: 8858832849403754350}
   - component: {fileID: 7257471007249144088}
   - component: {fileID: 4399839141658533809}
@@ -4100,6 +4101,9 @@ MonoBehaviour:
   cam: {fileID: 8300184526464855807}
   tagIndicator: {fileID: 2837360571082093167}
   playerUI: {fileID: 8860965874478302000}
+  isShoutActive: 0
+  startFearedFromShoutAbility: 0
+  endFearFromShoutAbility: 0
 --- !u!114 &6756830938186484028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4110,6 +4114,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96f5ccb60ad2c7b43bf3b4d7253aa51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6331903576742411868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072363635181956858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55fde5e6fbc2cb24790f5eccb28b743a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8858832849403754350
@@ -4228,6 +4244,12 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: GroundSlam
+  - Type: 9
+    SynchronizeType: 0
+    Name: Shout
+  - Type: 4
+    SynchronizeType: 0
+    Name: ShoutActive
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
