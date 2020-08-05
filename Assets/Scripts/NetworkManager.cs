@@ -58,17 +58,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = MAX_PLAYERS;
 
         // if it's a ranked game, add the elo to the room
+        roomOptions.IsOpen = true;
+        roomOptions.IsVisible = true;
+
         if (rankedGame)
         {
             roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, rank } };
             roomOptions.CustomRoomPropertiesForLobby = roomPropertiesLobby;
-
+            PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby);
+        } 
+        else
+        {
+            PhotonNetwork.CreateRoom(roomName, roomOptions);
         }
-
-        roomOptions.IsOpen = true;
-        roomOptions.IsVisible = true;
-
-        PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby);
     }
 
     public void LeaveRoom()
@@ -106,12 +108,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Could not find room to join, creating room...");
         Debug.Log(returnCode + " " + message);
+
+        // create a room if unable to join one
         CreateRoom("");
     }
 
     [PunRPC]
     public void ChangeScene(string sceneName)
     {
+        // when a game has started - make the room impossible to join
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        // load game scene
         PhotonNetwork.LoadLevel(sceneName);
     }
 }
