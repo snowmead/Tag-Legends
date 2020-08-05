@@ -7,11 +7,17 @@ public class GroundSlam : MonoBehaviourPunCallbacks
 {
     private void Awake()
     {
+        // all players can be affected by this ground slam
         GameManager.instance.isGroundSlamActive = true;
     }
 
     private void OnDestroy()
     {
+        // destroy root game object
+        Destroy(gameObject.transform.root.gameObject);
+
+        // set ground slam active to false in the game manager
+        // all players can no longer be affected by this ground slam
         GameManager.instance.isGroundSlamActive = false;
     }
 
