@@ -73,7 +73,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     animator.SetBool("ShoutActive", true);
                     rig.isKinematic = true;
-                } 
+                }
+                else if (gameObject.GetComponent<PlayerManager>().isShoutAnimationActive)
+                {
+                    rig.isKinematic = true;
+                }
                 else
                 {
                     animator.SetBool("ShoutActive", false);
