@@ -165,7 +165,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void SetShoutAnimationState(bool shoutAnimationState)
     {
-        Debug.Log("I was called");
         isShoutAnimationActive = shoutAnimationState;
     }
 

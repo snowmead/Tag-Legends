@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Boo.Lang.Environments;
 
 public class ShoutAnimationStateHandler : StateMachineBehaviour
 {
@@ -14,7 +15,8 @@ public class ShoutAnimationStateHandler : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    
+
+        
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
