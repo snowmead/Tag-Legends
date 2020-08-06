@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Boo.Lang.Environments;
 
 public class ShoutAnimationStateHandler : StateMachineBehaviour
 {
