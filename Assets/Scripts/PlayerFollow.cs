@@ -19,11 +19,13 @@ public class PlayerFollow : MonoBehaviour
     public float screenHeight;
     private float timeCounter = 0; 
     private float touchDir = 0.0f;
+    public float radius;
 
     // Start is called before the first frame update
     void Start()
     {
         cameraOffset = transform.position - PlayerTransform.position;
+        float radius = cameraOffset.y + 2.0f;
         speed = 0.5f;
         screenWidth = Screen.width;
         screenHeight = Screen.height;
@@ -42,22 +44,22 @@ public class PlayerFollow : MonoBehaviour
 
         if(Input.GetMouseButton(0) && Input.mousePosition.y > (Screen.height * 0.5f))
         {
-
+            float radius = cameraOffset.y + 2.0f;
             input = Input.GetAxis("Mouse X");
-            speed = Mathf.Abs(Input.GetAxisRaw("Mouse X")) + 1.0f;           
-
+            speed = Mathf.Abs(Input.GetAxisRaw("Mouse X")) + 1.0f;
+            
             if (input > 0)
             {
                 timeCounter += speed * Time.deltaTime;
-                cameraOffset.x = Mathf.Cos(timeCounter) * cameraOffset.y;
-                cameraOffset.z = Mathf.Sin(timeCounter) * cameraOffset.y;
+                cameraOffset.x = Mathf.Cos(timeCounter) * radius;
+                cameraOffset.z = Mathf.Sin(timeCounter) * radius;
             }
             
             if(input < 0)
             {
                 timeCounter -= speed * Time.deltaTime;
-                cameraOffset.x = Mathf.Cos(timeCounter) * cameraOffset.y;
-                cameraOffset.z = Mathf.Sin(timeCounter) * cameraOffset.y;
+                cameraOffset.x = Mathf.Cos(timeCounter) * radius;
+                cameraOffset.z = Mathf.Sin(timeCounter) * radius;
             }
 
         }
