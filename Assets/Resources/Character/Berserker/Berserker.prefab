@@ -4741,7 +4741,7 @@ GameObject:
   - component: {fileID: 2939222376717155082}
   - component: {fileID: 2939222376717155083}
   m_Layer: 0
-  m_Name: Feared
+  m_Name: FearedParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15904,6 +15904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55fde5e6fbc2cb24790f5eccb28b743a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shoutParticles: {fileID: 0}
 --- !u!114 &1109075381087051444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16021,10 +16022,10 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: GroundSlam
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Shout
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: ShoutActive
   m_SynchronizeLayers:
   - SynchronizeType: 2
