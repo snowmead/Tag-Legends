@@ -21,9 +21,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Abilities")]
     public bool isShoutActive = false;
     public float startFearedFromShoutAbility;
-    public float endFearFromShoutAbility = 0f;
+    public float endFearFromShoutAbility;
 
     public static PlayerManager instance;
+
+    public float currentTime;
 
     void Awake()
     {
@@ -97,6 +99,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+        currentTime += Time.deltaTime;
+
         // only the master client decides when the game has ended
         if (PhotonNetwork.IsMasterClient)
         {
@@ -132,10 +136,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 curTagTime += Time.deltaTime;
         }
 
-        if(Time.deltaTime > endFearFromShoutAbility)
+        if(currentTime > endFearFromShoutAbility)
         {
             isShoutActive = false;
-            PlayerController.instance.animator.SetBool("ShoutActive", false);
         }
     }
 
@@ -151,7 +154,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public void SetShoutActive()
     {
         isShoutActive = true;
-        startFearedFromShoutAbility = Time.deltaTime;
+        startFearedFromShoutAbility = currentTime;
+        Debug.Log("Set shout active " + startFearedFromShoutAbility + " shout duration " + BerserkerAbilities.instance.shoutDurationEffect);
         endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.instance.shoutDurationEffect;
     }
 

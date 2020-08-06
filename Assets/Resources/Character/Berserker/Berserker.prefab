@@ -299,6 +299,7 @@ MonoBehaviour:
   isShoutActive: 0
   startFearedFromShoutAbility: 0
   endFearFromShoutAbility: 0
+  currentTime: 0
 --- !u!114 &6660394238553260412
 MonoBehaviour:
   m_ObjectHideFlags: 0
