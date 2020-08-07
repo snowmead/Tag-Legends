@@ -11096,6 +11096,8 @@ MonoBehaviour:
   cam: {fileID: 333601145488648022}
   jumpForce: 0
   turnSmoothTime: 0.1
+  horizontal: 0
+  vertical: 0
   joystick: {fileID: 816427334502903617}
 --- !u!114 &5398596026956923137
 MonoBehaviour:
@@ -11137,6 +11139,7 @@ MonoBehaviour:
   animator: {fileID: 4484707929299949928}
   rig: {fileID: 2609144339344721535}
   berserkerAbilityResourceLocation: Character/Berserker/
+  shoutActiveAnimFloatVar: ShoutActive
   shoutDurationEffect: 10
 --- !u!114 &8347533760636432521
 MonoBehaviour:

@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Policy;
 using UnityEngine;
 
 public class BerserkerAbilities : MonoBehaviourPunCallbacks
@@ -10,7 +11,8 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public Rigidbody rig;
     public string berserkerAbilityResourceLocation = "Character/Berserker/";
 
-    [Header("Ability Modifiers")]
+    [Header("Ability config")]
+    public string shoutActiveAnimFloatVar = "ShoutActive";
     public float shoutDurationEffect = 10f;
 
     public static BerserkerAbilities instance;

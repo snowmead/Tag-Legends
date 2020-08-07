@@ -153,18 +153,27 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         startGame = true;
     }
 
+    // sets the player in a feared state from the berserker shout ability
     public void SetFearState()
     {
+        // instantiate the feared particles over the network so all players can see that this player is feared
         fearParticles = PhotonNetwork.Instantiate(
             BerserkerAbilities.instance.berserkerAbilityResourceLocation + "FearedParticles",
             new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
+
+        // set shout to active so that the player can't move during this time
         isShoutActive = true;
+
+        // start feared timer
         startFearedFromShoutAbility = currentTime;
         endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.instance.shoutDurationEffect;
     }
 
+    // sets the berserker player's shout animation state
+    // determines if the berserker can move or not depending if he's casting the shout ability
     public void SetShoutAnimationState(bool shoutAnimationState)
     {
+        // set berserker shout animation to active so that the berserker can't move while he's casting his shout ability
         isShoutAnimationActive = shoutAnimationState;
     }
 

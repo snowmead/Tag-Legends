@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public float jumpForce;
     public float turnSmoothTime = 0.1f;
 
+    public float horizontal;
+    public float vertical;
+
     public static PlayerController instance;
 
     public Joystick joystick;
@@ -50,8 +53,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (photonView.IsMine)
             {
                 // Get movement vertices
-                float horizontal = Input.GetAxis("Horizontal") + joystick.Horizontal;
-                float vertical = Input.GetAxis("Vertical") + joystick.Vertical;
+                horizontal = Input.GetAxis("Horizontal") + joystick.Horizontal;
+                vertical = Input.GetAxis("Vertical") + joystick.Vertical;
 
                 Vector3 joystickDirection = cam.transform.rotation * new Vector3(horizontal, 0, vertical);
 
@@ -71,7 +74,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 // if shout is active - set fear animation and set kinematic to true
                 if (gameObject.GetComponent<PlayerManager>().isShoutActive)
                 {
-                    animator.SetBool("ShoutActive", true);
+                    animator.SetBool(BerserkerAbilities.instance.shoutActiveAnimFloatVar, true);
                     rig.isKinematic = true;
                 }
                 else if (gameObject.GetComponent<PlayerManager>().isShoutAnimationActive)
@@ -80,7 +83,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                    animator.SetBool("ShoutActive", false);
+                    animator.SetBool(BerserkerAbilities.instance.shoutActiveAnimFloatVar, false);
                     rig.isKinematic = false;
 
                     // check if my player is grounded
@@ -131,8 +134,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void OnJumpButton()
     {
         if (grounded)
-        {
+        {            
             rig.velocity = new Vector3(0f, 6f, 0f);
+            
+            //rig.AddForce(direction * 10f + new Vector3(0f, 6f, 0f), ForceMode.Impulse);
             animator.SetBool("Jump", true);
         }
     }
