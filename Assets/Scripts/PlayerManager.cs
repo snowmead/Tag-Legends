@@ -19,7 +19,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject playerUI;
 
     [Header("Shout Variables")]
-    public GameObject feared;
     public bool isShoutAnimationActive;
     public bool isShoutActive = false;
     public float startFearedFromShoutAbility;
@@ -140,7 +139,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         if(currentTime > endFearFromShoutAbility)
         {
-            feared.SetActive(false);
             isShoutActive = false;
         }
     }
@@ -156,10 +154,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void SetShoutActive()
     {
-        feared.SetActive(true);
+        PhotonNetwork.Instantiate(BerserkerAbilities.instance.berserkerAbilityResourceLocation + "FearedParticles", transform.position, Quaternion.identity);
         isShoutActive = true;
         startFearedFromShoutAbility = currentTime;
-        Debug.Log("Set shout active " + startFearedFromShoutAbility + " shout duration " + BerserkerAbilities.instance.shoutDurationEffect);
         endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.instance.shoutDurationEffect;
     }
 

@@ -8,7 +8,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     [Header("Config")]
     public Animator animator;
     public Rigidbody rig;
-    private string berserkerAbilityResourceLocation = "Character/Berserker/";
+    public string berserkerAbilityResourceLocation = "Character/Berserker/";
 
     [Header("Ability Modifiers")]
     public float shoutDurationEffect = 10f;
