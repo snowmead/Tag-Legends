@@ -135,9 +135,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         if (grounded)
         {            
-            rig.velocity = new Vector3(0f, 6f, 0f);
-            
-            //rig.AddForce(direction * 10f + new Vector3(0f, 6f, 0f), ForceMode.Impulse);
+            rig.velocity = new Vector3(0f, 6f, 0f);          
             animator.SetBool("Jump", true);
         }
     }

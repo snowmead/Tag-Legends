@@ -24,7 +24,11 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
 
     public void Leap()
     {
-         
+        // Lift character up in ther air before applying velocity, I think friction occurs if this is not done and prevents velocity from being applied
+        rig.transform.position = new Vector3(rig.transform.position.x, rig.transform.position.y + 0.5f, rig.transform.position.z);
+        
+        // Leap
+        rig.velocity = new Vector3(transform.forward.x * 10f, 10f, transform.forward.z * 10.0f);
     }
 
     public void AxeThrow()
