@@ -11116,7 +11116,6 @@ MonoBehaviour:
   cam: {fileID: 333601145488648022}
   tagIndicator: {fileID: 2902215066686920861}
   playerUI: {fileID: 7305518652890395645}
-  feared: {fileID: 0}
   isShoutAnimationActive: 0
   isShoutActive: 0
   startFearedFromShoutAbility: 0

@@ -16,7 +16,6 @@ public class AbilityManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void BerserkerShout()
     {
-        
-        gameObject.GetComponent<PlayerManager>().SetShoutActive();
+        gameObject.GetComponent<PlayerManager>().SetFearState();
     }
 }

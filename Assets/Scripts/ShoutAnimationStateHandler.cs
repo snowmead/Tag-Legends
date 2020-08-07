@@ -15,7 +15,7 @@ public class ShoutAnimationStateHandler : StateMachineBehaviour
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
 
-        
+
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
