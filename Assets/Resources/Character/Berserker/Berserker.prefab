@@ -11118,6 +11118,7 @@ MonoBehaviour:
   playerUI: {fileID: 7305518652890395645}
   isShoutAnimationActive: 0
   isShoutActive: 0
+  fearParticles: {fileID: 0}
   startFearedFromShoutAbility: 0
   endFearFromShoutAbility: 0
   currentTime: 0
