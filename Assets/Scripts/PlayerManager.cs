@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     [Header("Shout Variables")]
     public bool isShoutAnimationActive;
-    public bool isShoutActive = false;
+    public bool isFearedActive = false;
     public GameObject fearParticles;
     public float startFearedFromShoutAbility;
     public float endFearFromShoutAbility;
@@ -140,7 +140,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         if(currentTime > endFearFromShoutAbility)
         {
-            isShoutActive = false;
+            isFearedActive = false;
         }
     }
 
@@ -162,7 +162,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
 
         // set shout to active so that the player can't move during this time
-        isShoutActive = true;
+        isFearedActive = true;
 
         // start feared timer
         startFearedFromShoutAbility = currentTime;

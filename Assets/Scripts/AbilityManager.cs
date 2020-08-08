@@ -6,7 +6,6 @@ using Photon.Pun;
 public class AbilityManager : MonoBehaviourPunCallbacks
 {
     public static AbilityManager instance;
-    public GameObject shoutParticles;
 
     private void Awake()
     {

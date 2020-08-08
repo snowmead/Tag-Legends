@@ -45,6 +45,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public void Shout()
     {
         animator.SetTrigger("Shout");
+        // Set all other players feared active state
         AbilityManager.instance.photonView.RPC("BerserkerShout", RpcTarget.Others);
         PhotonNetwork.Instantiate(berserkerAbilityResourceLocation + "ShoutParticles", transform.position, Quaternion.identity);
     }

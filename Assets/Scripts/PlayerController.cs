@@ -72,11 +72,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
 
                 // if shout is active - set fear animation and set kinematic to true
-                if (gameObject.GetComponent<PlayerManager>().isShoutActive)
+                if (gameObject.GetComponent<PlayerManager>().isFearedActive)
                 {
                     animator.SetBool(BerserkerAbilities.instance.shoutActiveAnimFloatVar, true);
                     rig.isKinematic = true;
                 }
+                // if i'm a berserker and im shouting - then don't move until animation is complete
                 else if (gameObject.GetComponent<PlayerManager>().isShoutAnimationActive)
                 {
                     rig.isKinematic = true;
