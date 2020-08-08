@@ -8359,6 +8359,7 @@ MonoBehaviour:
   players: []
   taggedPlayer: 0
   countdownStarted: 0
+  isGroundSlamActive: 0
 --- !u!4 &828072266
 Transform:
   m_ObjectHideFlags: 0

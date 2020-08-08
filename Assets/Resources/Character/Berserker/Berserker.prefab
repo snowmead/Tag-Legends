@@ -11119,7 +11119,7 @@ MonoBehaviour:
   tagIndicator: {fileID: 2902215066686920861}
   playerUI: {fileID: 7305518652890395645}
   isShoutAnimationActive: 0
-  isShoutActive: 0
+  isFearedActive: 0
   fearParticles: {fileID: 0}
   startFearedFromShoutAbility: 0
   endFearFromShoutAbility: 0
@@ -11141,6 +11141,7 @@ MonoBehaviour:
   berserkerAbilityResourceLocation: Character/Berserker/
   shoutActiveAnimFloatVar: ShoutActive
   shoutDurationEffect: 10
+  originPlayerRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &8347533760636432521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11153,7 +11154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55fde5e6fbc2cb24790f5eccb28b743a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shoutParticles: {fileID: 0}
 --- !u!114 &1109075381087051444
 MonoBehaviour:
   m_ObjectHideFlags: 0

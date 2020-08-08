@@ -15,6 +15,8 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public string shoutActiveAnimFloatVar = "ShoutActive";
     public float shoutDurationEffect = 10f;
 
+    public Vector3 originPlayerRotation;
+
     public static BerserkerAbilities instance;
 
     private void Awake()
@@ -33,7 +35,32 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
 
     public void AxeThrow()
     {
-        PhotonNetwork.Instantiate(berserkerAbilityResourceLocation + "AxeThrow", transform.position, Quaternion.identity);
+        originPlayerRotation = gameObject.transform.rotation.eulerAngles;
+        bool hitTheGround = true;
+        Quaternion axeDirectionRotation = Quaternion.Euler(originPlayerRotation);
+        float xAngle = originPlayerRotation.x;
+
+        while (hitTheGround)
+        {
+            hitTheGround = Physics.Raycast(
+                gameObject.transform.position,
+                originPlayerRotation,
+                out RaycastHit raycastHit,
+                15f,
+                PlayerController.instance.groundLayer,
+                QueryTriggerInteraction.Ignore);
+
+            if (hitTheGround)
+            {
+                xAngle = originPlayerRotation.x + 10;
+                axeDirectionRotation = Quaternion.AngleAxis(xAngle, new Vector3(1, 0, 0));
+            }
+        }
+
+        PhotonNetwork.Instantiate(
+            berserkerAbilityResourceLocation + "AxeThrow", 
+            new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
+            axeDirectionRotation);
     }
 
     public void GroundSlam()

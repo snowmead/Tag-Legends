@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [SerializeField]
     private bool grounded;
     [SerializeField]
-    private LayerMask groundLayer;
+    public LayerMask groundLayer;
 
     [Header("Info")]
     public const float gravity = 1f;
