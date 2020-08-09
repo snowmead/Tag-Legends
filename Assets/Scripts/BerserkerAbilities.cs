@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Policy;
 using UnityEngine;
 
 public class BerserkerAbilities : MonoBehaviourPunCallbacks
@@ -14,8 +13,9 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     [Header("Ability config")]
     public string shoutActiveAnimFloatVar = "ShoutActive";
     public float shoutDurationEffect = 10f;
-
     public Vector3 originPlayerRotation;
+    private AudioSource leapAudioSource;
+    public AudioClip leapAudioClip;
 
     public static BerserkerAbilities instance;
 
@@ -24,8 +24,15 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         instance = this;
     }
 
+    private void Start()
+    {
+        leapAudioSource.clip = leapAudioClip;
+    }
+
     public void Leap()
     {
+        leapAudioSource.Play();
+
         // Lift character up in ther air before applying velocity, I think friction occurs if this is not done and prevents velocity from being applied
         rig.transform.position = new Vector3(rig.transform.position.x, rig.transform.position.y + 0.5f, rig.transform.position.z);
         
