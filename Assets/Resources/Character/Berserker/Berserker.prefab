@@ -11050,7 +11050,7 @@ GameObject:
   - component: {fileID: 8738379992563806749}
   - component: {fileID: -3307932840992005684}
   - component: {fileID: -7781330215515857708}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Berserker
   m_TagString: Player
   m_Icon: {fileID: 0}
