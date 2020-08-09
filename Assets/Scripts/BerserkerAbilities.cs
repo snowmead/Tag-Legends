@@ -14,19 +14,16 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public string shoutActiveAnimFloatVar = "ShoutActive";
     public float shoutDurationEffect = 10f;
     public Vector3 originPlayerRotation;
-    private AudioSource leapAudioSource;
-    public AudioClip leapAudioClip;
+    public AudioSource leapAudioSource;
+    public AudioSource axeThrowAudioSource;
+    public AudioSource groundSlamAudioSource;
+    public AudioSource shoutAudioSource;
 
     public static BerserkerAbilities instance;
 
     private void Awake()
     {
         instance = this;
-    }
-
-    private void Start()
-    {
-        leapAudioSource.clip = leapAudioClip;
     }
 
     public void Leap()
@@ -42,6 +39,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
 
     public void AxeThrow()
     {
+        axeThrowAudioSource.Play();
         originPlayerRotation = gameObject.transform.rotation.eulerAngles;
         bool hitTheGround = true;
         Quaternion axeDirectionRotation = Quaternion.Euler(originPlayerRotation);
@@ -72,12 +70,14 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
 
     public void GroundSlam()
     {
+        groundSlamAudioSource.Play();
         animator.SetTrigger("GroundSlam");
         PhotonNetwork.Instantiate(berserkerAbilityResourceLocation + "GroundSlam", transform.position, Quaternion.identity);
     }
 
     public void Shout()
     {
+        shoutAudioSource.Play();
         animator.SetTrigger("Shout");
         // Set all other players feared active state
         AbilityManager.instance.photonView.RPC("BerserkerShout", RpcTarget.Others);
