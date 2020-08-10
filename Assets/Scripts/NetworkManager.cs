@@ -106,9 +106,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("Could not find room to join, creating room...");
-        Debug.Log(returnCode + " " + message);
-
         // create a room if unable to join one
         CreateRoom("");
     }

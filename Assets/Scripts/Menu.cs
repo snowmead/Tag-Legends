@@ -63,7 +63,7 @@ public class Menu : MonoBehaviourPunCallbacks
         if (classAlreadyChosen != null) {
             // set as the chosen character
             characterChosen = classAlreadyChosen;
-            //Debug.Log(characterChosen.name.ToString().Replace("(Clone)", string.Empty));
+            // set character animator
             switchClassAnimator(characterChosen.name.Replace("(Clone)", string.Empty));
         } 
         else

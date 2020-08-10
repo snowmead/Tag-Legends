@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool countdownStarted = false;
 
     [HideInInspector]
+    [Header("Abilities")]
     public bool isGroundSlamActive = false;
 
     // instance
@@ -39,7 +40,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         instance = this;
         instance.enabled = true;
     }
-
 
     private void Start()
     {

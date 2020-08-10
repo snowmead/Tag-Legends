@@ -42,22 +42,22 @@ public class PlayerFollow : MonoBehaviour
 
         if(Input.GetMouseButton(0) && Input.mousePosition.y > (Screen.height * 0.5f))
         {
-
+            float radius = cameraOffset.y + 2.0f;
             input = Input.GetAxis("Mouse X");
-            speed = Mathf.Abs(Input.GetAxisRaw("Mouse X")) + 1.0f;           
-
+            speed = Mathf.Abs(Input.GetAxisRaw("Mouse X")) + 1.0f;
+            
             if (input > 0)
             {
                 timeCounter += speed * Time.deltaTime;
-                cameraOffset.x = Mathf.Cos(timeCounter) * cameraOffset.y;
-                cameraOffset.z = Mathf.Sin(timeCounter) * cameraOffset.y;
+                cameraOffset.x = Mathf.Cos(timeCounter) * radius;
+                cameraOffset.z = Mathf.Sin(timeCounter) * radius;
             }
             
             if(input < 0)
             {
                 timeCounter -= speed * Time.deltaTime;
-                cameraOffset.x = Mathf.Cos(timeCounter) * cameraOffset.y;
-                cameraOffset.z = Mathf.Sin(timeCounter) * cameraOffset.y;
+                cameraOffset.x = Mathf.Cos(timeCounter) * radius;
+                cameraOffset.z = Mathf.Sin(timeCounter) * radius;
             }
 
         }

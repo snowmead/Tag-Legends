@@ -18,7 +18,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject tagIndicator;
     public GameObject playerUI;
 
+    [Header("Shout Variables")]
+    public bool isShoutAnimationActive;
+    public bool isFearedActive = false;
+    public GameObject fearParticles;
+    public float startFearedFromShoutAbility;
+    public float endFearFromShoutAbility;
+
     public static PlayerManager instance;
+
+    public float currentTime;
 
     void Awake()
     {
@@ -92,6 +101,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+        currentTime += Time.deltaTime;
+
         // only the master client decides when the game has ended
         if (PhotonNetwork.IsMasterClient)
         {
@@ -126,6 +137,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 // increase current tag time every second
                 curTagTime += Time.deltaTime;
         }
+
+        if(currentTime > endFearFromShoutAbility)
+        {
+            isFearedActive = false;
+        }
     }
 
     // called when all the players are ready to play and the countdown was done
@@ -135,6 +151,30 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // start the game
         // update function will now have player movement and tag time counter
         startGame = true;
+    }
+
+    // sets the player in a feared state from the berserker shout ability
+    public void SetFearState()
+    {
+        // instantiate the feared particles over the network so all players can see that this player is feared
+        fearParticles = PhotonNetwork.Instantiate(
+            BerserkerAbilities.instance.berserkerAbilityResourceLocation + "FearedParticles",
+            new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
+
+        // set shout to active so that the player can't move during this time
+        isFearedActive = true;
+
+        // start feared timer
+        startFearedFromShoutAbility = currentTime;
+        endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.instance.shoutDurationEffect;
+    }
+
+    // sets the berserker player's shout animation state
+    // determines if the berserker can move or not depending if he's casting the shout ability
+    public void SetShoutAnimationState(bool shoutAnimationState)
+    {
+        // set berserker shout animation to active so that the berserker can't move while he's casting his shout ability
+        isShoutAnimationActive = shoutAnimationState;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
