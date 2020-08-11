@@ -24,7 +24,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public Button joinRoomButton;
     
     [Header("Character Screen")]
-    private GameObject characterChosen;
+    public GameObject characterChosen;
     
     public TextMeshProUGUI gameTypeTitle;
     private const string rankedGameTitle = "Ranked Game";

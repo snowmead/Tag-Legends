@@ -64,6 +64,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             GameObject.Find("UselessCamera").SetActive(false);
             cam.gameObject.SetActive(true);
             rig.isKinematic = false;
+            playerUI.SetActive(true);
         }
     }
 
