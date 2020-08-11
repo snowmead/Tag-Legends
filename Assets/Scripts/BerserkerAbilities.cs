@@ -10,14 +10,17 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public Rigidbody rig;
     public string berserkerAbilityResourceLocation = "Character/Berserker/";
 
-    [Header("Ability config")]
+    [Header("Shout Ability Config")]
     public string shoutActiveAnimFloatVar = "ShoutActive";
     public float shoutDurationEffect = 10f;
-    public Vector3 originPlayerRotation;
     public AudioSource leapAudioSource;
     public AudioSource axeThrowAudioSource;
     public AudioSource groundSlamAudioSource;
     public AudioSource shoutAudioSource;
+
+    [Header("Axe Throw Ability Config")]
+    public float maxDistance = 10f;
+    public LayerMask layerMask;
 
     public static BerserkerAbilities instance;
 
@@ -40,39 +43,26 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public void AxeThrow()
     {
         axeThrowAudioSource.Play();
-        originPlayerRotation = gameObject.transform.rotation.eulerAngles;
-        bool hitTheGround = true;
-        Quaternion axeDirectionRotation = Quaternion.Euler(originPlayerRotation);
-        float xAngle = originPlayerRotation.x;
 
-        while (hitTheGround)
-        {
-            hitTheGround = Physics.Raycast(
-                gameObject.transform.position,
-                originPlayerRotation,
-                out RaycastHit raycastHit,
-                15f,
-                PlayerController.instance.groundLayer,
-                QueryTriggerInteraction.Ignore);
+        Vector3 originPoint = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        Physics.Raycast(originPoint, gameObject.transform.rotation.eulerAngles, out RaycastHit raycastHitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore);
 
-            if (hitTheGround)
-            {
-                xAngle = originPlayerRotation.x + 10;
-                axeDirectionRotation = Quaternion.AngleAxis(xAngle, new Vector3(1, 0, 0));
-            }
-        }
+        Debug.Log(LayerMask.LayerToName(raycastHitInfo.collider.gameObject.layer));
 
         PhotonNetwork.Instantiate(
             berserkerAbilityResourceLocation + "AxeThrow", 
             new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
-            axeDirectionRotation);
+            gameObject.transform.rotation);
     }
 
     public void GroundSlam()
     {
         groundSlamAudioSource.Play();
         animator.SetTrigger("GroundSlam");
-        PhotonNetwork.Instantiate(berserkerAbilityResourceLocation + "GroundSlam", transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(
+            berserkerAbilityResourceLocation + "GroundSlam",
+            transform.position,
+            Quaternion.identity);
     }
 
     public void Shout()
@@ -81,6 +71,9 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         animator.SetTrigger("Shout");
         // Set all other players feared active state
         AbilityManager.instance.photonView.RPC("BerserkerShout", RpcTarget.Others);
-        PhotonNetwork.Instantiate(berserkerAbilityResourceLocation + "ShoutParticles", transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(
+            berserkerAbilityResourceLocation + "ShoutParticles",
+            transform.position,
+            Quaternion.identity);
     }
 }

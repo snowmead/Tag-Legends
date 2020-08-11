@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class AxeThrow : MonoBehaviour
 {
-    
+    private void OnDestroy()
+    {
+        Destroy(transform.root.gameObject);
+    }
 }
