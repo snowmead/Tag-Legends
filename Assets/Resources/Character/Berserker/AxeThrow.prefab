@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8736759069154295775}
   - component: {fileID: 2898177652196389057}
   - component: {fileID: -1187854099627943744}
-  - component: {fileID: 5187540987484406214}
   m_Layer: 0
   m_Name: AxeThrow
   m_TagString: Untagged
@@ -71,18 +70,6 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &5187540987484406214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8736759069154295774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad66e34648bb4b341b9b6b568af90919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8736759070443656169
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +81,7 @@ GameObject:
   - component: {fileID: 8736759070443656164}
   - component: {fileID: 8736759070443656167}
   - component: {fileID: 8736759070443656166}
-  - component: {fileID: 2678592396867756148}
+  - component: {fileID: 5184024869986680327}
   m_Layer: 0
   m_Name: vfxAxeThrow
   m_TagString: Untagged
@@ -131,7 +118,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -3639,7 +3626,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 3
     type: 1
     collisionMode: 0
@@ -3825,7 +3812,7 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 1
+    enabled: 0
     collisionShape0: {fileID: 0}
     collisionShape1: {fileID: 0}
     collisionShape2: {fileID: 0}
@@ -4839,7 +4826,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &2678592396867756148
+--- !u!114 &5184024869986680327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4848,7 +4835,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8736759070443656169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c389a77b85b54ebe8836a70006d5bf4, type: 3}
+  m_Script: {fileID: 11500000, guid: ad66e34648bb4b341b9b6b568af90919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8736759070820958357
