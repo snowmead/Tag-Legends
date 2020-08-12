@@ -17,6 +17,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public Camera cam;
     public GameObject tagIndicator;
     public GameObject playerUI;
+    public GameObject body;
 
     [Header("Shout Variables")]
     public bool isShoutAnimationActive;

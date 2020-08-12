@@ -7,12 +7,26 @@ public class IllusionistAbilities : MonoBehaviour
 {
     public string illusionistAbilityResourceLocation = "Character/Illusionist/";
 
-    public void Clone()
+    [Header("Invisible Config")]
+    public GameObject body;
+    public float invisibleTime = 5f;
+    public float endInvisibleTime = 0f;
+
+    public float currentTime;
+
+    private void Update()
     {
-        PhotonNetwork.Instantiate(
-            illusionistAbilityResourceLocation + "IllusionistClone",
-            new Vector3(transform.position.x + 1, transform.position.y, transform.position.z),
-            transform.rotation);
+        currentTime += Time.deltaTime;
+        if(currentTime > endInvisibleTime)
+        {
+            body.SetActive(true);
+        }
+    }
+
+    public void Invisible()
+    {
+        body.SetActive(false);
+        endInvisibleTime = currentTime + invisibleTime;
     }
 
     public void MindMelt()

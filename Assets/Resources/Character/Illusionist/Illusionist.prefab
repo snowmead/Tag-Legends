@@ -2247,6 +2247,7 @@ MonoBehaviour:
   cam: {fileID: 4609943403938458949}
   tagIndicator: {fileID: 4197155215145236828}
   playerUI: {fileID: 143809987418494950}
+  body: {fileID: 5980138207328888887}
   isShoutAnimationActive: 0
   isFearedActive: 0
   fearParticles: {fileID: 2342863576099399393, guid: 0c4d72fc3efd93046861e2941747fe25,
@@ -2266,7 +2267,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f5ccb60ad2c7b43bf3b4d7253aa51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  illusionistAbilityResourceLocation: Character/Berserker/
+  illusionistAbilityResourceLocation: Character/Illusionist/
+  body: {fileID: 5980138207328888887}
+  invisibleTime: 5
+  endInvisibleTime: 0
+  currentTime: 0
 --- !u!114 &4522842499340585423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8836,15 +8841,15 @@ PrefabInstance:
       objectReference: {fileID: 5975000115605166125}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6e515b7056ece14b910fddf4b550d39, type: 3}
---- !u!4 &6322281229125048992 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8211435280584386100, guid: a6e515b7056ece14b910fddf4b550d39,
-    type: 3}
-  m_PrefabInstance: {fileID: 2758913982206704788}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &4609943403938458949 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1851101216438866385, guid: a6e515b7056ece14b910fddf4b550d39,
+    type: 3}
+  m_PrefabInstance: {fileID: 2758913982206704788}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6322281229125048992 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8211435280584386100, guid: a6e515b7056ece14b910fddf4b550d39,
     type: 3}
   m_PrefabInstance: {fileID: 2758913982206704788}
   m_PrefabAsset: {fileID: 0}
@@ -9053,7 +9058,7 @@ PrefabInstance:
     - target: {fileID: 5370109023960861716, guid: c131a6dcb657121419f82619e0ef00c8,
         type: 3}
       propertyPath: m_Name
-      value: Clone
+      value: Invisible
       objectReference: {fileID: 0}
     - target: {fileID: 6157235275221884102, guid: c131a6dcb657121419f82619e0ef00c8,
         type: 3}
@@ -9118,7 +9123,9 @@ PrefabInstance:
     - target: {fileID: 6923788754537937533, guid: c131a6dcb657121419f82619e0ef00c8,
         type: 3}
       propertyPath: m_Text
-      value: Clone
+      value: 'Invisible
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 7517148671495200318, guid: c131a6dcb657121419f82619e0ef00c8,
         type: 3}
@@ -9163,7 +9170,7 @@ PrefabInstance:
     - target: {fileID: 8296724509733659241, guid: c131a6dcb657121419f82619e0ef00c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Clone
+      value: Invisible
       objectReference: {fileID: 0}
     - target: {fileID: 8764534650811812452, guid: c131a6dcb657121419f82619e0ef00c8,
         type: 3}
