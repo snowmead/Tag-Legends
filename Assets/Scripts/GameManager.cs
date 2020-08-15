@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [HideInInspector]
     [Header("Abilities")]
     public bool isGroundSlamActive = false;
+    public bool isFrostNovaActive = false;
 
     // instance
     public static GameManager instance;
