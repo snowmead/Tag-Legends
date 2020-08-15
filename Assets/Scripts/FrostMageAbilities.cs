@@ -8,16 +8,16 @@ public class FrostMageAbilities : MonoBehaviourPunCallbacks
     [Header("Config")]
     public Animator animator;
     public Rigidbody rig;
-    public string berserkerAbilityResourceLocation = "Character/FrostMage/";
+    public string FrostMageAbilityResourceLocation = "Character/FrostMage/";
 
     [Header("Freezing Winds Config")]
-    public string shoutActiveAnimFloatVar = "FreezingWindsActiveq";
-    public float shoutDurationEffect = 10f;
-    public AudioSource leapAudioSource;
-    public AudioSource axeThrowAudioSource;
-    public AudioSource groundSlamAudioSource;
-    public AudioSource shoutAudioSource;
-
+    public string freezingWindsAnimFloatVar = "FreezingWindsActive";
+    public float freezingWindsDurationEffect = 10f;
+    public AudioSource iceBlockAudioSource;
+    public AudioSource frostBoltAudioSource;
+    public AudioSource FrostNovaAudioSource;
+    public AudioSource freezingWindsAudioSource;
+    
     [Header("Frost Bolt Ability Config")]
     public float maxDistance = 10f;
     public LayerMask layerMask;
@@ -31,7 +31,7 @@ public class FrostMageAbilities : MonoBehaviourPunCallbacks
 
     public void IceBlock()
     {
-        //leapAudioSource.Play();
+        //iceBlockAudioSource.Play();
 
         // Lift character up in ther air before applying velocity, I think friction occurs if this is not done and prevents velocity from being applied
         //rig.transform.position = new Vector3(rig.transform.position.x, rig.transform.position.y + 0.5f, rig.transform.position.z);
@@ -42,7 +42,7 @@ public class FrostMageAbilities : MonoBehaviourPunCallbacks
 
     public void Frostbolt()
     {
-        axeThrowAudioSource.Play();
+        frostBoltAudioSource.Play();
 
         Vector3 originPoint = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         Physics.Raycast(originPoint, gameObject.transform.rotation.eulerAngles, out RaycastHit raycastHitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore);
@@ -50,29 +50,29 @@ public class FrostMageAbilities : MonoBehaviourPunCallbacks
         Debug.Log(LayerMask.LayerToName(raycastHitInfo.collider.gameObject.layer));
 
         PhotonNetwork.Instantiate(
-            berserkerAbilityResourceLocation + "FrostBolt",
+            FrostMageAbilityResourceLocation + "FrostBolt",
             new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
             gameObject.transform.rotation);
     }
 
     public void FrostNova()
     {
-        groundSlamAudioSource.Play();
+        FrostNovaAudioSource.Play();
         animator.SetTrigger("FrostNova");
         PhotonNetwork.Instantiate(
-            berserkerAbilityResourceLocation + "FrostNova",
+            FrostMageAbilityResourceLocation + "FrostNova",
             transform.position,
             Quaternion.identity);
     }
 
     public void FreezingWinds()
     {
-        shoutAudioSource.Play();
-        animator.SetTrigger("Shout");
+        freezingWindsAudioSource.Play();
+        animator.SetTrigger("FreezingWinds");
         // Set all other players feared active state
         AbilityManager.instance.photonView.RPC("FrostMageFreezingWinds", RpcTarget.Others);
         PhotonNetwork.Instantiate(
-            berserkerAbilityResourceLocation + "ShoutParticles",
+            FrostMageAbilityResourceLocation + "FreezingWindsParticles",
             transform.position,
             Quaternion.identity);
     }
