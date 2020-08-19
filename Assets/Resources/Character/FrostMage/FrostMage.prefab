@@ -5565,6 +5565,7 @@ MonoBehaviour:
   cam: {fileID: 7855032093095788268}
   tagIndicator: {fileID: 7549206590784842485}
   playerUI: {fileID: 5982340925355443279}
+  body: {fileID: 1673125281554060}
   isShoutAnimationActive: 0
   isFearedActive: 0
   fearParticles: {fileID: 2342863576099399393, guid: 0c4d72fc3efd93046861e2941747fe25,
