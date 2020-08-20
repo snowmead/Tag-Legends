@@ -99,6 +99,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
         }
+
+        if (other.gameObject.CompareTag("AxeThrow"))
+        {
+            if(!other.gameObject.GetPhotonView().IsMine)
+            {
+                Debug.Log("Got hit by an axe");
+            }
+        }
     }
 
     private void Update()
@@ -177,6 +185,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         // set berserker shout animation to active so that the berserker can't move while he's casting his shout ability
         isShoutAnimationActive = shoutAnimationState;
+    }
+
+    public void PlayerInvisible(bool isInvisible)
+    {
+        body.SetActive(isInvisible);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

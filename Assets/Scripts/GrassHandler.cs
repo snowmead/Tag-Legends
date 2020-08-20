@@ -9,8 +9,8 @@ public class GrassHandler : MonoBehaviour
     {
         if (other.gameObject.transform.root.gameObject.tag == "Player")
         {
-            PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
-            playerManager.body.SetActive(false);
+            PlayerManager playerManager = other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
+            playerManager.PlayerInvisible(false);
         }
     }
 
@@ -18,8 +18,8 @@ public class GrassHandler : MonoBehaviour
     {
         if (other.gameObject.transform.root.gameObject.tag == "Player")
         {
-            PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
-            playerManager.body.SetActive(true);
+            PlayerManager playerManager = other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
+            playerManager.PlayerInvisible(true);
         }
     }
 }

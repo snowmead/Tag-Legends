@@ -7,6 +7,7 @@ TagManager:
   - TagCircle
   - ChosenClass
   - GroundSlam
+  - AxeThrow
   layers:
   - Default
   - TransparentFX

@@ -18,10 +18,6 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public AudioSource groundSlamAudioSource;
     public AudioSource shoutAudioSource;
 
-    [Header("Axe Throw Ability Config")]
-    public float maxDistance = 10f;
-    public LayerMask layerMask;
-
     public static BerserkerAbilities instance;
 
     private void Awake()
@@ -44,14 +40,9 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     {
         axeThrowAudioSource.Play();
 
-        Vector3 originPoint = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-        Physics.Raycast(originPoint, gameObject.transform.rotation.eulerAngles, out RaycastHit raycastHitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore);
-
-        Debug.Log(LayerMask.LayerToName(raycastHitInfo.collider.gameObject.layer));
-
         PhotonNetwork.Instantiate(
-            berserkerAbilityResourceLocation + "AxeThrow", 
-            new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
+            berserkerAbilityResourceLocation + "AxeThrowStartingPoint",
+            transform.position + Vector3.up,
             gameObject.transform.rotation);
     }
 
