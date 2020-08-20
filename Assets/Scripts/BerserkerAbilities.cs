@@ -18,10 +18,6 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public AudioSource groundSlamAudioSource;
     public AudioSource shoutAudioSource;
 
-    [Header("Axe Throw Ability Config")]
-    public float maxDistance = 10f;
-    public LayerMask layerMask;
-
     public static BerserkerAbilities instance;
 
     private void Awake()
@@ -44,11 +40,14 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     {
         axeThrowAudioSource.Play();
 
-
-        PhotonNetwork.Instantiate(
-            berserkerAbilityResourceLocation + "AxeThrow",
-            new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
+        GameObject axe = PhotonNetwork.Instantiate(
+            berserkerAbilityResourceLocation + "AxeThrowStartingPoint",
+            transform.position,
             gameObject.transform.rotation);
+
+        // set the axe object as a child of the player object
+        // this will allow us to set the starting point of the axe to be in front of the player
+        axe.transform.parent = gameObject.transform;
     }
 
     public void GroundSlam()
