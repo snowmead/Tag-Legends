@@ -44,7 +44,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         axeThrowAudioSource.Play();
 
         PhotonNetwork.Instantiate(
-            berserkerAbilityResourceLocation + "AxeThrowStartingPoint",
+            berserkerAbilityResourceLocation + "Axe",
             transform.position + Vector3.up,
             gameObject.transform.rotation);
     }
