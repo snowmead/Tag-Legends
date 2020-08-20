@@ -1873,6 +1873,7 @@ GameObject:
   - component: {fileID: 828072265}
   - component: {fileID: 828072267}
   - component: {fileID: 828072264}
+  - component: {fileID: 828072268}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1974,6 +1975,14 @@ MonoBehaviour:
   loseText: {fileID: 668599003}
   countdownText: {fileID: 559546659}
   menu: {fileID: 732626409}
+--- !u!81 &828072268
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828072263}
+  m_Enabled: 1
 --- !u!1 &828800917
 GameObject:
   m_ObjectHideFlags: 0

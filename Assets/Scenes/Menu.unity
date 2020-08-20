@@ -6279,6 +6279,7 @@ GameObject:
   - component: {fileID: 1218416715}
   - component: {fileID: 1218416714}
   - component: {fileID: 1218416716}
+  - component: {fileID: 1218416717}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -6350,6 +6351,14 @@ MonoBehaviour:
   viewIdField: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!81 &1218416717
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218416713}
+  m_Enabled: 1
 --- !u!1 &1220442465
 GameObject:
   m_ObjectHideFlags: 0
