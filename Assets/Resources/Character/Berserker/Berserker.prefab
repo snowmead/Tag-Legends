@@ -1032,6 +1032,9 @@ MonoBehaviour:
     type: 3}
   startFearedFromShoutAbility: 0
   endFearFromShoutAbility: 0
+  isAxeStunned: 0
+  startAxeStunned: 0
+  endAxeStunned: 0
   currentTime: 0
 --- !u!114 &-8497407202683158048
 MonoBehaviour:
@@ -1054,6 +1057,7 @@ MonoBehaviour:
   axeThrowAudioSource: {fileID: 601127043143003089}
   groundSlamAudioSource: {fileID: -644525835761313511}
   shoutAudioSource: {fileID: -6508491672538791723}
+  axeDurationEffect: 0
 --- !u!114 &2495752826441940809
 MonoBehaviour:
   m_ObjectHideFlags: 0

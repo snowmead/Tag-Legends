@@ -35,12 +35,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public float vertical;
 
     public static PlayerController instance;
+    private PlayerManager playerManager;
 
     public Joystick joystick;
 
     void Awake()
     {
         instance = this;
+        playerManager = gameObject.GetComponent<PlayerManager>();
     }
 
     // update is called once per frame
@@ -72,13 +74,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
 
                 // if shout is active - set fear animation and set kinematic to true
-                if (gameObject.GetComponent<PlayerManager>().isFearedActive)
+                if (playerManager.isFearedActive)
                 {
                     animator.SetBool(BerserkerAbilities.instance.shoutActiveAnimFloatVar, true);
                     rig.isKinematic = true;
                 }
                 // if i'm a berserker and im shouting - then don't move until animation is complete
-                else if (gameObject.GetComponent<PlayerManager>().isShoutAnimationActive)
+                else if (playerManager.isShoutAnimationActive)
+                {
+                    rig.isKinematic = true;
+                }
+                else if (playerManager.isAxeStunned)
                 {
                     rig.isKinematic = true;
                 }

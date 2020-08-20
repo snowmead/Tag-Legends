@@ -18,6 +18,9 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public AudioSource groundSlamAudioSource;
     public AudioSource shoutAudioSource;
 
+    [Header("Axe Ability Config")]
+    public float axeDurationEffect;
+
     public static BerserkerAbilities instance;
 
     private void Awake()

@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject fearParticles;
     public float startFearedFromShoutAbility;
     public float endFearFromShoutAbility;
+
+    [Header("Axe Variables")]
+    public bool isAxeStunned = false;
+    public float startAxeStunned;
+    public float endAxeStunned;
 
     public static PlayerManager instance;
 
@@ -152,6 +158,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             isFearedActive = false;
         }
+
+        if (currentTime > endAxeStunned)
+        {
+            isAxeStunned = false;
+        }
     }
 
     // called when all the players are ready to play and the countdown was done
@@ -187,9 +198,19 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         isShoutAnimationActive = shoutAnimationState;
     }
 
+    // make the player invisible
     public void PlayerInvisible(bool isInvisible)
     {
         body.SetActive(isInvisible);
+    }
+
+    // set the amount of seconds the player is stunned
+    public void AxeStunned()
+    {
+        isAxeStunned = true;
+
+        startAxeStunned = currentTime;
+        endAxeStunned = startAxeStunned + BerserkerAbilities.instance.axeDurationEffect;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
