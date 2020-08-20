@@ -40,14 +40,10 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     {
         axeThrowAudioSource.Play();
 
-        GameObject axe = PhotonNetwork.Instantiate(
+        PhotonNetwork.Instantiate(
             berserkerAbilityResourceLocation + "AxeThrowStartingPoint",
-            transform.position,
+            transform.position + Vector3.up,
             gameObject.transform.rotation);
-
-        // set the axe object as a child of the player object
-        // this will allow us to set the starting point of the axe to be in front of the player
-        axe.transform.parent = gameObject.transform;
     }
 
     public void GroundSlam()

@@ -5,21 +5,20 @@ using UnityEngine;
 public class AxeThrow : MonoBehaviour
 {
     public GameObject axePrefab;
-
+    private GameObject instantiatedAxe;
+    private Rigidbody rig;
     public float speed;
-
-    private void Awake()
-    {
-        transform.position = new Vector3(0, 1.2f, 1.2f);
-        Debug.Log(transform.position);
-    }
 
     private void Start()
     {
-        Debug.Log(transform.position);
-
         // instantiate the axe prefab to be at the starting point
-        GameObject axe = Instantiate(axePrefab, transform.position, transform.rotation);
-        axe.transform.GetChild(0).GetComponent<Rigidbody>().velocity = transform.forward * speed;
+        instantiatedAxe = Instantiate(axePrefab, transform.position, transform.rotation);
+        rig = instantiatedAxe.transform.GetChild(0).GetComponent<Rigidbody>();
+        rig.velocity = transform.forward * speed;
+    }
+
+    void Update()
+    {
+        instantiatedAxe.transform.Rotate(0, 0, 1000 * Time.deltaTime); //rotates 50 degrees per second around z axis
     }
 }
