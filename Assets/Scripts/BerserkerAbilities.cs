@@ -44,13 +44,9 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     {
         axeThrowAudioSource.Play();
 
-        Vector3 originPoint = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-        Physics.Raycast(originPoint, gameObject.transform.rotation.eulerAngles, out RaycastHit raycastHitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore);
-
-        Debug.Log(LayerMask.LayerToName(raycastHitInfo.collider.gameObject.layer));
 
         PhotonNetwork.Instantiate(
-            berserkerAbilityResourceLocation + "AxeThrow", 
+            berserkerAbilityResourceLocation + "AxeThrow",
             new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
             gameObject.transform.rotation);
     }

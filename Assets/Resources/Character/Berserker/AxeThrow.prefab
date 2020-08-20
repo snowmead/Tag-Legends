@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 5184024869986680327}
   m_Layer: 0
   m_Name: vfxAxeThrow
-  m_TagString: Untagged
+  m_TagString: AxeThrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3626,7 +3626,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
     type: 1
     collisionMode: 0
