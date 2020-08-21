@@ -22,10 +22,10 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Play Options Screen")]
     public Button createRoomButton;
     public Button joinRoomButton;
-    
+
     [Header("Character Screen")]
     public GameObject characterChosen;
-    
+
     public TextMeshProUGUI gameTypeTitle;
     private const string rankedGameTitle = "Ranked Game";
     private const string unrankedGameTitle = "Unranked Game";
@@ -42,6 +42,16 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Player Preview")]
     private Animator animator;
     public TextMeshProUGUI rankScore;
+
+    [Header("Class Buttons and Text")]
+    public GameObject berserkerButtonSelection;
+    public GameObject frostMageButtonSelection;
+    public GameObject illusionistButtonSelection;
+    public GameObject ninjaButtonSelection;
+    public TextMeshProUGUI berserkerListText;
+    public TextMeshProUGUI frostMageListText;
+    public TextMeshProUGUI illusionistListText;
+    public TextMeshProUGUI ninjaListText;
 
     public GameObject buttonClickAudioObject;
     private AudioSource buttonClickAudio;
@@ -60,19 +70,20 @@ public class Menu : MonoBehaviourPunCallbacks
         GameObject classAlreadyChosen = GameObject.FindGameObjectWithTag("Player");
 
         // check if a class was already chosen
-        if (classAlreadyChosen != null) {
+        if (classAlreadyChosen != null)
+        {
             // set as the chosen character
             characterChosen = classAlreadyChosen;
             // set character animator
             switchClassAnimator(characterChosen.name.Replace("(Clone)", string.Empty));
-        } 
+        }
         else
         {
             // instantiate new character class object and set the chosen character and dont destroy on load to bring to the game scene
             characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
             InitializeChosenClass("Berserker");
             DontDestroyOnLoad(characterChosen);
-        }       
+        }
 
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
@@ -151,6 +162,8 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
         InitializeChosenClass("Berserker");
+        ResetClassSelection();
+        berserkerButtonSelection.SetActive(true);
     }
 
     // called when "Frost Mage" Button is pressed
@@ -159,6 +172,8 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/FrostMage/FrostMage") as GameObject);
         InitializeChosenClass("FrostMage");
+        ResetClassSelection();
+        frostMageButtonSelection.SetActive(true);
     }
 
     // called when "Ninja" Button is pressed
@@ -167,6 +182,8 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Ninja/Ninja") as GameObject);
         InitializeChosenClass("Ninja");
+        ResetClassSelection();
+        ninjaButtonSelection.SetActive(true);
     }
 
     // called when "Illusionist" Button is pressed
@@ -175,6 +192,16 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Illusionist/Illusionist") as GameObject);
         InitializeChosenClass("Illusionist");
+        ResetClassSelection();
+        illusionistButtonSelection.SetActive(true);
+    }
+
+    private void ResetClassSelection()
+    {
+        berserkerButtonSelection.SetActive(false);
+        frostMageButtonSelection.SetActive(false);
+        illusionistButtonSelection.SetActive(false);
+        ninjaButtonSelection.SetActive(false);
     }
 
     // Remove all components on the player prefab to set up the character preview
@@ -311,7 +338,7 @@ public class Menu : MonoBehaviourPunCallbacks
         }
         else
         {
-            gameTypeTitle.text = unrankedGameTitle;    
+            gameTypeTitle.text = unrankedGameTitle;
         }
 
         // send an rpc call to update all the other clients that this player has joined the room

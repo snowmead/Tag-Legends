@@ -5449,7 +5449,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744385805961278}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4524523547583792}
@@ -5572,6 +5572,9 @@ MonoBehaviour:
     type: 3}
   startFearedFromShoutAbility: 0
   endFearFromShoutAbility: 0
+  isAxeStunned: 0
+  startAxeStunned: 0
+  endAxeStunned: 0
   currentTime: 0
 --- !u!114 &8804692713819940836
 MonoBehaviour:
