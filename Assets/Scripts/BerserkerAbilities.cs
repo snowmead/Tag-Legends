@@ -19,7 +19,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public AudioSource shoutAudioSource;
 
     [Header("Axe Ability Config")]
-    public float axeDurationEffect;
+    public float axeDurationEffect = 5f;
 
     public static BerserkerAbilities instance;
 

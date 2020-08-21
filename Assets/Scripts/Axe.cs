@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Axe : MonoBehaviour
+public class Axe : MonoBehaviourPunCallbacks
 {
     public float lifeTime = 5f;
     public float startTime;
@@ -40,17 +41,19 @@ public class Axe : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // did the axe hit a player
-        if (other.gameObject.transform.root.gameObject.CompareTag("Player"))
+        // is the axe mine?
+        if (!photonView.IsMine)
         {
-            // did the axe hit someone other then the person who threw it
-            if (!other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>().photonView.IsMine) {
-                // stun the player
-                PlayerManager playerManager = other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
-                playerManager.AxeStunned();
-
-                // destroy the axe
-                Destroy(gameObject);
+            // did the axe hit a player?
+            if (other.gameObject.transform.root.gameObject.CompareTag("Player"))
+            {
+                // did the axe hit me?
+                if (other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>().photonView.IsMine)
+                {
+                    // stun the player
+                    PlayerManager playerManager = other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
+                    playerManager.AxeStunned();
+                }
             }
         }
     }

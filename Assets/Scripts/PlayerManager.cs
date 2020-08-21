@@ -210,7 +210,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         isAxeStunned = true;
 
         startAxeStunned = currentTime;
-        endAxeStunned = startAxeStunned + BerserkerAbilities.instance.axeDurationEffect;
+        endAxeStunned = startAxeStunned + 5f;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

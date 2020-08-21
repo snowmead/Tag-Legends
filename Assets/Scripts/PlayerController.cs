@@ -84,23 +84,26 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     rig.isKinematic = true;
                 }
+                // am I stunned by an axe?
                 else if (playerManager.isAxeStunned)
                 {
                     rig.isKinematic = true;
                 }
                 else
                 {
+                    // reset to normal state player behaviour - no ability effects
                     animator.SetBool(BerserkerAbilities.instance.shoutActiveAnimFloatVar, false);
                     rig.isKinematic = false;
 
                     // check if my player is grounded
                     grounded = Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.down), 1.2f, groundLayer);
 
-                    // Can only move while grounded
+                    // can only move while grounded
                     if (grounded)
                     {
                         animator.SetBool("Jump", false);
-                        // Only move if input was calculated
+
+                        // only move if input was calculated
                         if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
                         {
                             transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
