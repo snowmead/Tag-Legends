@@ -41,12 +41,13 @@ public class CloudManager : MonoBehaviour
     void CloudOnceLoadComplete(bool success)
     {
         Menu.instance.UpdateUI(CloudVariables.RankScore.ToString());
+        RankDisplayer.instance.UpdateRankDisplay();
     }
 
     // get rank of player
-    public string GetRank()
+    public int GetRank()
     {
-        return CloudVariables.RankScore.ToString();
+        return CloudVariables.RankScore;
     }
 
     public string GetPlayerName()
