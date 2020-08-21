@@ -35,12 +35,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public float vertical;
 
     public static PlayerController instance;
+    private PlayerManager playerManager;
 
     public Joystick joystick;
 
     void Awake()
     {
         instance = this;
+        playerManager = gameObject.GetComponent<PlayerManager>();
     }
 
     // update is called once per frame
@@ -72,29 +74,36 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
 
                 // if shout is active - set fear animation and set kinematic to true
-                if (gameObject.GetComponent<PlayerManager>().isFearedActive)
+                if (playerManager.isFearedActive)
                 {
                     animator.SetBool(BerserkerAbilities.instance.shoutActiveAnimFloatVar, true);
                     rig.isKinematic = true;
                 }
                 // if i'm a berserker and im shouting - then don't move until animation is complete
-                else if (gameObject.GetComponent<PlayerManager>().isShoutAnimationActive)
+                else if (playerManager.isShoutAnimationActive)
+                {
+                    rig.isKinematic = true;
+                }
+                // am I stunned by an axe?
+                else if (playerManager.isAxeStunned)
                 {
                     rig.isKinematic = true;
                 }
                 else
                 {
+                    // reset to normal state player behaviour - no ability effects
                     animator.SetBool(BerserkerAbilities.instance.shoutActiveAnimFloatVar, false);
                     rig.isKinematic = false;
 
                     // check if my player is grounded
                     grounded = Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.down), 1.2f, groundLayer);
 
-                    // Can only move while grounded
+                    // can only move while grounded
                     if (grounded)
                     {
                         animator.SetBool("Jump", false);
-                        // Only move if input was calculated
+
+                        // only move if input was calculated
                         if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
                         {
                             transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
