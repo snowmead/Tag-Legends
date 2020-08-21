@@ -6,8 +6,7 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
-using UnityEngine.Rendering;
-using Firebase;
+using UnityEngine.Events;
 
 public class Menu : MonoBehaviourPunCallbacks
 {
@@ -44,17 +43,30 @@ public class Menu : MonoBehaviourPunCallbacks
     public TextMeshProUGUI rankScore;
 
     [Header("Class Buttons and Text")]
+    public GameObject berserkerButton;
+    public GameObject frostMageButton;
+    public GameObject illusionistButton;
+    public GameObject ninjaButton;
     public GameObject berserkerButtonSelection;
     public GameObject frostMageButtonSelection;
     public GameObject illusionistButtonSelection;
     public GameObject ninjaButtonSelection;
+    public GameObject berserkerButtonIcon;
+    public GameObject frostMageButtonIcon;
+    public GameObject illusionistButtonIcon;
+    public GameObject ninjaButtonIcon;
     public TextMeshProUGUI berserkerListText;
     public TextMeshProUGUI frostMageListText;
     public TextMeshProUGUI illusionistListText;
     public TextMeshProUGUI ninjaListText;
 
+    [Header("Button configs")]
     public GameObject buttonClickAudioObject;
     private AudioSource buttonClickAudio;
+    public LeanTweenType inType;
+    public LeanTweenType outType;
+
+    public UnityEvent onCompleteCallback;
 
     public static Menu instance;
 
@@ -65,6 +77,9 @@ public class Menu : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        // set button click audio
+        buttonClickAudio = buttonClickAudioObject.GetComponent<AudioSource>();
+
         // find already chosen class (this may be found when we come back from a game and go back to the main menu)
         // we use this to preserve the same class he already chose
         GameObject classAlreadyChosen = GameObject.FindGameObjectWithTag("Player");
@@ -96,9 +111,6 @@ public class Menu : MonoBehaviourPunCallbacks
         // set audio source volume to the sliders default setting
         audioSource = cam.GetComponent<AudioSource>();
         audioSource.volume = volumeSlider.value;
-
-        // set button click audio
-        buttonClickAudio = buttonClickAudioObject.GetComponent<AudioSource>();
 
         // this allows the rank text to appear by setting it everytime we switch from game scene to the menu scene
         UpdateUI(CloudManager.instance.GetRank());
@@ -161,9 +173,10 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
-        InitializeChosenClass("Berserker");
         ResetClassSelection();
+        InitializeChosenClass("Berserker");
         berserkerButtonSelection.SetActive(true);
+        BounceButtonEffect(berserkerButton);
     }
 
     // called when "Frost Mage" Button is pressed
@@ -171,9 +184,10 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/FrostMage/FrostMage") as GameObject);
-        InitializeChosenClass("FrostMage");
         ResetClassSelection();
+        InitializeChosenClass("FrostMage");
         frostMageButtonSelection.SetActive(true);
+        BounceButtonEffect(frostMageButton);
     }
 
     // called when "Ninja" Button is pressed
@@ -181,9 +195,10 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Ninja/Ninja") as GameObject);
-        InitializeChosenClass("Ninja");
         ResetClassSelection();
+        InitializeChosenClass("Ninja");
         ninjaButtonSelection.SetActive(true);
+        BounceButtonEffect(ninjaButton);
     }
 
     // called when "Illusionist" Button is pressed
@@ -191,9 +206,29 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Illusionist/Illusionist") as GameObject);
-        InitializeChosenClass("Illusionist");
         ResetClassSelection();
+        InitializeChosenClass("Illusionist");
         illusionistButtonSelection.SetActive(true);
+        BounceButtonEffect(illusionistButton);
+    }
+
+    private void BounceButtonEffect(GameObject button)
+    {
+        // bounce lean tween effect
+        LeanTween.scale(
+            button,
+            new Vector2(1.1f, 1.1f),
+            .25f)
+            .setOnComplete(OnComplete)
+            .setEase(inType);
+    }
+
+    private void OnComplete()
+    {
+        if(onCompleteCallback != null)
+        {
+            onCompleteCallback.Invoke();
+        }
     }
 
     private void ResetClassSelection()
@@ -202,6 +237,41 @@ public class Menu : MonoBehaviourPunCallbacks
         frostMageButtonSelection.SetActive(false);
         illusionistButtonSelection.SetActive(false);
         ninjaButtonSelection.SetActive(false);
+
+        berserkerListText.color = new Color32(190, 181, 182, 255);
+        frostMageListText.color = new Color32(190, 181, 182, 255);
+        illusionistListText.color = new Color32(190, 181, 182, 255);
+        ninjaListText.color = new Color32(190, 181, 182, 255);
+
+        berserkerButtonIcon.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        frostMageButtonIcon.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        illusionistButtonIcon.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        ninjaButtonIcon.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+        LeanTween.scale(
+            berserkerButton,
+            new Vector2(1, 1),
+            .25f)
+            .setOnComplete(OnComplete)
+            .setEase(outType);
+        LeanTween.scale(
+            frostMageButton,
+            new Vector2(1, 1),
+            .25f)
+            .setOnComplete(OnComplete)
+            .setEase(outType);
+        LeanTween.scale(
+            illusionistButton,
+            new Vector2(1, 1),
+            .25f)
+            .setOnComplete(OnComplete)
+            .setEase(outType);
+        LeanTween.scale(
+            ninjaButton,
+            new Vector2(1, 1),
+            .25f)
+            .setOnComplete(OnComplete)
+            .setEase(outType);
     }
 
     // Remove all components on the player prefab to set up the character preview
@@ -213,15 +283,19 @@ public class Menu : MonoBehaviourPunCallbacks
         {
             case "Berserker":
                 characterChosen.GetComponent<BerserkerAbilities>().enabled = false;
+                SetChosenCharacterTextColorAndIcon(berserkerListText, berserkerButtonIcon);
                 break;
             case "FrostMage":
                 characterChosen.GetComponent<FrostMageAbilities>().enabled = false;
+                SetChosenCharacterTextColorAndIcon(frostMageListText, frostMageButtonIcon);
                 break;
             case "Ninja":
                 characterChosen.GetComponent<NinjaAbilities>().enabled = false;
+                SetChosenCharacterTextColorAndIcon(ninjaListText, ninjaButtonIcon);
                 break;
             case "Illusionist":
                 characterChosen.GetComponent<IllusionistAbilities>().enabled = false;
+                SetChosenCharacterTextColorAndIcon(illusionistListText, illusionistButtonIcon);
                 break;
         }
 
@@ -232,9 +306,17 @@ public class Menu : MonoBehaviourPunCallbacks
         characterChosen.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
     }
 
+    private void SetChosenCharacterTextColorAndIcon(TextMeshProUGUI characterText, GameObject icon)
+    {
+        Debug.Log(characterText);
+        characterText.color = new Color32(251, 244, 190, 255);
+        icon.GetComponent<Image>().color = new Color32(252, 228, 132, 255);
+    }
+
     // called when "BackToMenu" Button is pressed
     private void InitializeChosenClass(string className)
     {
+        buttonClickAudio.Play();
         DontDestroyOnLoad(characterChosen);
         switchClassAnimator(className);
         SetupPlayerPreview(className);
@@ -383,5 +465,10 @@ public class Menu : MonoBehaviourPunCallbacks
             startGameButton.interactable = true;
         else
             startGameButton.interactable = false;
+    }
+
+    private void ButtonBounceEffectTween()
+    {
+        
     }
 }
