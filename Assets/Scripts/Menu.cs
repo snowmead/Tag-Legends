@@ -308,7 +308,6 @@ public class Menu : MonoBehaviourPunCallbacks
 
     private void SetChosenCharacterTextColorAndIcon(TextMeshProUGUI characterText, GameObject icon)
     {
-        Debug.Log(characterText);
         characterText.color = new Color32(251, 244, 190, 255);
         icon.GetComponent<Image>().color = new Color32(252, 228, 132, 255);
     }
