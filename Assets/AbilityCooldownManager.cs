@@ -9,19 +9,42 @@ public class AbilityCooldownManager : MonoBehaviour
 
     private void Update()
     {
+        // iterate through all the abilities and set their cooldowns
         foreach (Ability ability in abilities)
         {
             if (ability.cooldown > 0)
             {
-                ability.cooldownImage.fillAmount = ability.cooldown;
+                // show cooldown circle mask image
+                ability.cooldownImage.gameObject.SetActive(true);
+                // make the ability button not interactable
+                ability.ability.GetComponent<Button>().interactable = false;
 
-                ability.cooldown -= Time.deltaTime;
+                // fill the amount depending on the abilities time
+                ability.cooldownImage.fillAmount -= (Time.deltaTime / ability.cooldown);
+
+                // check if we are done the time of the cooldown
+                if (ability.cooldownImage.fillAmount <= 0)
+                {
+                    // set the cooldown to 0
+                    ability.cooldown = 0;
+                }
+            }
+            else
+            {
+                // make the ability button interactable
+                ability.ability.GetComponent<Button>().interactable = true;
+                // set the cooldown image amount to 1
+                ability.cooldownImage.fillAmount = 1;
+                // make the cooldown image not visible
+                ability.cooldownImage.gameObject.SetActive(false);
             }
         }
     }
 
+    // start an abilities cooldown - called from a [class]Abilities.cs
     public void StartCooldown(int abilityIndex, float cooldown)
     {
+        // set the ability cooldown
         GetAbility(abilityIndex).cooldown = cooldown;
     }
 
