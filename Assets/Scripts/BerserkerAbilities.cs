@@ -29,8 +29,8 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     [Header("Shout Ability Config")]
     private const int SHOUT_ABILITY_INDEX = 3;
     private const float SHOUT_COOLDOWN = 15f;
-    public const string SHOUT_ACTIVE_ANIMATOR_FLOAT_VAR = "ShoutActive";
     public const float SHOUT_DURATION_EFFECT = 10f;
+    public const string SHOUT_ACTIVE_ANIMATOR_FLOAT_VAR = "ShoutActive";
 
     public AudioSource leapAudioSource;
     public AudioSource axeThrowAudioSource;
