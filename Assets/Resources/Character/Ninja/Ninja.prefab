@@ -7248,7 +7248,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  speed: 4
+  speed: 5
   inputVector: {x: 0, y: 0, z: 0}
   cam: {fileID: 7326374616866115487}
   jumpForce: 0
