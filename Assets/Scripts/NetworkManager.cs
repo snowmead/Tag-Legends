@@ -37,6 +37,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
+    public override void OnConnectedToMaster()
+    {
+        // increase the progress bar of the loading screen
+        MenuLoading.instance.PhotonConnectionDone();
+    }
+
     // get list of rooms based on string query
     public void GetListOfRooms()
     {
