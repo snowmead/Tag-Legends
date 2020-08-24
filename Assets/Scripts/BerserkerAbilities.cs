@@ -9,6 +9,14 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public Animator animator;
     public Rigidbody rig;
     public string berserkerAbilityResourceLocation = "Character/Berserker/";
+    private AbilityCooldownManager abilityCooldownManager;
+
+    [Header("Leap Ability Config")]
+    private const int LEAP_ABILITY_INDEX = 0;
+    private const float LEAP_COOLDOWN = .2f;
+
+    [Header("Axe Ability Config")]
+    public const float axeDurationEffect = 5f;
 
     [Header("Shout Ability Config")]
     public string shoutActiveAnimFloatVar = "ShoutActive";
@@ -18,18 +26,18 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public AudioSource groundSlamAudioSource;
     public AudioSource shoutAudioSource;
 
-    [Header("Axe Ability Config")]
-    public float axeDurationEffect = 5f;
-
     public static BerserkerAbilities instance;
 
     private void Awake()
     {
         instance = this;
+        abilityCooldownManager = gameObject.GetComponent<AbilityCooldownManager>();
     }
 
     public void Leap()
     {
+        abilityCooldownManager.StartCooldown(LEAP_ABILITY_INDEX, LEAP_COOLDOWN);
+
         leapAudioSource.Play();
 
         // Lift character up in ther air before applying velocity, I think friction occurs if this is not done and prevents velocity from being applied
@@ -64,7 +72,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         shoutAudioSource.Play();
         animator.SetTrigger("Shout");
         // Set all other players feared active state
-        AbilityManager.instance.photonView.RPC("BerserkerShout", RpcTarget.Others);
+        AbilityRpcReceiver.instance.photonView.RPC("BerserkerShout", RpcTarget.Others);
         PhotonNetwork.Instantiate(
             berserkerAbilityResourceLocation + "ShoutParticles",
             transform.position,

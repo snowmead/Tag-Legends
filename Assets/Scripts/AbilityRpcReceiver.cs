@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class AbilityManager : MonoBehaviourPunCallbacks
+public class AbilityRpcReceiver : MonoBehaviourPunCallbacks
 {
-    public static AbilityManager instance;
+    public static AbilityRpcReceiver instance;
 
     private void Awake()
     {

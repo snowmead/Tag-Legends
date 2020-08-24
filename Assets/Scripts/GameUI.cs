@@ -56,8 +56,11 @@ public class GameUI : MonoBehaviour
         // loop through all of the players
         for (int x = 0; x < GameManager.instance.players.Length; ++x)
         {
+            // update the grey mask area in the players profile
             if (GameManager.instance.players[x] != null)
-                playerContainers[x].timer.fillAmount = 1.0f / GameManager.instance.timeToLose  * GameManager.instance.players[x].curTagTime;
+                playerContainers[x].timer.fillAmount =
+                    1.0f / GameManager.instance.timeToLose *
+                    GameManager.instance.players[x].curTagTime;
         }
     }
 
@@ -82,8 +85,10 @@ public class GameUI : MonoBehaviour
             if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
             {
                 PlayerUIContainer container = playerContainers[x];
-                container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f); // Increase the size of your vingette
-                container.obj.gameObject.transform.SetAsFirstSibling(); // Set yourself as the first child in the list
+                // Increase the size of your vingette
+                container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+                // Set yourself as the first child in the list
+                container.obj.gameObject.transform.SetAsFirstSibling();
             }
         }
     }
