@@ -101,6 +101,9 @@ public class Menu : MonoBehaviourPunCallbacks
             DontDestroyOnLoad(characterChosen);
         }
 
+        // set chosen preview class game object active so that we can access it in the main menu
+        characterChosen.SetActive(true);
+
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
         animator.SetBool("InMainMenu", true);

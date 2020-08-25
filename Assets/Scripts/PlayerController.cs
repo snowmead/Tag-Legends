@@ -55,8 +55,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (photonView.IsMine)
             {
                 // Get movement vertices
-                horizontal = Input.GetAxis("Horizontal") + joystick.Horizontal;
-                vertical = Input.GetAxis("Vertical") + joystick.Vertical;
+                horizontal = Input.GetAxisRaw("Horizontal") + joystick.Horizontal;
+                vertical = Input.GetAxisRaw("Vertical") + joystick.Vertical;
 
                 Vector3 joystickDirection = cam.transform.rotation * new Vector3(horizontal, 0, vertical);
 
