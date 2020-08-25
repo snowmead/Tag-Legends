@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public int id;                  // player id
     public float curTagTime;        // current tag time of player
     public bool startGame = false;  // determines if the game started
+    public string chosenClass;      // Holds player's chosen class
 
     [Header("Components")]
     public Player photonPlayer;
@@ -43,12 +44,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     // called when the player object is instantiated
     [PunRPC]
-    public void Initialize(Player player)
+    public void Initialize(Player player, string activeClass)
     {
         // set network photon player
         photonPlayer = player;
         // set player id using photon player actor number
         id = player.ActorNumber;
+        // set chosen class
+        chosenClass = activeClass;
 
         // set the amount of players in the game 
         GameManager.instance.players[id - 1] = this;

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using System.ComponentModel;
 
 public class GameUI : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI loseText;
     public TextMeshProUGUI countdownText;
     public GameObject menu;
+
+    public Sprite berserkerSprite;
+    public Sprite frostMageSprite;
+    public Sprite illusionistSprite;
+    public Sprite ninjaSprite;
 
     // instance
     public static GameUI instance;
@@ -81,15 +87,33 @@ public class GameUI : MonoBehaviour
         // Game started, set player vingettes
         for (int x = 0; x < PhotonNetwork.PlayerList.Length; ++x)
         {
+            PlayerUIContainer container = playerContainers[x];
+
+            switch (GameManager.instance.players[x].chosenClass)
+            {
+                case GameManager.BERSERKER_ACTIVE_CLASS_NAME:
+                    container.classImage.sprite = berserkerSprite;
+                    break;
+                case GameManager.FROSTMAGE_ACTIVE_CLASS_NAME:
+                    container.classImage.sprite = frostMageSprite;
+                    break;
+                case GameManager.ILLUSIONIST_ACTIVE_CLASS_NAME:
+                    container.classImage.sprite = illusionistSprite;
+                    break;
+                case GameManager.NINJA_ACTIVE_CLASS_NAME:
+                    container.classImage.sprite = ninjaSprite;
+                    break;
+            }           
+            
             // Increase the size of your own UI vingette and set your image to the top of the player list
             if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
-            {
-                PlayerUIContainer container = playerContainers[x];
+            {              
                 // Increase the size of your vingette
                 container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
                 // Set yourself as the first child in the list
-                container.obj.gameObject.transform.SetAsFirstSibling();
+                container.obj.gameObject.transform.SetAsFirstSibling();               
             }
+          
         }
     }
 
@@ -137,4 +161,5 @@ public class PlayerUIContainer
     public GameObject obj;
     public TextMeshProUGUI nameText;
     public Image timer;
+    public Image classImage;
 }

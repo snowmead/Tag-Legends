@@ -10,6 +10,11 @@ using System.Diagnostics;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    public const string BERSERKER_ACTIVE_CLASS_NAME = "Berserker";
+    public const string FROSTMAGE_ACTIVE_CLASS_NAME = "FrostMage";
+    public const string ILLUSIONIST_ACTIVE_CLASS_NAME = "Illusionist";
+    public const string NINJA_ACTIVE_CLASS_NAME = "Ninja";
+
     [Header("Stats")]
     public bool gameEnded = false;
     public float timeToLose;
@@ -69,7 +74,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         chosenClass.SetActive(false);
 
         string characterResourceFolder = "Character/";
-        string activeClass;
+        string activeClass = BERSERKER_ACTIVE_CLASS_NAME;
         string prefabName;
 
         // instantiate the player accross the network
@@ -79,7 +84,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 activeClass = "Berserker";
                 prefabName = characterResourceFolder + activeClass + "/" + activeClass;
                 character = PhotonNetwork.Instantiate(prefabName, spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
-                setClassAnimator(activeClass);
+                setClassAnimator(activeClass);           
                 break;
             case "FrostMage(Clone)":
                 activeClass = "FrostMage";
@@ -106,7 +111,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         playerManagerScript = character.GetComponent<PlayerManager>();
 
         // intialize the player
-        playerManagerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+        playerManagerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer, activeClass);
     }
 
     private void setClassAnimator(string activeClass)
@@ -199,9 +204,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void GoBackToMenu()
     {
         PhotonNetwork.LeaveRoom();
-        NetworkManager.instance.ChangeScene("Menu");
-
-        // set chosen preview class game object active so that we can access it in the main menu
-        chosenClass.SetActive(true);
+        NetworkManager.instance.ChangeScene("Menu");        
     }
 }
