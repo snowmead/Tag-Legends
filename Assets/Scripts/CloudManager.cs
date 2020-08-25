@@ -41,8 +41,6 @@ public class CloudManager : MonoBehaviour
     void CloudOnceLoadComplete(bool success)
     {
         MenuLoading.instance.CloudConnectionDone();
-        //Menu.instance.UpdateUI(CloudVariables.RankScore.ToString());
-        //RankDisplayer.instance.UpdateRankDisplay();
     }
 
     // get rank of player
