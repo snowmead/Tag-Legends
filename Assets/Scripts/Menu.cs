@@ -39,7 +39,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public Button startGameButton;
 
     [Header("Player Preview")]
-    private Animator animator;
+    public Animator animator;
     public TextMeshProUGUI rankScore;
 
     [Header("Class Buttons and Text")]
@@ -65,6 +65,12 @@ public class Menu : MonoBehaviourPunCallbacks
     private AudioSource buttonClickAudio;
     public LeanTweenType inType;
     public LeanTweenType outType;
+
+    [Header("Play Screen")]
+    public GameObject searchForGame;
+    public GameObject quickPlayButton;
+    public GameObject rankedPlayButton;
+    public GameObject backButton;
 
     public UnityEvent onCompleteCallback;
 
@@ -119,6 +125,8 @@ public class Menu : MonoBehaviourPunCallbacks
         // this allows the rank text to appear by setting it everytime we switch from game scene to the menu scene
         UpdateUI(CloudManager.instance.GetRank().ToString());
         RankDisplayer.instance.UpdateRankDisplay();
+
+        searchForGame.SetActive(false);
     }
 
     // called when connection to photon server is successful
@@ -388,6 +396,8 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
         NetworkManager.instance.JoinRandomRoomUnranked();
+        searchForGame.SetActive(true);
+        EnableOrDisbalePlayScreenButtons(false);
     }
 
     public void OnRankedPlayButton()
@@ -441,7 +451,15 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
         NetworkManager.instance.LeaveRoom();
-        SetScreen(GetScreen(playOptionsName));
+        searchForGame.SetActive(false);
+        EnableOrDisbalePlayScreenButtons(true);
+    }
+
+    private void EnableOrDisbalePlayScreenButtons(bool isEnabled)
+    {
+        quickPlayButton.GetComponent<Button>().interactable = isEnabled;
+        rankedPlayButton.GetComponent<Button>().interactable = isEnabled;
+        backButton.GetComponent<Button>().interactable = isEnabled;
     }
 
     // called when the "Start Game" button is pressed

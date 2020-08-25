@@ -116,6 +116,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         CreateRoom("");
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient &&
+                    PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            // set animator to not be kneeling - entering game now
+            Menu.instance.animator.SetBool("InMainMenu", false);
+
+            // send an rpc call to all players in the room to load the "Game" scene
+            photonView.RPC("ChangeScene", RpcTarget.All, "Game");
+        }
+    }
+
     [PunRPC]
     public void ChangeScene(string sceneName)
     {
