@@ -137,4 +137,5 @@ public class PlayerUIContainer
     public GameObject obj;
     public TextMeshProUGUI nameText;
     public Image timer;
+    public Image classImage;
 }
