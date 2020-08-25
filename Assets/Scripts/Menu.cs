@@ -96,6 +96,7 @@ public class Menu : MonoBehaviourPunCallbacks
         {
             // instantiate new character class object and set the chosen character and dont destroy on load to bring to the game scene
             characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
+            characterChosen.transform.localScale = new Vector3(2, 2, 2);
             InitializeChosenClass("Berserker");
             DontDestroyOnLoad(characterChosen);
         }
@@ -174,6 +175,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
+        characterChosen.transform.localScale = new Vector3(2, 2, 2);
         ResetClassSelection();
         InitializeChosenClass("Berserker");
         berserkerButtonSelection.SetActive(true);
@@ -185,6 +187,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/FrostMage/FrostMage") as GameObject);
+        characterChosen.transform.localScale = new Vector3(2, 2, 2);
         ResetClassSelection();
         InitializeChosenClass("FrostMage");
         frostMageButtonSelection.SetActive(true);
@@ -196,6 +199,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Ninja/Ninja") as GameObject);
+        characterChosen.transform.localScale = new Vector3(2, 2, 2);
         ResetClassSelection();
         InitializeChosenClass("Ninja");
         ninjaButtonSelection.SetActive(true);
@@ -207,6 +211,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Illusionist/Illusionist") as GameObject);
+        characterChosen.transform.localScale = new Vector3(2, 2, 2);
         ResetClassSelection();
         InitializeChosenClass("Illusionist");
         illusionistButtonSelection.SetActive(true);
