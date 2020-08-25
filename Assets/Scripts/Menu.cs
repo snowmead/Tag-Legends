@@ -114,6 +114,7 @@ public class Menu : MonoBehaviourPunCallbacks
 
         // this allows the rank text to appear by setting it everytime we switch from game scene to the menu scene
         UpdateUI(CloudManager.instance.GetRank().ToString());
+        RankDisplayer.instance.UpdateRankDisplay();
     }
 
     // called when connection to photon server is successful
