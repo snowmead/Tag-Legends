@@ -12,7 +12,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public static NetworkManager instance;
     readonly TypedLobby typedLobby = new TypedLobby("SqlTypedLobby", LobbyType.SqlLobby);
     public const string ELO_PROP_KEY = "C0";
-    public const int MAX_PLAYERS = 5;
+    public const int MAX_PLAYERS = 2;
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
     string matchmakingSqlQuery;
     public bool rankedGame = false;

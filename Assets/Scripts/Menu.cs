@@ -406,10 +406,9 @@ public class Menu : MonoBehaviourPunCallbacks
             characterChosen.transform.GetChild(0).gameObject.SetActive(true);
         } else 
         {
-            
             // close the settings screen
             GetScreen(settings).SetActive(true);
-
+            Debug.Log(characterChosen.transform.GetChild(0).gameObject);
             // show the character again
             characterChosen.transform.GetChild(0).gameObject.SetActive(false);
         } 
