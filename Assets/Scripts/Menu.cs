@@ -10,13 +10,17 @@ using UnityEngine.Events;
 
 public class Menu : MonoBehaviourPunCallbacks
 {
+    private const string BERSERKER_NAME = "Berserker";
+    private const string FROSTMAGE_NAME = "FrostMage";
+    private const string ILLUSIONIST_NAME = "Illusionist";
+    private const string NINJA_NAME = "Ninja";
+
     [Header("Screens")]
     public GameObject[] screens;
-    private const string mainOptionsName = "MainOptions";
-    private const string CharacterScreenName = "CharacterScreen";
-    private const string playOptionsName = "PlayOptions";
-    private const string settings = "Settings";
-    private const string lobbyName = "LobbyScreen";
+    private const string MAIN_OPTIONS_NAME = "MainOptions";
+    private const string CHARACTER_SCREEN_NAME = "CharacterScreen";
+    private const string PLAY_OPTIONS_NAME = "PlayOptions";
+    private const string SETTINGS_NAME = "SettingsPopUp";
 
     [Header("Play Options Screen")]
     public Button createRoomButton;
@@ -24,13 +28,10 @@ public class Menu : MonoBehaviourPunCallbacks
 
     [Header("Character Screen")]
     public GameObject characterChosen;
-
-    public TextMeshProUGUI gameTypeTitle;
-    private const string rankedGameTitle = "Ranked Game";
-    private const string unrankedGameTitle = "Unranked Game";
+    private string characterChosenName;
 
     [Header("Settings Screen")]
-    public Slider volumeSlider;
+    public Slider masterVolumeSlider;
     public GameObject cam;
     private AudioSource audioSource;
 
@@ -39,7 +40,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public Button startGameButton;
 
     [Header("Player Preview")]
-    private Animator animator;
+    public Animator animator;
     public TextMeshProUGUI rankScore;
 
     [Header("Class Buttons and Text")]
@@ -65,6 +66,13 @@ public class Menu : MonoBehaviourPunCallbacks
     private AudioSource buttonClickAudio;
     public LeanTweenType inType;
     public LeanTweenType outType;
+
+    [Header("Play Screen")]
+    public TextMeshProUGUI numberOfPlayersInLobby;
+    public GameObject searchForGame;
+    public GameObject quickPlayButton;
+    public GameObject rankedPlayButton;
+    public GameObject backButton;
 
     public UnityEvent onCompleteCallback;
 
@@ -114,11 +122,13 @@ public class Menu : MonoBehaviourPunCallbacks
 
         // set audio source volume to the sliders default setting
         audioSource = cam.GetComponent<AudioSource>();
-        audioSource.volume = volumeSlider.value;
+        audioSource.volume = masterVolumeSlider.value;
 
         // this allows the rank text to appear by setting it everytime we switch from game scene to the menu scene
         UpdateUI(CloudManager.instance.GetRank().ToString());
         RankDisplayer.instance.UpdateRankDisplay();
+
+        searchForGame.SetActive(false);
     }
 
     // called when connection to photon server is successful
@@ -137,7 +147,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public void BackToMainOptions()
     {
         buttonClickAudio.Play();
-        SetScreen(GetScreen(mainOptionsName));
+        SetScreen(GetScreen(MAIN_OPTIONS_NAME));
     }
 
     // get screen game object using screen name
@@ -179,8 +189,9 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
         characterChosen.transform.localScale = new Vector3(2, 2, 2);
+        characterChosenName = BERSERKER_NAME;
         ResetClassSelection();
-        InitializeChosenClass("Berserker");
+        InitializeChosenClass(characterChosenName);
         berserkerButtonSelection.SetActive(true);
         BounceButtonEffect(berserkerButton);
     }
@@ -191,8 +202,9 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/FrostMage/FrostMage") as GameObject);
         characterChosen.transform.localScale = new Vector3(2, 2, 2);
+        characterChosenName = FROSTMAGE_NAME;
         ResetClassSelection();
-        InitializeChosenClass("FrostMage");
+        InitializeChosenClass(characterChosenName);
         frostMageButtonSelection.SetActive(true);
         BounceButtonEffect(frostMageButton);
     }
@@ -203,8 +215,9 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Ninja/Ninja") as GameObject);
         characterChosen.transform.localScale = new Vector3(2, 2, 2);
+        characterChosenName = NINJA_NAME;
         ResetClassSelection();
-        InitializeChosenClass("Ninja");
+        InitializeChosenClass(characterChosenName);
         ninjaButtonSelection.SetActive(true);
         BounceButtonEffect(ninjaButton);
     }
@@ -215,8 +228,9 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Illusionist/Illusionist") as GameObject);
         characterChosen.transform.localScale = new Vector3(2, 2, 2);
+        characterChosenName = ILLUSIONIST_NAME;
         ResetClassSelection();
-        InitializeChosenClass("Illusionist");
+        InitializeChosenClass(characterChosenName);
         illusionistButtonSelection.SetActive(true);
         BounceButtonEffect(illusionistButton);
     }
@@ -290,19 +304,19 @@ public class Menu : MonoBehaviourPunCallbacks
         characterChosen.GetComponent<PlayerManager>().enabled = false;
         switch (className)
         {
-            case "Berserker":
+            case BERSERKER_NAME:
                 characterChosen.GetComponent<BerserkerAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(berserkerListText, berserkerButtonIcon);
                 break;
-            case "FrostMage":
+            case FROSTMAGE_NAME:
                 characterChosen.GetComponent<FrostMageAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(frostMageListText, frostMageButtonIcon);
                 break;
-            case "Ninja":
+            case NINJA_NAME:
                 characterChosen.GetComponent<NinjaAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(ninjaListText, ninjaButtonIcon);
                 break;
-            case "Illusionist":
+            case ILLUSIONIST_NAME:
                 characterChosen.GetComponent<IllusionistAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(illusionistListText, illusionistButtonIcon);
                 break;
@@ -325,9 +339,9 @@ public class Menu : MonoBehaviourPunCallbacks
     private void InitializeChosenClass(string className)
     {
         buttonClickAudio.Play();
-        DontDestroyOnLoad(characterChosen);
         switchClassAnimator(className);
         SetupPlayerPreview(className);
+        DontDestroyOnLoad(characterChosen);
     }
 
     private void switchClassAnimator(string classAnimBoolVar)
@@ -361,22 +375,36 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnPlayButton()
     {
         buttonClickAudio.Play();
-        SetScreen(GetScreen(playOptionsName));
-        NetworkManager.instance.GetListOfRooms();
+        SetScreen(GetScreen(PLAY_OPTIONS_NAME));
     }
 
     // called when "Character" Button is pressed
     public void OnCharacterButton()
     {
         buttonClickAudio.Play();
-        SetScreen(GetScreen(CharacterScreenName));
+        SetScreen(GetScreen(CHARACTER_SCREEN_NAME));
     }
 
     // called when "Settings" Button is pressed
     public void OnSettingsButton()
     {
         buttonClickAudio.Play();
-        SetScreen(GetScreen(settings));
+
+        if (GetScreen(SETTINGS_NAME).activeInHierarchy)
+        {
+            // open the settings screen
+            GetScreen(SETTINGS_NAME).SetActive(false);
+
+            // dont show the character - so the character doesn't appear over the settings
+            characterChosen.transform.GetChild(0).gameObject.SetActive(true);
+        } else 
+        {
+            // close the settings screen
+            GetScreen(SETTINGS_NAME).SetActive(true);
+            Debug.Log(characterChosen.transform.GetChild(0).gameObject);
+            // show the character again
+            characterChosen.transform.GetChild(0).gameObject.SetActive(false);
+        } 
     }
 
     /**
@@ -388,11 +416,16 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
         NetworkManager.instance.JoinRandomRoomUnranked();
+        searchForGame.SetActive(true);
+        EnableOrDisbalePlayScreenButtons(false);
     }
 
     public void OnRankedPlayButton()
     {
+        buttonClickAudio.Play();
         NetworkManager.instance.JoinRandomRoomRanked();
+        searchForGame.SetActive(true);
+        EnableOrDisbalePlayScreenButtons(false);
     }
 
     // called when "Create Room" Button is pressed
@@ -420,16 +453,7 @@ public class Menu : MonoBehaviourPunCallbacks
     // called when a player joins the room
     public override void OnJoinedRoom()
     {
-        SetScreen(GetScreen(lobbyName));
         PhotonNetwork.NickName = CloudManager.instance.GetPlayerName();
-        if (NetworkManager.instance.rankedGame)
-        {
-            gameTypeTitle.text = rankedGameTitle;
-        }
-        else
-        {
-            gameTypeTitle.text = unrankedGameTitle;
-        }
 
         // send an rpc call to update all the other clients that this player has joined the room
         // update everyone elses lobby ui
@@ -441,7 +465,15 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
         NetworkManager.instance.LeaveRoom();
-        SetScreen(GetScreen(playOptionsName));
+        searchForGame.SetActive(false);
+        EnableOrDisbalePlayScreenButtons(true);
+    }
+
+    private void EnableOrDisbalePlayScreenButtons(bool isEnabled)
+    {
+        quickPlayButton.GetComponent<Button>().interactable = isEnabled;
+        rankedPlayButton.GetComponent<Button>().interactable = isEnabled;
+        backButton.GetComponent<Button>().interactable = isEnabled;
     }
 
     // called when the "Start Game" button is pressed
@@ -456,27 +488,15 @@ public class Menu : MonoBehaviourPunCallbacks
         NetworkManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "Game");
     }
 
+    public void OnVolumeSlider()
+    {
+        audioSource.volume = masterVolumeSlider.value;
+    }
+
     // updates the lobby UI to show player list and host buttons
     [PunRPC]
     public void UpdateLobbyUI()
     {
-        playerListText.text = "";
-
-        // display all the players currently in the lobby
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            playerListText.text += player.NickName + "\n";
-        }
-
-        // only the host can start the game
-        if (PhotonNetwork.IsMasterClient)
-            startGameButton.interactable = true;
-        else
-            startGameButton.interactable = false;
-    }
-
-    private void ButtonBounceEffectTween()
-    {
-        
+        numberOfPlayersInLobby.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
     }
 }

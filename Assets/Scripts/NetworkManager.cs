@@ -12,7 +12,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public static NetworkManager instance;
     readonly TypedLobby typedLobby = new TypedLobby("SqlTypedLobby", LobbyType.SqlLobby);
     public const string ELO_PROP_KEY = "C0";
-    public const int MAX_PLAYERS = 5;
+    public const int MAX_PLAYERS = 2;
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
     string matchmakingSqlQuery;
     public bool rankedGame = false;
@@ -114,6 +114,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         // create a room if unable to join one
         CreateRoom("");
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient &&
+                    PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            // set animator to not be kneeling - entering game now
+            Menu.instance.animator.SetBool("InMainMenu", false);
+
+            // send an rpc call to all players in the room to load the "Game" scene
+            photonView.RPC("ChangeScene", RpcTarget.All, "Game");
+        }
     }
 
     [PunRPC]
