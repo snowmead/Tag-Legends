@@ -7,7 +7,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
 using UnityEngine.Events;
-using WebSocketSharp;
 
 public class Menu : MonoBehaviourPunCallbacks
 {
