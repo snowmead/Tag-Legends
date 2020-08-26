@@ -17,10 +17,10 @@ public class Menu : MonoBehaviourPunCallbacks
 
     [Header("Screens")]
     public GameObject[] screens;
-    private const string mainOptionsName = "MainOptions";
-    private const string CharacterScreenName = "CharacterScreen";
-    private const string playOptionsName = "PlayOptions";
-    private const string settings = "SettingsPopUp";
+    private const string MAIN_OPTIONS_NAME = "MainOptions";
+    private const string CHARACTER_SCREEN_NAME = "CharacterScreen";
+    private const string PLAY_OPTIONS_NAME = "PlayOptions";
+    private const string SETTINGS_NAME = "SettingsPopUp";
 
     [Header("Play Options Screen")]
     public Button createRoomButton;
@@ -29,10 +29,6 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Character Screen")]
     public GameObject characterChosen;
     private string characterChosenName;
-
-    public TextMeshProUGUI gameTypeTitle;
-    private const string rankedGameTitle = "Ranked Game";
-    private const string unrankedGameTitle = "Unranked Game";
 
     [Header("Settings Screen")]
     public Slider masterVolumeSlider;
@@ -151,7 +147,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public void BackToMainOptions()
     {
         buttonClickAudio.Play();
-        SetScreen(GetScreen(mainOptionsName));
+        SetScreen(GetScreen(MAIN_OPTIONS_NAME));
     }
 
     // get screen game object using screen name
@@ -379,14 +375,14 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnPlayButton()
     {
         buttonClickAudio.Play();
-        SetScreen(GetScreen(playOptionsName));
+        SetScreen(GetScreen(PLAY_OPTIONS_NAME));
     }
 
     // called when "Character" Button is pressed
     public void OnCharacterButton()
     {
         buttonClickAudio.Play();
-        SetScreen(GetScreen(CharacterScreenName));
+        SetScreen(GetScreen(CHARACTER_SCREEN_NAME));
     }
 
     // called when "Settings" Button is pressed
@@ -394,17 +390,17 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
 
-        if (GetScreen(settings).activeInHierarchy)
+        if (GetScreen(SETTINGS_NAME).activeInHierarchy)
         {
             // open the settings screen
-            GetScreen(settings).SetActive(false);
+            GetScreen(SETTINGS_NAME).SetActive(false);
 
             // dont show the character - so the character doesn't appear over the settings
             characterChosen.transform.GetChild(0).gameObject.SetActive(true);
         } else 
         {
             // close the settings screen
-            GetScreen(settings).SetActive(true);
+            GetScreen(SETTINGS_NAME).SetActive(true);
             Debug.Log(characterChosen.transform.GetChild(0).gameObject);
             // show the character again
             characterChosen.transform.GetChild(0).gameObject.SetActive(false);
