@@ -7,16 +7,21 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
 using UnityEngine.Events;
+using WebSocketSharp;
 
 public class Menu : MonoBehaviourPunCallbacks
 {
+    private const string BERSERKER_NAME = "Berserker";
+    private const string FROSTMAGE_NAME = "FrostMage";
+    private const string ILLUSIONIST_NAME = "Illusionist";
+    private const string NINJA_NAME = "Ninja";
+
     [Header("Screens")]
     public GameObject[] screens;
     private const string mainOptionsName = "MainOptions";
     private const string CharacterScreenName = "CharacterScreen";
     private const string playOptionsName = "PlayOptions";
-    private const string settings = "Settings";
-    private const string lobbyName = "LobbyScreen";
+    private const string settings = "SettingsPopUp";
 
     [Header("Play Options Screen")]
     public Button createRoomButton;
@@ -24,6 +29,7 @@ public class Menu : MonoBehaviourPunCallbacks
 
     [Header("Character Screen")]
     public GameObject characterChosen;
+    private string characterChosenName;
 
     public TextMeshProUGUI gameTypeTitle;
     private const string rankedGameTitle = "Ranked Game";
@@ -41,6 +47,7 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Player Preview")]
     public Animator animator;
     public TextMeshProUGUI rankScore;
+    public GameObject characterHolder;
 
     [Header("Class Buttons and Text")]
     public GameObject berserkerButton;
@@ -67,6 +74,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public LeanTweenType outType;
 
     [Header("Play Screen")]
+    public TextMeshProUGUI numberOfPlayersInLobby;
     public GameObject searchForGame;
     public GameObject quickPlayButton;
     public GameObject rankedPlayButton;
@@ -104,8 +112,8 @@ public class Menu : MonoBehaviourPunCallbacks
             characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
             characterChosen.transform.localScale = new Vector3(2, 2, 2);
             InitializeChosenClass("Berserker");
-            DontDestroyOnLoad(characterChosen);
-        }
+/*            DontDestroyOnLoad(characterChosen);
+*/        }
 
         // set chosen preview class game object active so that we can access it in the main menu
         characterChosen.SetActive(true);
@@ -187,8 +195,9 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
         characterChosen.transform.localScale = new Vector3(2, 2, 2);
+        characterChosenName = BERSERKER_NAME;
         ResetClassSelection();
-        InitializeChosenClass("Berserker");
+        InitializeChosenClass(characterChosenName);
         berserkerButtonSelection.SetActive(true);
         BounceButtonEffect(berserkerButton);
     }
@@ -199,8 +208,9 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/FrostMage/FrostMage") as GameObject);
         characterChosen.transform.localScale = new Vector3(2, 2, 2);
+        characterChosenName = FROSTMAGE_NAME;
         ResetClassSelection();
-        InitializeChosenClass("FrostMage");
+        InitializeChosenClass(characterChosenName);
         frostMageButtonSelection.SetActive(true);
         BounceButtonEffect(frostMageButton);
     }
@@ -211,8 +221,9 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Ninja/Ninja") as GameObject);
         characterChosen.transform.localScale = new Vector3(2, 2, 2);
+        characterChosenName = NINJA_NAME;
         ResetClassSelection();
-        InitializeChosenClass("Ninja");
+        InitializeChosenClass(characterChosenName);
         ninjaButtonSelection.SetActive(true);
         BounceButtonEffect(ninjaButton);
     }
@@ -223,8 +234,9 @@ public class Menu : MonoBehaviourPunCallbacks
         Destroy(characterChosen);
         characterChosen = Instantiate(Resources.Load("Character/Illusionist/Illusionist") as GameObject);
         characterChosen.transform.localScale = new Vector3(2, 2, 2);
+        characterChosenName = ILLUSIONIST_NAME;
         ResetClassSelection();
-        InitializeChosenClass("Illusionist");
+        InitializeChosenClass(characterChosenName);
         illusionistButtonSelection.SetActive(true);
         BounceButtonEffect(illusionistButton);
     }
@@ -298,19 +310,19 @@ public class Menu : MonoBehaviourPunCallbacks
         characterChosen.GetComponent<PlayerManager>().enabled = false;
         switch (className)
         {
-            case "Berserker":
+            case BERSERKER_NAME:
                 characterChosen.GetComponent<BerserkerAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(berserkerListText, berserkerButtonIcon);
                 break;
-            case "FrostMage":
+            case FROSTMAGE_NAME:
                 characterChosen.GetComponent<FrostMageAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(frostMageListText, frostMageButtonIcon);
                 break;
-            case "Ninja":
+            case NINJA_NAME:
                 characterChosen.GetComponent<NinjaAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(ninjaListText, ninjaButtonIcon);
                 break;
-            case "Illusionist":
+            case ILLUSIONIST_NAME:
                 characterChosen.GetComponent<IllusionistAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(illusionistListText, illusionistButtonIcon);
                 break;
@@ -321,6 +333,7 @@ public class Menu : MonoBehaviourPunCallbacks
         characterChosen.GetComponent<PhotonTransformView>().enabled = false;
         characterChosen.transform.GetChild(2).gameObject.SetActive(false);
         characterChosen.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        characterChosen.transform.parent = characterHolder.transform;
     }
 
     private void SetChosenCharacterTextColorAndIcon(TextMeshProUGUI characterText, GameObject icon)
@@ -333,7 +346,6 @@ public class Menu : MonoBehaviourPunCallbacks
     private void InitializeChosenClass(string className)
     {
         buttonClickAudio.Play();
-        DontDestroyOnLoad(characterChosen);
         switchClassAnimator(className);
         SetupPlayerPreview(className);
     }
@@ -384,7 +396,23 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnSettingsButton()
     {
         buttonClickAudio.Play();
-        SetScreen(GetScreen(settings));
+
+        if (GetScreen(settings).activeInHierarchy)
+        {
+            // open the settings screen
+            GetScreen(settings).SetActive(false);
+
+            // dont show the character - so the character doesn't appear over the settings
+            characterChosen.transform.GetChild(0).gameObject.SetActive(true);
+        } else 
+        {
+            
+            // close the settings screen
+            GetScreen(settings).SetActive(true);
+
+            // show the character again
+            characterChosen.transform.GetChild(0).gameObject.SetActive(false);
+        } 
     }
 
     /**
@@ -430,16 +458,7 @@ public class Menu : MonoBehaviourPunCallbacks
     // called when a player joins the room
     public override void OnJoinedRoom()
     {
-        SetScreen(GetScreen(lobbyName));
         PhotonNetwork.NickName = CloudManager.instance.GetPlayerName();
-        if (NetworkManager.instance.rankedGame)
-        {
-            gameTypeTitle.text = rankedGameTitle;
-        }
-        else
-        {
-            gameTypeTitle.text = unrankedGameTitle;
-        }
 
         // send an rpc call to update all the other clients that this player has joined the room
         // update everyone elses lobby ui
@@ -478,23 +497,6 @@ public class Menu : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdateLobbyUI()
     {
-        playerListText.text = "";
-
-        // display all the players currently in the lobby
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            playerListText.text += player.NickName + "\n";
-        }
-
-        // only the host can start the game
-        if (PhotonNetwork.IsMasterClient)
-            startGameButton.interactable = true;
-        else
-            startGameButton.interactable = false;
-    }
-
-    private void ButtonBounceEffectTween()
-    {
-        
+        numberOfPlayersInLobby.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
     }
 }
