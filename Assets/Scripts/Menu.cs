@@ -47,7 +47,6 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Player Preview")]
     public Animator animator;
     public TextMeshProUGUI rankScore;
-    public GameObject characterHolder;
 
     [Header("Class Buttons and Text")]
     public GameObject berserkerButton;
@@ -112,8 +111,8 @@ public class Menu : MonoBehaviourPunCallbacks
             characterChosen = Instantiate(Resources.Load("Character/Berserker/Berserker") as GameObject);
             characterChosen.transform.localScale = new Vector3(2, 2, 2);
             InitializeChosenClass("Berserker");
-/*            DontDestroyOnLoad(characterChosen);
-*/        }
+            DontDestroyOnLoad(characterChosen);
+        }
 
         // set chosen preview class game object active so that we can access it in the main menu
         characterChosen.SetActive(true);
@@ -333,7 +332,6 @@ public class Menu : MonoBehaviourPunCallbacks
         characterChosen.GetComponent<PhotonTransformView>().enabled = false;
         characterChosen.transform.GetChild(2).gameObject.SetActive(false);
         characterChosen.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-        characterChosen.transform.parent = characterHolder.transform;
     }
 
     private void SetChosenCharacterTextColorAndIcon(TextMeshProUGUI characterText, GameObject icon)
@@ -348,6 +346,7 @@ public class Menu : MonoBehaviourPunCallbacks
         buttonClickAudio.Play();
         switchClassAnimator(className);
         SetupPlayerPreview(className);
+        DontDestroyOnLoad(characterChosen);
     }
 
     private void switchClassAnimator(string classAnimBoolVar)
@@ -382,7 +381,6 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
         SetScreen(GetScreen(playOptionsName));
-        NetworkManager.instance.GetListOfRooms();
     }
 
     // called when "Character" Button is pressed

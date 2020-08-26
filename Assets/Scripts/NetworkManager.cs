@@ -132,7 +132,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ChangeScene(string sceneName)
     {
-        DontDestroyOnLoad(Menu.instance.characterChosen);
         // when a game has started - make the room impossible to join
         PhotonNetwork.CurrentRoom.IsOpen = false;
         // load game scene
