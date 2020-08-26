@@ -422,7 +422,10 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void OnRankedPlayButton()
     {
+        buttonClickAudio.Play();
         NetworkManager.instance.JoinRandomRoomRanked();
+        searchForGame.SetActive(true);
+        EnableOrDisbalePlayScreenButtons(false);
     }
 
     // called when "Create Room" Button is pressed
