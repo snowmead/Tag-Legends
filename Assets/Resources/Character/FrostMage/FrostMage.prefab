@@ -1014,6 +1014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e3d61092b1ac7419b9355ac0916727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 95949351757707422}
   rig: {fileID: 4586655325597420748}
   frostNovaAudioSource: {fileID: 8925259782024828685}
   iceBoltAudioSource: {fileID: 8138971206443486372}
@@ -2696,6 +2697,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5040047748978839925, guid: a6e515b7056ece14b910fddf4b550d39,
+        type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6e515b7056ece14b910fddf4b550d39, type: 3}

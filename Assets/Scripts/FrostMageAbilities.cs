@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FrostMageAbilities : MonoBehaviour
 {
+    public Animator animator;
     public Rigidbody rig;
-    public const string BERSERKER_ABILTIES_RESOURCE_LOCATION = "Character/Berserker/";
+    public const string BERSERKER_ABILTIES_RESOURCE_LOCATION = "Character/FrostMage/";
     private AbilityCooldownManager abilityCooldownManager;
 
     [Header("Frost Nova Ability Config")]
@@ -26,7 +28,7 @@ public class FrostMageAbilities : MonoBehaviour
     private const int FREEZING_WINDS_ABILITY_INDEX = 3;
     private const float FREEZING_WINDS_COOLDOWN = 15f;
     public const float FREEZING_WINDS_DURATION_EFFECT = 10f;
-    public const string FREEZING_WINDS_ACTIVE_ANIMATOR_FLOAT_VAR = "ShoutActive";
+    public const string FREEZING_WINDS_ACTIVE_ANIMATOR_FLOAT_VAR = "FreezingWindsActive";
 
     public AudioSource frostNovaAudioSource;
     public AudioSource iceBoltAudioSource;
@@ -47,6 +49,12 @@ public class FrostMageAbilities : MonoBehaviour
         abilityCooldownManager.StartCooldown(FROST_NOVA_ABILITY_INDEX, FROST_NOVA_COOLDOWN);
 
         frostNovaAudioSource.Play();
+
+        animator.SetTrigger("FrostNova");
+        PhotonNetwork.Instantiate(
+            BERSERKER_ABILTIES_RESOURCE_LOCATION + "FrostNova",
+            transform.position,
+            Quaternion.identity);
     }
 
     public void IceBolt()
@@ -55,6 +63,11 @@ public class FrostMageAbilities : MonoBehaviour
         abilityCooldownManager.StartCooldown(ICE_BOLT_ABILITY_INDEX, ICE_BOLT_COOLDOWN);
 
         iceBoltAudioSource.Play();
+
+        PhotonNetwork.Instantiate(
+            BERSERKER_ABILTIES_RESOURCE_LOCATION + "IceBolt",
+            transform.position + Vector3.up,
+            gameObject.transform.rotation);
     }
 
     public void IceBlock()

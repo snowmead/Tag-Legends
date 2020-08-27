@@ -1975,7 +1975,6 @@ MonoBehaviour:
   loseText: {fileID: 668599003}
   countdownText: {fileID: 559546659}
   menu: {fileID: 732626409}
-  classImage: {fileID: 0}
   berserkerSprite: {fileID: 21300000, guid: b133bf9bc7d8e0f47b2dc234cd689e04, type: 3}
   frostMageSprite: {fileID: 21300000, guid: 43e0e6dfbd064454b8e54670ed0a7bab, type: 3}
   illusionistSprite: {fileID: 21300000, guid: 80e8c0473c89ddf4d9f46fa8685b7249, type: 3}
