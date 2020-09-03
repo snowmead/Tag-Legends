@@ -7,7 +7,7 @@ public class FrostMageAbilities : MonoBehaviour
 {
     public Animator animator;
     public Rigidbody rig;
-    public const string BERSERKER_ABILTIES_RESOURCE_LOCATION = "Character/FrostMage/";
+    public const string FROSTMAGE_ABILTIES_RESOURCE_LOCATION = "Character/FrostMage/";
     private AbilityCooldownManager abilityCooldownManager;
 
     [Header("Frost Nova Ability Config")]
@@ -50,9 +50,8 @@ public class FrostMageAbilities : MonoBehaviour
 
         frostNovaAudioSource.Play();
 
-        animator.SetTrigger("FrostNova");
         PhotonNetwork.Instantiate(
-            BERSERKER_ABILTIES_RESOURCE_LOCATION + "FrostNova",
+            FROSTMAGE_ABILTIES_RESOURCE_LOCATION + "FrostNova",
             transform.position,
             Quaternion.identity);
     }
@@ -65,7 +64,7 @@ public class FrostMageAbilities : MonoBehaviour
         iceBoltAudioSource.Play();
 
         PhotonNetwork.Instantiate(
-            BERSERKER_ABILTIES_RESOURCE_LOCATION + "IceBolt",
+            FROSTMAGE_ABILTIES_RESOURCE_LOCATION + "IceBolt",
             transform.position + Vector3.up,
             gameObject.transform.rotation);
     }

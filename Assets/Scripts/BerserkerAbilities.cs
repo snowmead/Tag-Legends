@@ -78,7 +78,8 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         abilityCooldownManager.StartCooldown(GROUND_SLAM_ABILITY_INDEX, GROUND_SLAM_COOLDOWN);
 
         groundSlamAudioSource.Play();
-        animator.SetTrigger("GroundSlam");
+
+        //animator.SetTrigger("GroundSlam");
         PhotonNetwork.Instantiate(
             BERSERKER_ABILTIES_RESOURCE_LOCATION + "GroundSlam",
             transform.position,

@@ -67,12 +67,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
                 inputVector = direction * speed * Time.deltaTime;
 
-                // disable groundSlam effect completely to avoid any drag that stays after it dissapears
-                if (!GameManager.instance.isGroundSlamActive)
-                {
-                    rig.drag = 0f;
-                }
-
                 // if shout is active - set fear animation and set kinematic to true
                 if (playerManager.isFearedActive)
                 {

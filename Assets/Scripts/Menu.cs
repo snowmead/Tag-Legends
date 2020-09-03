@@ -114,7 +114,6 @@ public class Menu : MonoBehaviourPunCallbacks
 
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
-        animator.SetBool("InMainMenu", true);
 
         // can't create room or join rooms until connected to the master
         createRoomButton.interactable = false;
@@ -348,7 +347,6 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
-        animator.SetBool("InMainMenu", true);
 
         // reset all bool variables in animator and set the chosen class bool variable to true
         // switch state machines in the animator using these values

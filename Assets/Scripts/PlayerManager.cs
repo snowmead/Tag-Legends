@@ -109,12 +109,41 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
 
-        if (other.gameObject.CompareTag("AxeThrow"))
+        // did we hit another player's tag range circle?
+        if (other.gameObject.CompareTag("GroundSlam"))
         {
-            if(!other.gameObject.GetPhotonView().IsMine)
-            {
-                Debug.Log("Got hit by an axe");
-            }
+            Debug.Log("ENTER");
+            rig.drag = 20f;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // only the client controlling this player will check for collisions
+        // client based collision detection
+        if (!photonView.IsMine)
+            return;
+
+        // did we hit another player's tag range circle?
+        if (other.gameObject.CompareTag("GroundSlam"))
+        {
+            Debug.Log("STAY");
+            rig.drag = 20f;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // only the client controlling this player will check for collisions
+        // client based collision detection
+        if (!photonView.IsMine)
+            return;
+
+        // did we hit another player's tag range circle?
+        if (other.gameObject.CompareTag("GroundSlam"))
+        {
+            Debug.Log("EXIT");
+            rig.drag = 0f;
         }
     }
 

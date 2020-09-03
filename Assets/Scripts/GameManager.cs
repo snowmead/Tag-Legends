@@ -33,10 +33,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     PlayerManager playerManagerScript;
     public bool countdownStarted = false;
 
-    [HideInInspector]
-    [Header("Abilities")]
-    public bool isGroundSlamActive = false;
-
     // instance
     public static GameManager instance;
 
