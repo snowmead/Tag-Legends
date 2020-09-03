@@ -12,19 +12,12 @@ using System.Reflection.Emit;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
-    [Header("Components")]
-    public Rigidbody rig;
+    [Header("Components")] public Rigidbody rig;
     public Animator animator;
 
-    [SerializeField]
-    private bool grounded;
-    [SerializeField]
-    public LayerMask groundLayer;
+    [SerializeField] private bool grounded;
+    [SerializeField] public LayerMask groundLayer;
 
-    [Header("Info")]
-    public const float gravity = 1f;
-    public const float acceleration = 0.00005f;
-    public const float speedConstant = 0.15f;
     public float speed = 10f;
     public Vector3 inputVector;
     public Camera cam;
@@ -34,22 +27,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public float horizontal;
     public float vertical;
 
-    public static PlayerController instance;
     private PlayerManager playerManager;
 
     public Joystick joystick;
+    private static readonly int Jump = Animator.StringToHash("Jump");
+    private static readonly int Sprint = Animator.StringToHash("Sprint");
 
-    void Awake()
+    private void Awake()
     {
-        instance = this;
         playerManager = gameObject.GetComponent<PlayerManager>();
     }
 
     // update is called once per frame
-    void Update()
+    private void Update()
     {
         // check if the game is started
-        if (PlayerManager.instance.startGame)
+        if (PlayerManager.Instance.startGame)
         {
             // only move my player
             if (photonView.IsMine)
@@ -65,7 +58,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
                 float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-                inputVector = direction * speed * Time.deltaTime;
+                inputVector = direction * (speed * Time.deltaTime);
 
                 // if shout is active - set fear animation and set kinematic to true
                 if (playerManager.isFearedActive)
@@ -90,19 +83,21 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     rig.isKinematic = false;
 
                     // check if my player is grounded
-                    grounded = Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.down), 1.2f, groundLayer);
+                    grounded = Physics.Raycast(transform.position + Vector3.up,
+                        transform.TransformDirection(Vector3.down), 1.2f, groundLayer);
 
                     // can only move while grounded
                     if (grounded)
                     {
-                        animator.SetBool("Jump", false);
+                        animator.SetBool(Jump, false);
 
                         // only move if input was calculated
                         if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
                         {
                             transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
                             transform.forward = inputVector;
-                            rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y, transform.forward.z * speed);
+                            rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y,
+                                transform.forward.z * speed);
                         }
 
                         // Completely stop moving (velocity-wise) if no input was found
@@ -112,20 +107,23 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         }
 
                         // Animatioms
-                        if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 || Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1 || Mathf.Abs(joystick.Vertical) > .1 || Mathf.Abs(joystick.Horizontal) > .1) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
+                        if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 ||
+                            Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1 || Mathf.Abs(joystick.Vertical) > .1 ||
+                            Mathf.Abs(joystick.Horizontal) > .1
+                        ) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
                         {
-                            animator.SetBool("Sprint", true);
+                            animator.SetBool(Sprint, true);
                         }
                         else
                         {
-                            animator.SetBool("Sprint", false);
+                            animator.SetBool(Sprint, false);
                         }
                     }
                     else
                     {
-                        animator.SetBool("Jump", true);
+                        animator.SetBool(Jump, true);
                     }
-                }                
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -138,9 +136,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void OnJumpButton()
     {
         if (grounded)
-        {            
-            rig.velocity = new Vector3(0f, 6f, 0f);          
-            animator.SetBool("Jump", true);
+        {
+            rig.velocity = new Vector3(0f, 6f, 0f);
+            animator.SetBool(Jump, true);
         }
     }
 }

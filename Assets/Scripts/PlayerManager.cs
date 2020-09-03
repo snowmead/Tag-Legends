@@ -14,7 +14,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public string chosenClass;      // Holds player's chosen class
 
     [Header("Components")]
-    public Player photonPlayer;
+    public Player PhotonPlayer;
     public Rigidbody rig;
     public Camera cam;
     public GameObject tagIndicator;
@@ -33,13 +33,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public float startAxeStunned;
     public float endAxeStunned;
 
-    public static PlayerManager instance;
+    public static PlayerManager Instance;
 
     public float currentTime;
 
     void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     // called when the player object is instantiated
@@ -47,7 +47,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public void Initialize(Player player, string activeClass)
     {
         // set network photon player
-        photonPlayer = player;
+        PhotonPlayer = player;
         // set player id using photon player actor number
         id = player.ActorNumber;
         // set chosen class
@@ -112,7 +112,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // did we hit another player's tag range circle?
         if (other.gameObject.CompareTag("GroundSlam"))
         {
-            rig.drag = 20f;
+            if(!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 20f;
         }
     }
 
@@ -126,7 +127,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // did we hit another player's tag range circle?
         if (other.gameObject.CompareTag("GroundSlam"))
         {
-            rig.drag = 20f;
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 20f;
         }
     }
 
@@ -140,7 +142,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // did we hit another player's tag range circle?
         if (other.gameObject.CompareTag("GroundSlam"))
         {
-            rig.drag = 0f;
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 0f;
         }
     }
 
@@ -156,7 +159,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 // end the game for all players
                 GameManager.instance.gameEnded = true;
-                GameManager.instance.photonView.RPC("GameOver", RpcTarget.All, PlayerManager.instance.id);
+                GameManager.instance.photonView.RPC("GameOver", RpcTarget.All, PlayerManager.Instance.id);
             }
         }
 

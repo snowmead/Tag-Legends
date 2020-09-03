@@ -79,10 +79,12 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
 
         groundSlamAudioSource.Play();
 
+        Vector3 position = new Vector3(transform.position.x, 0.1f, transform.position.z);
+
         //animator.SetTrigger("GroundSlam");
         PhotonNetwork.Instantiate(
             BERSERKER_ABILTIES_RESOURCE_LOCATION + "GroundSlam",
-            transform.position,
+            position,
             gameObject.transform.rotation);
     }
 
