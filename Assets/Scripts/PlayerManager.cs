@@ -112,7 +112,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // did we hit another player's tag range circle?
         if (other.gameObject.CompareTag("GroundSlam"))
         {
-            Debug.Log("ENTER");
             rig.drag = 20f;
         }
     }
@@ -127,7 +126,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // did we hit another player's tag range circle?
         if (other.gameObject.CompareTag("GroundSlam"))
         {
-            Debug.Log("STAY");
             rig.drag = 20f;
         }
     }
@@ -142,7 +140,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // did we hit another player's tag range circle?
         if (other.gameObject.CompareTag("GroundSlam"))
         {
-            Debug.Log("EXIT");
             rig.drag = 0f;
         }
     }

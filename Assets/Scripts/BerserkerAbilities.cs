@@ -83,7 +83,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate(
             BERSERKER_ABILTIES_RESOURCE_LOCATION + "GroundSlam",
             transform.position,
-            Quaternion.identity);
+            gameObject.transform.rotation);
     }
 
     public void Shout()
