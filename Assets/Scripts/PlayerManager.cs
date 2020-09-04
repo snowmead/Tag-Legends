@@ -113,23 +113,29 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
 
-        // did we hit another player's tag range circle?
-        if (other.gameObject.CompareTag("GroundSlam"))
-        {
-            if(!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = 20f;
-        }
+        GroundSlamCheck(other);
 
-        // did I get hit by an icebolt
+        // did I get hit by an IceBolt
         if (other.gameObject.CompareTag("IceBolt"))
         {
-            // did I get hit by someone else's icebolt
+            // did I get hit by someone else's IceBolt
             if(!other.gameObject.GetPhotonView().IsMine) 
             {
                 rig.isKinematic = true;
                 startIceBoltStunned = currentTime;
                 endIceBoltStunned = startIceBoltStunned + FrostMageAbilities.IceBoltDurationEffect;
             }
+        }
+    }
+
+    private void GroundSlamCheck(Collider other)
+    {
+        // am I in a ground slam
+        if (other.gameObject.CompareTag("GroundSlam"))
+        {
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 20f;
         }
     }
 
@@ -140,12 +146,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             return;
 
-        // did we hit another player's tag range circle?
-        if (other.gameObject.CompareTag("GroundSlam"))
-        {
-            if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = 20f;
-        }
+        GroundSlamCheck(other);
     }
 
     private void OnTriggerExit(Collider other)
@@ -155,12 +156,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             return;
 
-        // did we hit another player's tag range circle?
-        if (other.gameObject.CompareTag("GroundSlam"))
-        {
-            if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = 0f;
-        }
+        GroundSlamCheck(other);
     }
 
     private void Update()
