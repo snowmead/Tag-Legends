@@ -1038,6 +1038,8 @@ MonoBehaviour:
   isAxeStunned: 0
   startAxeStunned: 0
   endAxeStunned: 0
+  startIceBoltStunned: 0
+  endIceBoltStunned: 0
   currentTime: 0
 --- !u!114 &-8497407202683158048
 MonoBehaviour:
@@ -2049,7 +2051,7 @@ PrefabInstance:
     - target: {fileID: 3724029693679463306, guid: 6a4a86e7e0103ea4bbbcbae31c813e2e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 3724029693679463306, guid: 6a4a86e7e0103ea4bbbcbae31c813e2e,
         type: 3}

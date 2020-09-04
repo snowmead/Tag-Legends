@@ -2,8 +2,9 @@ using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 
-public class RFX4_RaycastCollision : MonoBehaviour
+public class RFX4_RaycastCollision : MonoBehaviourPunCallbacks
 {
     public float RaycastDistance = 100;
     public GameObject[] Effects;
@@ -18,9 +19,9 @@ public class RFX4_RaycastCollision : MonoBehaviour
     public bool DestroyAfterDisabling;
     [HideInInspector]
     public float HUE = -1;
-    [HideInInspector]
+    //[HideInInspector]
     public List<GameObject> CollidedInstances = new List<GameObject>();
-
+    
     const string particlesAdditionalName = "Distance";
     ParticleSystem[] distanceParticles;
 
@@ -63,59 +64,72 @@ public class RFX4_RaycastCollision : MonoBehaviour
     private void UpdateRaycast()
     {
         RaycastHit raycastHit;
-        if (Physics.Raycast(transform.position, transform.forward, out raycastHit, RaycastDistance)) {
-            Vector3 position;
-            if (UsePivotPosition)
-                position = raycastHit.transform.position;
-            else
-                position = raycastHit.point + raycastHit.normal * Offset;
-
-            var handler = CollisionEnter;
-            if (handler != null)
-                handler(this, new RFX4_PhysicsMotion.RFX4_CollisionInfo { HitPoint = raycastHit.point, HitCollider = raycastHit.collider, HitGameObject = raycastHit.transform.gameObject});
-
-            if (distanceParticles !=null)
-            foreach (var rayPS in distanceParticles)
+        if (Physics.Raycast(transform.position, transform.forward, out raycastHit, RaycastDistance))
+        {
+            if (raycastHit.collider.transform.root.gameObject.CompareTag("Player"))
             {
+                Vector3 position;
+                if (UsePivotPosition)
+                    position = raycastHit.transform.position;
+                else
+                    position = raycastHit.point + raycastHit.normal * Offset;
 
-                    if (rayPS != null && rayPS.name.Contains(particlesAdditionalName))
-                    rayPS.GetComponent<ParticleSystemRenderer>().lengthScale = (transform.position - raycastHit.point).magnitude / rayPS.main.startSize.constantMax;
-
-            }
-
-            if (CollidedInstances.Count==0)
-                foreach (var effect in Effects) {
-                    if (effect != null)
-                    {
-                        var instance = Instantiate(effect, position, new Quaternion()) as GameObject;
-                        var effectSettings = instance.GetComponent<RFX4_EffectSettings>();
-                        var effectSettingsRoot = GetComponentInParent<RFX4_EffectSettings>();
-                        if (effectSettings != null && effectSettingsRoot != null)
+                var handler = CollisionEnter;
+                if (handler != null)
+                    handler(this,
+                        new RFX4_PhysicsMotion.RFX4_CollisionInfo
                         {
-                            //effectSettings.EffectQuality = effectSettingsRoot.EffectQuality;
-                            // effectSettings.ForceInitialize();
+                            HitPoint = raycastHit.point, HitCollider = raycastHit.collider,
+                            HitGameObject = raycastHit.transform.gameObject
+                        });
+
+                if (distanceParticles != null)
+                    foreach (var rayPS in distanceParticles)
+                    {
+                        if (rayPS != null && rayPS.name.Contains(particlesAdditionalName))
+                            rayPS.GetComponent<ParticleSystemRenderer>().lengthScale =
+                                (transform.position - raycastHit.point).magnitude / rayPS.main.startSize.constantMax;
+                    }
+
+                if (CollidedInstances.Count == 0)
+                    foreach (var effect in Effects)
+                    {
+                        if (effect != null)
+                        {
+                            Transform playerHit = raycastHit.collider.transform.root;
+                            //playerHit.GetComponent<AbilityRpcReceiver>().photonView.RPC("IceBolt", );
+                            var instance = PhotonNetwork.Instantiate("Character/FrostMage/IceBoltFreeze", playerHit.position, new Quaternion()) as GameObject;
+                            var effectSettings = instance.GetComponent<RFX4_EffectSettings>();
+                            var effectSettingsRoot = GetComponentInParent<RFX4_EffectSettings>();
+                            if (effectSettings != null && effectSettingsRoot != null)
+                            {
+                                //effectSettings.EffectQuality = effectSettingsRoot.EffectQuality;
+                                // effectSettings.ForceInitialize();
+                            }
+
+                            CollidedInstances.Add(instance);
+
+                            if (HUE > -0.9f) RFX4_ColorHelper.ChangeObjectColorByHUE(instance, HUE);
+
+                            if (!IsWorldSpace)
+                                instance.transform.parent = transform;
+                            if (UseNormalRotation)
+                                instance.transform.LookAt(raycastHit.point + raycastHit.normal);
+                            if (DestroyTime > 0.0001f)
+                                Destroy(instance, DestroyTime);
                         }
-
-                        CollidedInstances.Add(instance);
-
-                        if (HUE > -0.9f) RFX4_ColorHelper.ChangeObjectColorByHUE(instance, HUE);
-                    
-                        if (!IsWorldSpace)
-                            instance.transform.parent = transform;
+                    }
+                else
+                    foreach (var instance in CollidedInstances)
+                    {
+                        if (instance == null) continue;
+                        instance.transform.position = position;
                         if (UseNormalRotation)
                             instance.transform.LookAt(raycastHit.point + raycastHit.normal);
-                        if (DestroyTime > 0.0001f)
-                            Destroy(instance, DestroyTime);
                     }
-                }
-            else
-                foreach (var instance in CollidedInstances) {
-                    if (instance == null) continue;
-                    instance.transform.position = position;
-                    if (UseNormalRotation)
-                        instance.transform.LookAt(raycastHit.point + raycastHit.normal);
-                }
+            }
         }
+
         if (RealTimeUpdateRaycast)
             canUpdate = true;
     }

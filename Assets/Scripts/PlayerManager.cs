@@ -32,6 +32,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public bool isAxeStunned = false;
     public float startAxeStunned;
     public float endAxeStunned;
+    
+    [Header("IceBolt Variables")]
+    public float startIceBoltStunned;
+    public float endIceBoltStunned;
 
     public static PlayerManager Instance;
 
@@ -115,6 +119,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             if(!other.gameObject.GetPhotonView().IsMine)
                 rig.drag = 20f;
         }
+        
+        if (other.gameObject.CompareTag("IceBolt"))
+        {
+            if(!other.gameObject.GetPhotonView().IsMine) 
+            {
+                rig.isKinematic = true;
+                startIceBoltStunned = currentTime;
+                endIceBoltStunned = startIceBoltStunned + FrostMageAbilities.IceBoltDurationEffect;
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -194,6 +208,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (currentTime > endAxeStunned)
         {
             isAxeStunned = false;
+        }
+
+        if (currentTime > endIceBoltStunned)
+        {
+            rig.isKinematic = false;
         }
     }
 

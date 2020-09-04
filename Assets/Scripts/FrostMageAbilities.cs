@@ -17,7 +17,7 @@ public class FrostMageAbilities : MonoBehaviour
     [Header("Ice Bolt Ability Config")]
     private const int ICE_BOLT_ABILITY_INDEX = 1;
     private const float ICE_BOLT_COOLDOWN = 5f;
-    public const float ICE_BOLT_DURATION_EFFECT = 5f;
+    public const float IceBoltDurationEffect = 5f;
 
     [Header("Ice Block Ability Config")]
     private const int ICE_BLOCK_ABILITY_INDEX = 2;
