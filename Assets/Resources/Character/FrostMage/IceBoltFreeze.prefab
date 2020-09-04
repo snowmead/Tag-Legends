@@ -41354,7 +41354,7 @@ GameObject:
   - component: {fileID: 6774931070775372412}
   - component: {fileID: 1125272833237053638}
   m_Layer: 0
-  m_Name: Effect9_Collision
+  m_Name: IceBoltFreeze
   m_TagString: IceBolt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

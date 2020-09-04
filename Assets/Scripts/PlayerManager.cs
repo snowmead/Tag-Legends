@@ -119,9 +119,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             if(!other.gameObject.GetPhotonView().IsMine)
                 rig.drag = 20f;
         }
-        
+
+        // did I get hit by an icebolt
         if (other.gameObject.CompareTag("IceBolt"))
         {
+            // did I get hit by someone else's icebolt
             if(!other.gameObject.GetPhotonView().IsMine) 
             {
                 rig.isKinematic = true;
