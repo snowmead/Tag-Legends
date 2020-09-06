@@ -1002,6 +1002,7 @@ MonoBehaviour:
   isAxeStunned: 0
   startAxeStunned: 0
   endAxeStunned: 0
+  isIceBoltFreeze: 0
   startIceBoltStunned: 0
   endIceBoltStunned: 0
   currentTime: 0
