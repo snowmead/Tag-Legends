@@ -7,28 +7,29 @@ public class FrostMageAbilities : MonoBehaviour
 {
     public Animator animator;
     public Rigidbody rig;
-    public const string FROSTMAGE_ABILTIES_RESOURCE_LOCATION = "Character/FrostMage/";
+    public const string FrostMageAbiltiesResourceLocation = "Character/FrostMage/";
     private AbilityCooldownManager abilityCooldownManager;
 
-    [Header("Frost Nova Ability Config")]
-    private const int FROST_NOVA_ABILITY_INDEX = 0;
-    private const float FROST_NOVA_COOLDOWN = 5f;
+    [Header("Frost Nova Ability Config")] 
+    public const string FrostNovaTag = "FrostNova";
+    private const int FrostNovaAbilityIndex = 0;
+    private const float FrostNovaCooldown = 5f;
 
     [Header("Ice Bolt Ability Config")]
-    private const int ICE_BOLT_ABILITY_INDEX = 1;
-    private const float ICE_BOLT_COOLDOWN = 5f;
-    public const float IceBoltDurationEffect = 5f;
+    private const int IceBoltAbilityIndex = 1;
+    private const float IceBoltCooldown = 5f;
+    public const float IceBoltDurationEffect = 6f;
 
     [Header("Ice Block Ability Config")]
-    private const int ICE_BLOCK_ABILITY_INDEX = 2;
-    private const float ICE_BLOCK_COOLDOWN = 5f;
-    public const float ICE_BLOCK_DURATION_EFFECT = 5f;
+    private const int IceBlockAbilityIndex = 2;
+    private const float IceBlockCooldown = 5f;
+    public const float IceBlockDurationEffect = 5f;
 
     [Header("Freezing Winds Ability Config")]
-    private const int FREEZING_WINDS_ABILITY_INDEX = 3;
-    private const float FREEZING_WINDS_COOLDOWN = 15f;
-    public const float FREEZING_WINDS_DURATION_EFFECT = 10f;
-    public const string FREEZING_WINDS_ACTIVE_ANIMATOR_FLOAT_VAR = "FreezingWindsActive";
+    private const int FreezingWindsAbilityIndex = 3;
+    private const float FreezingWindsCooldown = 15f;
+    public const float FreezingWindsDurationEffect = 10f;
+    public const string FreezingWindsActiveAnimatorFloatVar = "FreezingWindsActive";
 
     public AudioSource frostNovaAudioSource;
     public AudioSource iceBoltAudioSource;
@@ -46,12 +47,12 @@ public class FrostMageAbilities : MonoBehaviour
     public void FrostNova()
     {
         // start the ability cooldown
-        abilityCooldownManager.StartCooldown(FROST_NOVA_ABILITY_INDEX, FROST_NOVA_COOLDOWN);
+        abilityCooldownManager.StartCooldown(FrostNovaAbilityIndex, FrostNovaCooldown);
 
         frostNovaAudioSource.Play();
 
         PhotonNetwork.Instantiate(
-            FROSTMAGE_ABILTIES_RESOURCE_LOCATION + "FrostNova",
+            FrostMageAbiltiesResourceLocation + "FrostNova",
             transform.position,
             Quaternion.identity);
     }
@@ -59,12 +60,12 @@ public class FrostMageAbilities : MonoBehaviour
     public void IceBolt()
     {
         // start the ability cooldown
-        abilityCooldownManager.StartCooldown(ICE_BOLT_ABILITY_INDEX, ICE_BOLT_COOLDOWN);
+        abilityCooldownManager.StartCooldown(IceBoltAbilityIndex, IceBoltCooldown);
 
         iceBoltAudioSource.Play();
 
         PhotonNetwork.Instantiate(
-            FROSTMAGE_ABILTIES_RESOURCE_LOCATION + "IceBolt",
+            FrostMageAbiltiesResourceLocation + "IceBolt",
             transform.position + Vector3.up,
             gameObject.transform.rotation);
     }
@@ -72,7 +73,7 @@ public class FrostMageAbilities : MonoBehaviour
     public void IceBlock()
     {
         // start the ability cooldown
-        abilityCooldownManager.StartCooldown(ICE_BLOCK_ABILITY_INDEX, ICE_BLOCK_COOLDOWN);
+        abilityCooldownManager.StartCooldown(IceBlockAbilityIndex, IceBlockCooldown);
 
         iceBlockAudioSource.Play();
     }
@@ -80,7 +81,7 @@ public class FrostMageAbilities : MonoBehaviour
     public void FreezingWinds()
     {
         // start the ability cooldown
-        abilityCooldownManager.StartCooldown(FREEZING_WINDS_ABILITY_INDEX, FREEZING_WINDS_COOLDOWN);
+        abilityCooldownManager.StartCooldown(FreezingWindsAbilityIndex, FreezingWindsCooldown);
 
         freezingWindsAudioSource.Play();
     }

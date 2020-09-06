@@ -9,6 +9,7 @@ TagManager:
   - GroundSlam
   - AxeThrow
   - IceBolt
+  - FrostNova
   layers:
   - Default
   - TransparentFX

@@ -8,9 +8,17 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector]
+    [Header("RPC Method Names")]
+    private const string TagPlayerMethodName = "TagPlayer";
+    private const string GameOverMethodName = "GameOver";
+    private const string StartCountdownMethodName = "StartCountdown";
+    private const string UpdateInGameUIMethodName = "UpdateInGameUI";
+    private const string UselessCameraObjectName = "UselessCamera";
+
+    [HideInInspector]
     public int id;                  // player id
     public float curTagTime;        // current tag time of player
-    public bool startGame = false;  // determines if the game started
+    public bool startGame;  // determines if the game started
     public string chosenClass;      // Holds player's chosen class
 
     [Header("Components")]
@@ -76,7 +84,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            GameObject.Find("UselessCamera").SetActive(false);
+            GameObject.Find(UselessCameraObjectName).SetActive(false);
             cam.gameObject.SetActive(true);
             rig.isKinematic = false;
             playerUI.SetActive(true);
@@ -95,7 +103,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 // end the game for all players
                 GameManager.instance.gameEnded = true;
-                GameManager.instance.photonView.RPC("GameOver", RpcTarget.All, PlayerManager.Instance.id);
+                GameManager.instance.photonView.RPC(GameOverMethodName, RpcTarget.All, PlayerManager.Instance.id);
             }
         }
 
@@ -106,10 +114,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.instance.countdownStarted)
             {
                 // start the game for all players
-                GameManager.instance.photonView.RPC("StartCountdown", RpcTarget.All);
+                GameManager.instance.photonView.RPC(StartCountdownMethodName, RpcTarget.All);
 
                 // update player vingettes in UI
-                GameManager.instance.photonView.RPC("UpdateInGameUI", RpcTarget.All);
+                GameManager.instance.photonView.RPC(UpdateInGameUIMethodName, RpcTarget.All);
             }
         }
 
@@ -164,7 +172,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 if (GameManager.instance.CanGetTagged())
                 {
                     // get tagged
-                    GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
+                    GameManager.instance.photonView.RPC(TagPlayerMethodName, RpcTarget.All, id, false);
                 }
             }
         }
@@ -192,7 +200,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             return;
 
         // am I in a ground slam
-        if (other.gameObject.CompareTag("GroundSlam"))
+        if (other.gameObject.CompareTag(BerserkerAbilities.GroundSlamTag))
         {
             // am I in someone else's ground slam
             if (!other.gameObject.GetPhotonView().IsMine)
@@ -200,7 +208,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         
         // am I in a ground slam
-        if (other.gameObject.CompareTag("FrostNova"))
+        if (other.gameObject.CompareTag(FrostMageAbilities.FrostNovaTag))
         {
             // am I in someone else's ground slam
             if (!other.gameObject.GetPhotonView().IsMine)
@@ -211,7 +219,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     private void GroundSlamCheck(Collider other)
     {
         // am I in a ground slam
-        if (other.gameObject.CompareTag("GroundSlam"))
+        if (other.gameObject.CompareTag(BerserkerAbilities.GroundSlamTag))
         {
             // am I in someone else's ground slam
             if (!other.gameObject.GetPhotonView().IsMine)
@@ -222,7 +230,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     private void FrostNovaCheck(Collider other)
     {
         // am I in a ground slam
-        if (other.gameObject.CompareTag("FrostNova"))
+        if (other.gameObject.CompareTag(FrostMageAbilities.FrostNovaTag))
         {
             // am I in someone else's ground slam
             if (!other.gameObject.GetPhotonView().IsMine)
@@ -244,7 +252,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         // instantiate the feared particles over the network so all players can see that this player is feared
         fearParticles = PhotonNetwork.Instantiate(
-            BerserkerAbilities.BERSERKER_ABILTIES_RESOURCE_LOCATION + "FearedParticles",
+            BerserkerAbilities.BERSERKER_ABILTIES_RESOURCE_LOCATION + BerserkerAbilities.FearedParticlesObjectName,
             new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
 
         // set shout to active so that the player can't move during this time

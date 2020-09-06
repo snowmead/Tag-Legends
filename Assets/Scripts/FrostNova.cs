@@ -1,13 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
 public class FrostNova : MonoBehaviourPunCallbacks
 {
-    private void OnDestroy()
+    private float currentTime;
+    private readonly float endFrostNova = 5f;
+
+    private void Update()
     {
-        // destroy root game object
-        Destroy(gameObject.transform.root.gameObject);
+        currentTime += Time.deltaTime;
+
+        if (currentTime > endFrostNova)
+        {
+            Destroy(gameObject);
+        }
     }
 }

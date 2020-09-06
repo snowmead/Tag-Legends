@@ -22,11 +22,13 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public const float AXE_DURATION_EFFECT = 5f;
 
     [Header("Ground Slam Ability Config")]
+    public const string GroundSlamTag = "GroundSlam";
     private const int GROUND_SLAM_ABILITY_INDEX = 2;
     private const float GROUND_SLAM_COOLDOWN = 5f;
     public const float GROUND_SLAM_DURATION_EFFECT = 5f;
 
-    [Header("Shout Ability Config")]
+    [Header("Shout Ability Config")] 
+    public const string FearedParticlesObjectName = "FearedParticles";
     private const int SHOUT_ABILITY_INDEX = 3;
     private const float SHOUT_COOLDOWN = 15f;
     public const float SHOUT_DURATION_EFFECT = 10f;

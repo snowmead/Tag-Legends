@@ -7181,7 +7181,7 @@ GameObject:
   - component: {fileID: 5034509697019104999}
   m_Layer: 0
   m_Name: FrostNova
-  m_TagString: Untagged
+  m_TagString: FrostNova
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
