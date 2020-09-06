@@ -17,4 +17,10 @@ public class AbilityRpcReceiver : MonoBehaviourPunCallbacks
     {
         gameObject.GetComponent<PlayerManager>().SetFearState();
     }
+    
+    [PunRPC]
+    public void IceBolt()
+    {
+        gameObject.GetComponent<PlayerManager>().SetIceBolt();
+    }
 }

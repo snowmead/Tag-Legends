@@ -23,17 +23,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     [Header("Shout Variables")]
     public bool isShoutAnimationActive;
-    public bool isFearedActive = false;
+    public bool isFearedActive;
     public GameObject fearParticles;
     public float startFearedFromShoutAbility;
     public float endFearFromShoutAbility;
 
     [Header("Axe Variables")]
-    public bool isAxeStunned = false;
+    public bool isAxeStunned;
     public float startAxeStunned;
     public float endAxeStunned;
-    
-    [Header("IceBolt Variables")]
+
+    [Header("IceBolt Variables")] 
+    public bool isIceBoltFreeze;
     public float startIceBoltStunned;
     public float endIceBoltStunned;
 
@@ -81,84 +82,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             playerUI.SetActive(true);
         }
     }
-
-    // tag a player or remove tag from player
-    public void TagPlayer(bool tagged)
-    {
-        if (tagged)
-            tagIndicator.SetActive(true);
-        else
-            tagIndicator.SetActive(false);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // only the client controlling this player will check for collisions
-        // client based collision detection
-        if (!photonView.IsMine)
-            return;
-
-        // did we hit another player's tag range circle?
-        if (other.gameObject.CompareTag("TagCircle"))
-        {
-            // are they tag?
-            if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
-            {
-                // can we get tagged?
-                if (GameManager.instance.CanGetTagged())
-                {
-                    // get tagged
-                    GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
-                }
-            }
-        }
-
-        GroundSlamCheck(other);
-
-        // did I get hit by an IceBolt
-        if (other.gameObject.CompareTag("IceBolt"))
-        {
-            // did I get hit by someone else's IceBolt
-            if(!other.gameObject.GetPhotonView().IsMine) 
-            {
-                rig.isKinematic = true;
-                startIceBoltStunned = currentTime;
-                endIceBoltStunned = startIceBoltStunned + FrostMageAbilities.IceBoltDurationEffect;
-            }
-        }
-    }
-
-    private void GroundSlamCheck(Collider other)
-    {
-        // am I in a ground slam
-        if (other.gameObject.CompareTag("GroundSlam"))
-        {
-            // am I in someone else's ground slam
-            if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = 20f;
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        // only the client controlling this player will check for collisions
-        // client based collision detection
-        if (!photonView.IsMine)
-            return;
-
-        GroundSlamCheck(other);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // only the client controlling this player will check for collisions
-        // client based collision detection
-        if (!photonView.IsMine)
-            return;
-
-        GroundSlamCheck(other);
-    }
-
+    
     private void Update()
     {
         currentTime += Time.deltaTime;
@@ -210,10 +134,102 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         if (currentTime > endIceBoltStunned)
         {
-            rig.isKinematic = false;
+            isIceBoltFreeze = false;
         }
     }
 
+    // tag a player or remove tag from player
+    public void TagPlayer(bool tagged)
+    {
+        if (tagged)
+            tagIndicator.SetActive(true);
+        else
+            tagIndicator.SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // only the client controlling this player will check for collisions
+        // client based collision detection
+        if (!photonView.IsMine)
+            return;
+
+        // did we hit another player's tag range circle?
+        if (other.gameObject.CompareTag("TagCircle"))
+        {
+            // are they tag?
+            if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
+            {
+                // can we get tagged?
+                if (GameManager.instance.CanGetTagged())
+                {
+                    // get tagged
+                    GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
+                }
+            }
+        }
+
+        GroundSlamCheck(other);
+        FrostNovaCheck(other);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // only the client controlling this player will check for collisions
+        // client based collision detection
+        if (!photonView.IsMine)
+            return;
+
+        GroundSlamCheck(other);
+        FrostNovaCheck(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // only the client controlling this player will check for collisions
+        // client based collision detection
+        if (!photonView.IsMine)
+            return;
+
+        // am I in a ground slam
+        if (other.gameObject.CompareTag("GroundSlam"))
+        {
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 0f;
+        }
+        
+        // am I in a ground slam
+        if (other.gameObject.CompareTag("FrostNova"))
+        {
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 0f;
+        }
+    }
+
+    private void GroundSlamCheck(Collider other)
+    {
+        // am I in a ground slam
+        if (other.gameObject.CompareTag("GroundSlam"))
+        {
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 20f;
+        }
+    }
+    
+    private void FrostNovaCheck(Collider other)
+    {
+        // am I in a ground slam
+        if (other.gameObject.CompareTag("FrostNova"))
+        {
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 20f;
+        }
+    }
+    
     // called when all the players are ready to play and the countdown was done
     [PunRPC]
     public void BeginGame()
@@ -237,6 +253,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // start feared timer
         startFearedFromShoutAbility = currentTime;
         endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.SHOUT_DURATION_EFFECT;
+    }
+
+    // sets the player in a ice bolt freezed state
+    public void SetIceBolt()
+    {
+        Debug.Log("SetIceBolt!");
+        
+        isIceBoltFreeze = true;
+        startIceBoltStunned = currentTime;
+        endIceBoltStunned = startIceBoltStunned + FrostMageAbilities.IceBoltDurationEffect;
     }
 
     // sets the berserker player's shout animation state
