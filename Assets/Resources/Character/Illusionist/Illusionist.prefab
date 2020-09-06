@@ -420,6 +420,8 @@ MonoBehaviour:
   isAxeStunned: 0
   startAxeStunned: 0
   endAxeStunned: 0
+  startIceBoltStunned: 0
+  endIceBoltStunned: 0
   currentTime: 0
 --- !u!114 &21749506192450366
 MonoBehaviour:
@@ -2183,6 +2185,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5331288506936017620, guid: a6e515b7056ece14b910fddf4b550d39,
+        type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5331288506936017620, guid: a6e515b7056ece14b910fddf4b550d39,
+        type: 3}
+      propertyPath: orthographic size
+      value: 6.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6e515b7056ece14b910fddf4b550d39, type: 3}
