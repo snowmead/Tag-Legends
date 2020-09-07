@@ -22,11 +22,13 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public const float AXE_DURATION_EFFECT = 5f;
 
     [Header("Ground Slam Ability Config")]
+    public const string GroundSlamTag = "GroundSlam";
     private const int GROUND_SLAM_ABILITY_INDEX = 2;
     private const float GROUND_SLAM_COOLDOWN = 5f;
     public const float GROUND_SLAM_DURATION_EFFECT = 5f;
 
-    [Header("Shout Ability Config")]
+    [Header("Shout Ability Config")] 
+    public const string FearedParticlesObjectName = "FearedParticles";
     private const int SHOUT_ABILITY_INDEX = 3;
     private const float SHOUT_COOLDOWN = 15f;
     public const float SHOUT_DURATION_EFFECT = 10f;
@@ -78,11 +80,14 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         abilityCooldownManager.StartCooldown(GROUND_SLAM_ABILITY_INDEX, GROUND_SLAM_COOLDOWN);
 
         groundSlamAudioSource.Play();
-        animator.SetTrigger("GroundSlam");
+
+        Vector3 position = new Vector3(transform.position.x, 0.1f, transform.position.z);
+
+        //animator.SetTrigger("GroundSlam");
         PhotonNetwork.Instantiate(
             BERSERKER_ABILTIES_RESOURCE_LOCATION + "GroundSlam",
-            transform.position,
-            Quaternion.identity);
+            position,
+            gameObject.transform.rotation);
     }
 
     public void Shout()

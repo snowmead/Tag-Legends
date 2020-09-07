@@ -31,7 +31,6 @@ public class Menu : MonoBehaviourPunCallbacks
     private string characterChosenName;
 
     [Header("Settings Screen")]
-    public Slider masterVolumeSlider;
     public GameObject cam;
     private AudioSource audioSource;
 
@@ -114,7 +113,6 @@ public class Menu : MonoBehaviourPunCallbacks
 
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
-        animator.SetBool("InMainMenu", true);
 
         // can't create room or join rooms until connected to the master
         createRoomButton.interactable = false;
@@ -122,7 +120,6 @@ public class Menu : MonoBehaviourPunCallbacks
 
         // set audio source volume to the sliders default setting
         audioSource = cam.GetComponent<AudioSource>();
-        audioSource.volume = masterVolumeSlider.value;
 
         // this allows the rank text to appear by setting it everytime we switch from game scene to the menu scene
         UpdateUI(CloudManager.instance.GetRank().ToString());
@@ -348,7 +345,6 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
-        animator.SetBool("InMainMenu", true);
 
         // reset all bool variables in animator and set the chosen class bool variable to true
         // switch state machines in the animator using these values
@@ -487,12 +483,7 @@ public class Menu : MonoBehaviourPunCallbacks
         // send an rpc call to all players in the room to load the "Game" scene
         NetworkManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "Game");
     }
-
-    public void OnVolumeSlider()
-    {
-        audioSource.volume = masterVolumeSlider.value;
-    }
-
+    
     // updates the lobby UI to show player list and host buttons
     [PunRPC]
     public void UpdateLobbyUI()

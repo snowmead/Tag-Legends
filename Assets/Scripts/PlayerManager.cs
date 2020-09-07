@@ -8,38 +8,65 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector]
-    public int id;                  // player id
-    public float curTagTime;        // current tag time of player
-    public bool startGame = false;  // determines if the game started
-    public string chosenClass;      // Holds player's chosen class
+    [Header("RPC Method Names")]
+    private const string TagPlayerMethodName      = "TagPlayer";
+    private const string GameOverMethodName       = "GameOver";
+    private const string StartCountdownMethodName = "StartCountdown";
+    private const string UpdateInGameUIMethodName = "UpdateInGameUI";
+    private const string UselessCameraObjectName  = "UselessCamera";
+
+    [HideInInspector]
+    public int    id;          // player id
+    public float  curTagTime;  // current tag time of player
+    public bool   startGame;   // determines if the game started
+    public string chosenClass; // Holds player's chosen class
+    public GameObject TagCircle;
 
     [Header("Components")]
-    public Player photonPlayer;
-    public Rigidbody rig;
-    public Camera cam;
+    public Player     PhotonPlayer;
+    public Rigidbody  rig;
+    public Camera     cam;
     public GameObject tagIndicator;
     public GameObject playerUI;
     public GameObject body;
 
+    [Header("General Ability Configs")]
+    private const float SlowedRigDrag = 20f;
+
     [Header("Shout Variables")]
     public bool isShoutAnimationActive;
-    public bool isFearedActive = false;
+    public bool isFearedActive;
     public GameObject fearParticles;
     public float startFearedFromShoutAbility;
     public float endFearFromShoutAbility;
 
     [Header("Axe Variables")]
-    public bool isAxeStunned = false;
+    public bool isAxeStunned;
     public float startAxeStunned;
     public float endAxeStunned;
 
-    public static PlayerManager instance;
+    [Header("IceBolt Variables")] 
+    public bool isIceBoltFreeze;
+    public float startIceBoltStunned;
+    public float endIceBoltStunned;
+
+    [Header("IceBlock Variables")] 
+    public bool isIceBlock;
+    private float startIceBlock;
+    private float endIceBlock;
+
+    [Header("Freezing Winds Variables")] 
+    public bool isFreezingWindsActive;
+    private float startFreezingWindsTimer;
+    private float endFreezingWindsTimer;
+        
+    public static PlayerManager Instance;
 
     public float currentTime;
 
     void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     // called when the player object is instantiated
@@ -47,7 +74,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public void Initialize(Player player, string activeClass)
     {
         // set network photon player
-        photonPlayer = player;
+        PhotonPlayer = player;
         // set player id using photon player actor number
         id = player.ActorNumber;
         // set chosen class
@@ -71,10 +98,75 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            GameObject.Find("UselessCamera").SetActive(false);
+            GameObject.Find(UselessCameraObjectName).SetActive(false);
             cam.gameObject.SetActive(true);
             rig.isKinematic = false;
             playerUI.SetActive(true);
+        }
+    }
+    
+    private void Update()
+    {
+        currentTime += Time.deltaTime;
+
+        // only the master client decides when the game has ended
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // check if the curTagTime is greater then the max time allowed before losing
+            if (curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded)
+            {
+                // end the game for all players
+                GameManager.instance.gameEnded = true;
+                GameManager.instance.photonView.RPC(GameOverMethodName, RpcTarget.All, PlayerManager.Instance.id);
+            }
+        }
+
+        // only the master client decides when to start the game
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // check if all players have initialized their player in the game
+            if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.instance.countdownStarted)
+            {
+                // start the game for all players
+                GameManager.instance.photonView.RPC(StartCountdownMethodName, RpcTarget.All);
+
+                // update player vingettes in UI
+                GameManager.instance.photonView.RPC(UpdateInGameUIMethodName, RpcTarget.All);
+            }
+        }
+
+        // when the game has started start tag timer
+        if (startGame)
+        {
+            // track the amount of time we're tagged
+            if (tagIndicator.activeInHierarchy)
+                // increase current tag time every second
+                curTagTime += Time.deltaTime;
+        }
+
+        if(currentTime > endFearFromShoutAbility)
+        {
+            isFearedActive = false;
+        }
+
+        if (currentTime > endAxeStunned)
+        {
+            isAxeStunned = false;
+        }
+
+        if (currentTime > endIceBoltStunned)
+        {
+            isIceBoltFreeze = false;
+        }
+        
+        if (currentTime > endIceBlock)
+        {
+            isIceBlock = false;
+        }
+        
+        if (currentTime > endFreezingWindsTimer)
+        {
+            isFreezingWindsActive = false;
         }
     }
 
@@ -101,73 +193,75 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
             {
                 // can we get tagged?
-                if (GameManager.instance.CanGetTagged())
+                if (GameManager.instance.CanGetTagged(id))
                 {
                     // get tagged
-                    GameManager.instance.photonView.RPC("TagPlayer", RpcTarget.All, id, false);
+                    GameManager.instance.photonView.RPC(TagPlayerMethodName, RpcTarget.All, id, false);
                 }
             }
         }
 
-        if (other.gameObject.CompareTag("AxeThrow"))
-        {
-            if(!other.gameObject.GetPhotonView().IsMine)
-            {
-                Debug.Log("Got hit by an axe");
-            }
-        }
+        GroundSlamCheck(other);
+        FrostNovaCheck(other);
     }
 
-    private void Update()
+    private void OnTriggerStay(Collider other)
     {
-        currentTime += Time.deltaTime;
+        // only the client controlling this player will check for collisions
+        // client based collision detection
+        if (!photonView.IsMine)
+            return;
 
-        // only the master client decides when the game has ended
-        if (PhotonNetwork.IsMasterClient)
+        GroundSlamCheck(other);
+        FrostNovaCheck(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // only the client controlling this player will check for collisions
+        // client based collision detection
+        if (!photonView.IsMine)
+            return;
+
+        // am I in a ground slam
+        if (other.gameObject.CompareTag(BerserkerAbilities.GroundSlamTag))
         {
-            // check if the curTagTime is greater then the max time allowed before losing
-            if (curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded)
-            {
-                // end the game for all players
-                GameManager.instance.gameEnded = true;
-                GameManager.instance.photonView.RPC("GameOver", RpcTarget.All, PlayerManager.instance.id);
-            }
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 0f;
         }
-
-        // only the master client decides when to start the game
-        if (PhotonNetwork.IsMasterClient)
+        
+        // am I in a ground slam
+        if (other.gameObject.CompareTag(FrostMageAbilities.FrostNovaTag))
         {
-            // check if all players have initialized their player in the game
-            if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.instance.countdownStarted)
-            {
-                // start the game for all players
-                GameManager.instance.photonView.RPC("StartCountdown", RpcTarget.All);
-
-                // update player vingettes in UI
-                GameManager.instance.photonView.RPC("UpdateInGameUI", RpcTarget.All);
-            }
-        }
-
-        // when the game has started start tag timer
-        if (startGame)
-        {
-            // track the amount of time we're tagged
-            if (tagIndicator.activeInHierarchy)
-                // increase current tag time every second
-                curTagTime += Time.deltaTime;
-        }
-
-        if(currentTime > endFearFromShoutAbility)
-        {
-            isFearedActive = false;
-        }
-
-        if (currentTime > endAxeStunned)
-        {
-            isAxeStunned = false;
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = 0f;
         }
     }
 
+    private void GroundSlamCheck(Collider other)
+    {
+        // am I in a ground slam
+        if (other.gameObject.CompareTag(BerserkerAbilities.GroundSlamTag))
+        {
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = SlowedRigDrag;
+        }
+    }
+    
+    private void FrostNovaCheck(Collider other)
+    {
+        // am I in a ground slam
+        if (other.gameObject.CompareTag(FrostMageAbilities.FrostNovaTag))
+        {
+            // am I in someone else's ground slam
+            if (!other.gameObject.GetPhotonView().IsMine)
+                rig.drag = SlowedRigDrag;
+        }
+    }
+    
     // called when all the players are ready to play and the countdown was done
     [PunRPC]
     public void BeginGame()
@@ -182,7 +276,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         // instantiate the feared particles over the network so all players can see that this player is feared
         fearParticles = PhotonNetwork.Instantiate(
-            BerserkerAbilities.BERSERKER_ABILTIES_RESOURCE_LOCATION + "FearedParticles",
+            BerserkerAbilities.BERSERKER_ABILTIES_RESOURCE_LOCATION + BerserkerAbilities.FearedParticlesObjectName,
             new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
 
         // set shout to active so that the player can't move during this time
@@ -191,6 +285,39 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // start feared timer
         startFearedFromShoutAbility = currentTime;
         endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.SHOUT_DURATION_EFFECT;
+    }
+
+    // sets the player in a ice bolt freezed state
+    public void SetIceBolt()
+    {
+        isIceBoltFreeze = true;
+        startIceBoltStunned = currentTime;
+        endIceBoltStunned = startIceBoltStunned + FrostMageAbilities.IceBoltDurationEffect;
+    }
+
+    public void StartIceBlock()
+    {
+        isIceBlock = true;
+        startIceBlock = currentTime;
+        endIceBlock = startIceBlock + FrostMageAbilities.IceBlockDurationEffect;
+        
+        TagCircle.SetActive(false);
+    }
+    
+    // sets the player in a freezing winds state from the frost mage freezing winds ability
+    public void SetFreezingWindsState()
+    {
+        // instantiate the freezing winds block of ice over the network so all players can see that this player is feared
+        fearParticles = PhotonNetwork.Instantiate(
+            FrostMageAbilities.FrostMageAbiltiesResourceLocation + FrostMageAbilities.IceBlockResource,
+            transform.position, Quaternion.identity);
+
+        // set shout to active so that the player can't move during this time
+        isFreezingWindsActive = true;
+
+        // start feared timer
+        startFreezingWindsTimer = currentTime;
+        endFreezingWindsTimer = startFreezingWindsTimer + FrostMageAbilities.FreezingWindsDurationEffect;
     }
 
     // sets the berserker player's shout animation state
@@ -213,7 +340,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         isAxeStunned = true;
 
         startAxeStunned = currentTime;
-        endAxeStunned = startAxeStunned + 5f;
+        endAxeStunned = startAxeStunned + BerserkerAbilities.SHOUT_DURATION_EFFECT;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

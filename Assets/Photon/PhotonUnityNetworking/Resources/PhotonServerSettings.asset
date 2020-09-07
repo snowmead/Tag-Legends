@@ -34,18 +34,19 @@ MonoBehaviour:
   StartInOfflineMode: 0
   RpcList:
   - BeginGame
+  - BerserkerShout
   - ChangeScene
   - ClickRpc
   - DestroyRpc
   - GameOver
+  - IceBolt
   - ImInGame
   - Initialize
   - StartCountdown
   - TagPlayer
   - UpdateInGameUI
   - UpdateLobbyUI
-  - BerserkerShout
-  - BerserkerAxe
+  - FreezingWinds
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
+  ShowSettings: 0
   DevRegionSetOnce: 1
