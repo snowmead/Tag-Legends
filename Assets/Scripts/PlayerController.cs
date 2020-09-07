@@ -84,6 +84,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     rig.isKinematic = true;
                 }
+                else if (playerManager.isFreezingWindsActive)
+                {
+                    rig.isKinematic = true;
+                }
                 else
                 {
                     // reset to normal state player behaviour - no ability effects
