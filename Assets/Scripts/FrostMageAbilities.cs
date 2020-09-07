@@ -27,7 +27,7 @@ public class FrostMageAbilities : MonoBehaviour
     private const int IceBlockAbilityIndex = 2;
     private const float IceBlockCooldown = 5f;
     public const float IceBlockDurationEffect = 5f;
-    private const string IceBlockResource = "IceBlock";
+    public const string IceBlockResource = "IceBlock";
 
     [Header("Freezing Winds Ability Config")]
     private const int FreezingWindsAbilityIndex = 3;
@@ -96,5 +96,7 @@ public class FrostMageAbilities : MonoBehaviour
         abilityCooldownManager.StartCooldown(FreezingWindsAbilityIndex, FreezingWindsCooldown);
 
         freezingWindsAudioSource.Play();
+        
+        AbilityRpcReceiver.instance.photonView.RPC("FreezingWinds", RpcTarget.Others);
     }
 }

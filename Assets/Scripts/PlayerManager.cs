@@ -55,6 +55,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     private float startIceBlock;
     private float endIceBlock;
 
+    [Header("Freezing Winds Variables")] 
+    public bool isFreezingWindsActive;
+    private float startFreezingWindsTimer;
+    private float endFreezingWindsTimer;
+        
     public static PlayerManager Instance;
 
     public float currentTime;
@@ -157,7 +162,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (currentTime > endIceBlock)
         {
             isIceBlock = false;
-            TagCircle.SetActive(true);
+        }
+        
+        if (currentTime > endFreezingWindsTimer)
+        {
+            isFreezingWindsActive = false;
         }
     }
 
@@ -293,6 +302,22 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         endIceBlock = startIceBlock + FrostMageAbilities.IceBlockDurationEffect;
         
         TagCircle.SetActive(false);
+    }
+    
+    // sets the player in a freezing winds state from the frost mage freezing winds ability
+    public void SetFreezingWindsState()
+    {
+        // instantiate the freezing winds block of ice over the network so all players can see that this player is feared
+        fearParticles = PhotonNetwork.Instantiate(
+            FrostMageAbilities.FrostMageAbiltiesResourceLocation + FrostMageAbilities.IceBlockResource,
+            transform.position, Quaternion.identity);
+
+        // set shout to active so that the player can't move during this time
+        isFreezingWindsActive = true;
+
+        // start feared timer
+        startFreezingWindsTimer = currentTime;
+        endFreezingWindsTimer = startFreezingWindsTimer + FrostMageAbilities.FreezingWindsDurationEffect;
     }
 
     // sets the berserker player's shout animation state
