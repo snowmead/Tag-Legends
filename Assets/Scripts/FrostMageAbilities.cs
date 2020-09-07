@@ -5,25 +5,29 @@ using UnityEngine;
 
 public class FrostMageAbilities : MonoBehaviour
 {
-    public Animator animator;
-    public Rigidbody rig;
     public const string FrostMageAbiltiesResourceLocation = "Character/FrostMage/";
-    private AbilityCooldownManager abilityCooldownManager;
 
+    private PlayerManager playerManager;
+    private AbilityCooldownManager abilityCooldownManager;
+    
     [Header("Frost Nova Ability Config")] 
     public const string FrostNovaTag = "FrostNova";
     private const int FrostNovaAbilityIndex = 0;
     private const float FrostNovaCooldown = 5f;
+    public const float FrostNovaDurationEffect = 5f;
+    private const string FrostNovaResource = "FrostNova";
 
     [Header("Ice Bolt Ability Config")]
     private const int IceBoltAbilityIndex = 1;
     private const float IceBoltCooldown = 5f;
     public const float IceBoltDurationEffect = 6f;
+    private const string IceBoltResource = "IceBolt";
 
     [Header("Ice Block Ability Config")]
     private const int IceBlockAbilityIndex = 2;
     private const float IceBlockCooldown = 5f;
     public const float IceBlockDurationEffect = 5f;
+    private const string IceBlockResource = "IceBlock";
 
     [Header("Freezing Winds Ability Config")]
     private const int FreezingWindsAbilityIndex = 3;
@@ -36,11 +40,12 @@ public class FrostMageAbilities : MonoBehaviour
     public AudioSource iceBlockAudioSource;
     public AudioSource freezingWindsAudioSource;
 
-    public static FrostMageAbilities instance;
+    public static FrostMageAbilities Instance;
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
+        playerManager = gameObject.GetComponent<PlayerManager>();
         abilityCooldownManager = gameObject.GetComponent<AbilityCooldownManager>();
     }
 
@@ -52,7 +57,7 @@ public class FrostMageAbilities : MonoBehaviour
         frostNovaAudioSource.Play();
 
         PhotonNetwork.Instantiate(
-            FrostMageAbiltiesResourceLocation + "FrostNova",
+            FrostMageAbiltiesResourceLocation + FrostNovaResource,
             transform.position,
             Quaternion.identity);
     }
@@ -65,7 +70,7 @@ public class FrostMageAbilities : MonoBehaviour
         iceBoltAudioSource.Play();
 
         PhotonNetwork.Instantiate(
-            FrostMageAbiltiesResourceLocation + "IceBolt",
+            FrostMageAbiltiesResourceLocation + IceBoltResource,
             transform.position + Vector3.up,
             gameObject.transform.rotation);
     }
@@ -76,6 +81,13 @@ public class FrostMageAbilities : MonoBehaviour
         abilityCooldownManager.StartCooldown(IceBlockAbilityIndex, IceBlockCooldown);
 
         iceBlockAudioSource.Play();
+        
+        PhotonNetwork.Instantiate(
+            FrostMageAbiltiesResourceLocation + IceBlockResource,
+            transform.position,
+            gameObject.transform.rotation);
+
+        playerManager.StartIceBlock();
     }
 
     public void FreezingWinds()

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class FrostNova : MonoBehaviourPunCallbacks
+public class IceBlock : MonoBehaviour
 {
     private float currentTime;
 
@@ -12,7 +10,7 @@ public class FrostNova : MonoBehaviourPunCallbacks
     {
         currentTime += Time.deltaTime;
 
-        if (currentTime > FrostMageAbilities.FrostNovaDurationEffect)
+        if (currentTime > FrostMageAbilities.IceBlockDurationEffect)
         {
             Destroy(gameObject);
         }

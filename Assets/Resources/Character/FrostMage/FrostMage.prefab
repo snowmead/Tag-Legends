@@ -988,6 +988,7 @@ MonoBehaviour:
   curTagTime: 0
   startGame: 0
   chosenClass: 
+  TagCircle: {fileID: 3879542252347189067}
   rig: {fileID: 4586655325597420748}
   cam: {fileID: 3809584325817384875}
   tagIndicator: {fileID: 7549206590784842485}
@@ -1005,6 +1006,7 @@ MonoBehaviour:
   isIceBoltFreeze: 0
   startIceBoltStunned: 0
   endIceBoltStunned: 0
+  isIceBlock: 0
   currentTime: 0
 --- !u!114 &8804692713819940836
 MonoBehaviour:
@@ -1018,8 +1020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e3d61092b1ac7419b9355ac0916727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 95949351757707422}
-  rig: {fileID: 4586655325597420748}
   frostNovaAudioSource: {fileID: 8925259782024828685}
   iceBoltAudioSource: {fileID: 8138971206443486372}
   iceBlockAudioSource: {fileID: 7029447810467910864}
@@ -2608,8 +2608,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6489577779041469896, guid: 5a762e429f8040b4b8426eb59037a5c6, type: 3}
+    - {fileID: 7178145596198420107, guid: 5a762e429f8040b4b8426eb59037a5c6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5a762e429f8040b4b8426eb59037a5c6, type: 3}
+--- !u!1 &3879542252347189067 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5051116049809619371, guid: 5a762e429f8040b4b8426eb59037a5c6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8345113307474616032}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5058603129191488046 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3889993971493733582, guid: 5a762e429f8040b4b8426eb59037a5c6,

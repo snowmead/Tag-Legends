@@ -20,6 +20,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public float  curTagTime;  // current tag time of player
     public bool   startGame;   // determines if the game started
     public string chosenClass; // Holds player's chosen class
+    public GameObject TagCircle;
 
     [Header("Components")]
     public Player     PhotonPlayer;
@@ -48,6 +49,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public bool isIceBoltFreeze;
     public float startIceBoltStunned;
     public float endIceBoltStunned;
+
+    [Header("IceBlock Variables")] 
+    public bool isIceBlock;
+    private float startIceBlock;
+    private float endIceBlock;
 
     public static PlayerManager Instance;
 
@@ -147,6 +153,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             isIceBoltFreeze = false;
         }
+        
+        if (currentTime > endIceBlock)
+        {
+            isIceBlock = false;
+            TagCircle.SetActive(true);
+        }
     }
 
     // tag a player or remove tag from player
@@ -172,7 +184,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
             {
                 // can we get tagged?
-                if (GameManager.instance.CanGetTagged())
+                if (GameManager.instance.CanGetTagged(id))
                 {
                     // get tagged
                     GameManager.instance.photonView.RPC(TagPlayerMethodName, RpcTarget.All, id, false);
@@ -272,6 +284,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         isIceBoltFreeze = true;
         startIceBoltStunned = currentTime;
         endIceBoltStunned = startIceBoltStunned + FrostMageAbilities.IceBoltDurationEffect;
+    }
+
+    public void StartIceBlock()
+    {
+        isIceBlock = true;
+        startIceBlock = currentTime;
+        endIceBlock = startIceBlock + FrostMageAbilities.IceBlockDurationEffect;
+        
+        TagCircle.SetActive(false);
     }
 
     // sets the berserker player's shout animation state

@@ -132,18 +132,21 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void TagPlayer(int playerId, bool initialTag)
     {
+        // untag the player that was tag
         if (!initialTag)
             GetPlayer(taggedPlayer).TagPlayer(false);
 
         taggedPlayer = playerId;
+        // tag the player who should now be tag
         GetPlayer(playerId).TagPlayer(true);
         taggedTime = Time.time;
     }
 
     // is the player able to get tagged at this current time?
-    public bool CanGetTagged()
+    public bool CanGetTagged(int id)
     {
-        if (Time.time > taggedTime + invincibleDuration)
+        // check invincibleDuration and if the player is in an iceblock
+        if (Time.time > taggedTime + invincibleDuration || GetPlayer(taggedPlayer).isIceBlock)
             return true;
         else
             return false;
