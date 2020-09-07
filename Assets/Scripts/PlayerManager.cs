@@ -9,25 +9,28 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector]
     [Header("RPC Method Names")]
-    private const string TagPlayerMethodName = "TagPlayer";
-    private const string GameOverMethodName = "GameOver";
+    private const string TagPlayerMethodName      = "TagPlayer";
+    private const string GameOverMethodName       = "GameOver";
     private const string StartCountdownMethodName = "StartCountdown";
     private const string UpdateInGameUIMethodName = "UpdateInGameUI";
-    private const string UselessCameraObjectName = "UselessCamera";
+    private const string UselessCameraObjectName  = "UselessCamera";
 
     [HideInInspector]
-    public int id;                  // player id
-    public float curTagTime;        // current tag time of player
-    public bool startGame;  // determines if the game started
-    public string chosenClass;      // Holds player's chosen class
+    public int    id;          // player id
+    public float  curTagTime;  // current tag time of player
+    public bool   startGame;   // determines if the game started
+    public string chosenClass; // Holds player's chosen class
 
     [Header("Components")]
-    public Player PhotonPlayer;
-    public Rigidbody rig;
-    public Camera cam;
+    public Player     PhotonPlayer;
+    public Rigidbody  rig;
+    public Camera     cam;
     public GameObject tagIndicator;
     public GameObject playerUI;
     public GameObject body;
+
+    [Header("General Ability Configs")]
+    private const float SlowedRigDrag = 20f;
 
     [Header("Shout Variables")]
     public bool isShoutAnimationActive;
@@ -223,7 +226,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             // am I in someone else's ground slam
             if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = 20f;
+                rig.drag = SlowedRigDrag;
         }
     }
     
@@ -234,7 +237,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             // am I in someone else's ground slam
             if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = 20f;
+                rig.drag = SlowedRigDrag;
         }
     }
     
@@ -266,8 +269,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     // sets the player in a ice bolt freezed state
     public void SetIceBolt()
     {
-        Debug.Log("SetIceBolt!");
-        
         isIceBoltFreeze = true;
         startIceBoltStunned = currentTime;
         endIceBoltStunned = startIceBoltStunned + FrostMageAbilities.IceBoltDurationEffect;
@@ -293,7 +294,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         isAxeStunned = true;
 
         startAxeStunned = currentTime;
-        endAxeStunned = startAxeStunned + 5f;
+        endAxeStunned = startAxeStunned + BerserkerAbilities.SHOUT_DURATION_EFFECT;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
