@@ -1007,6 +1007,7 @@ MonoBehaviour:
   startIceBoltStunned: 0
   endIceBoltStunned: 0
   isIceBlock: 0
+  isFreezingWindsActive: 0
   currentTime: 0
 --- !u!114 &8804692713819940836
 MonoBehaviour:
