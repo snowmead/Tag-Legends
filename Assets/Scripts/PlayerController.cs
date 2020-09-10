@@ -99,42 +99,37 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         transform.TransformDirection(Vector3.down), 1.2f, groundLayer);
 
                     // can only move while grounded
-                    if (grounded)
+
+                    animator.SetBool(Jump, false);
+
+                    // only move if input was calculated
+                    if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
                     {
-                        animator.SetBool(Jump, false);
+                        transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                        transform.forward = inputVector;
+                        rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y,
+                            transform.forward.z * speed);
+                    }
 
-                        // only move if input was calculated
-                        if (inputVector.x < 0 || inputVector.z < 0 || inputVector.x > 0 || inputVector.z > 0)
-                        {
-                            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-                            transform.forward = inputVector;
-                            rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y,
-                                transform.forward.z * speed);
-                        }
+                    // Completely stop moving (velocity-wise) if no input was found
+                    if (horizontal == 0f && vertical == 0f)
+                    {
+                        rig.velocity = new Vector3(0f, rig.velocity.y, 0f);
+                    }
 
-                        // Completely stop moving (velocity-wise) if no input was found
-                        if (horizontal == 0f && vertical == 0f)
-                        {
-                            rig.velocity = new Vector3(0f, rig.velocity.y, 0f);
-                        }
-
-                        // Animatioms
-                        if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 ||
-                            Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1 || Mathf.Abs(joystick.Vertical) > .1 ||
-                            Mathf.Abs(joystick.Horizontal) > .1
-                        ) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
-                        {
-                            animator.SetBool(Sprint, true);
-                        }
-                        else
-                        {
-                            animator.SetBool(Sprint, false);
-                        }
+                    // Animatioms
+                    if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > .1 ||
+                        Mathf.Abs(Input.GetAxisRaw("Horizontal")) > .1 || Mathf.Abs(joystick.Vertical) > .1 ||
+                        Mathf.Abs(joystick.Horizontal) > .1
+                    ) //(rig.velocity.x > 0 || rig.velocity.z > 0 || rig.velocity.x < 0 || rig.velocity.z < 0)
+                    {
+                        animator.SetBool(Sprint, true);
                     }
                     else
                     {
-                        animator.SetBool(Jump, true);
+                        animator.SetBool(Sprint, false);
                     }
+
                 }
             }
 
@@ -142,15 +137,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 GameUI.instance.EscapeMenu();
             }
-        }
-    }
-
-    public void OnJumpButton()
-    {
-        if (grounded)
-        {
-            rig.velocity = new Vector3(0f, 6f, 0f);
-            animator.SetBool(Jump, true);
         }
     }
 }
