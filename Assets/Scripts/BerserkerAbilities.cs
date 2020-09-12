@@ -14,24 +14,24 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
 
     [Header("Leap Ability Config")]
     private const int LEAP_ABILITY_INDEX = 0;
-    private const float LEAP_COOLDOWN = 5f;
+    private const float LEAP_COOLDOWN = 10f;
 
     [Header("Axe Ability Config")]
     private const int AXE_ABILITY_INDEX = 1;
-    private const float AXE_COOLDOWN = 5f;
+    private const float AXE_COOLDOWN = 10f;
     public const float AXE_DURATION_EFFECT = 5f;
 
     [Header("Ground Slam Ability Config")]
     public const string GroundSlamTag = "GroundSlam";
     private const int GROUND_SLAM_ABILITY_INDEX = 2;
-    private const float GROUND_SLAM_COOLDOWN = 5f;
+    private const float GROUND_SLAM_COOLDOWN = 10f;
     public const float GROUND_SLAM_DURATION_EFFECT = 5f;
 
     [Header("Shout Ability Config")] 
     public const string FearedParticlesObjectName = "FearedParticles";
     private const int SHOUT_ABILITY_INDEX = 3;
-    private const float SHOUT_COOLDOWN = 15f;
-    public const float SHOUT_DURATION_EFFECT = 10f;
+    private const float SHOUT_COOLDOWN = 45f;
+    public const float SHOUT_DURATION_EFFECT = 5f;
     public const string SHOUT_ACTIVE_ANIMATOR_FLOAT_VAR = "ShoutActive";
 
     public AudioSource leapAudioSource;

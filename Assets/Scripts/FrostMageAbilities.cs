@@ -13,25 +13,25 @@ public class FrostMageAbilities : MonoBehaviour
     [Header("Frost Nova Ability Config")] 
     public const string FrostNovaTag = "FrostNova";
     private const int FrostNovaAbilityIndex = 0;
-    private const float FrostNovaCooldown = 5f;
+    private const float FrostNovaCooldown = 10f;
     public const float FrostNovaDurationEffect = 5f;
     private const string FrostNovaResource = "FrostNova";
 
     [Header("Ice Bolt Ability Config")]
     private const int IceBoltAbilityIndex = 1;
-    private const float IceBoltCooldown = 5f;
+    private const float IceBoltCooldown = 10f;
     public const float IceBoltDurationEffect = 6f;
     private const string IceBoltResource = "IceBolt";
 
     [Header("Ice Block Ability Config")]
     private const int IceBlockAbilityIndex = 2;
-    private const float IceBlockCooldown = 5f;
+    private const float IceBlockCooldown = 10f;
     public const float IceBlockDurationEffect = 5f;
     public const string IceBlockResource = "IceBlock";
 
     [Header("Freezing Winds Ability Config")]
     private const int FreezingWindsAbilityIndex = 3;
-    private const float FreezingWindsCooldown = 15f;
+    private const float FreezingWindsCooldown = 45f;
     public const float FreezingWindsDurationEffect = 10f;
     public const string FreezingWindsActiveAnimatorFloatVar = "FreezingWindsActive";
 
