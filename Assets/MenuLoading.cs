@@ -32,11 +32,11 @@ public class MenuLoading : MonoBehaviour
 
     public void PhotonConnectionDone()
     {
-        progressBar.value = 0.5f;
+        progressBar.value += 0.3f;
     }
 
     public void CloudConnectionDone()
     {
-        progressBar.value += 0.5f;
+        progressBar.value += 0.7f;
     }
 }
