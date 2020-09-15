@@ -41396,7 +41396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatedGameObject: {fileID: 3982626901983355617}
-  Delay: 1.9
+  Delay: 0
 --- !u!114 &3951401191885219393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41410,7 +41410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatedGameObject: {fileID: 3983236857438231563}
-  Delay: 1.95
+  Delay: 0
 --- !u!114 &3951558790445671063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41424,7 +41424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatedGameObject: {fileID: 3982754026664520711}
-  Delay: 0.35
+  Delay: 0
 --- !u!1 &3983215209283799545
 GameObject:
   m_ObjectHideFlags: 0
