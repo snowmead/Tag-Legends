@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [HideInInspector]
     [Header("RPC Method Names")]
     private const string TagPlayerMethodName      = "TagPlayer";
     private const string GameOverMethodName       = "GameOver";

@@ -21,8 +21,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public float speed = 10f;
     public Vector3 inputVector;
     public Camera cam;
-    public float jumpForce;
-    public float turnSmoothTime = 0.1f;
+    public AudioSource SoundFootSteps;
 
     public float horizontal;
     public float vertical;
@@ -36,6 +35,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private void Awake()
     {
         playerManager = gameObject.GetComponent<PlayerManager>();
+    }
+
+    private void Start()
+    {
+        if (photonView.IsMine)
+        {
+            SoundFootSteps.enabled = true;
+        }
     }
 
     // update is called once per frame
@@ -109,12 +116,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         transform.forward = inputVector;
                         rig.velocity = new Vector3(transform.forward.x * speed, rig.velocity.y,
                             transform.forward.z * speed);
+                        
+                        // play sound footsteps
+                        if(!SoundFootSteps.isPlaying)
+                            SoundFootSteps.Play();
                     }
 
                     // Completely stop moving (velocity-wise) if no input was found
                     if (horizontal == 0f && vertical == 0f)
                     {
                         rig.velocity = new Vector3(0f, rig.velocity.y, 0f);
+                        
+                        // stop playing sound footsteps
+                        if(SoundFootSteps.isPlaying)
+                            SoundFootSteps.Stop();
                     }
 
                     // Animatioms
