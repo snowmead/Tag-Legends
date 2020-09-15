@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             SoundFootSteps.enabled = true;
+            SoundFootSteps.Stop();
         }
     }
 

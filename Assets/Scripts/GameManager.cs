@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     private int playersInGame;
     GameObject chosenClass;
 
+    [Header("Tag Effects")] 
+    private const string TAG_EFFECT_RESOURCE = "TagEffect";
+    public AudioSource TagSound;
+    
     [HideInInspector]
     PlayerManager playerManagerScript;
     public bool countdownStarted = false;
@@ -140,6 +144,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         // tag the player who should now be tag
         GetPlayer(playerId).TagPlayer(true);
         taggedTime = Time.time;
+
+        // play tag sound effect
+        TagSound.Play();
+        // instantiate tag effect where player was tagged
+        PhotonNetwork.Instantiate("Character/" + TAG_EFFECT_RESOURCE, GetPlayer(playerId).gameObject.transform.position, Quaternion.identity);
     }
 
     // is the player able to get tagged at this current time?

@@ -54,7 +54,7 @@ public class FrostMageAbilities : MonoBehaviour
         // start the ability cooldown
         abilityCooldownManager.StartCooldown(FrostNovaAbilityIndex, FrostNovaCooldown);
 
-        frostNovaAudioSource.Play();
+        //frostNovaAudioSource.Play();
 
         PhotonNetwork.Instantiate(
             FrostMageAbiltiesResourceLocation + FrostNovaResource,
@@ -67,7 +67,7 @@ public class FrostMageAbilities : MonoBehaviour
         // start the ability cooldown
         abilityCooldownManager.StartCooldown(IceBoltAbilityIndex, IceBoltCooldown);
 
-        iceBoltAudioSource.Play();
+        //iceBoltAudioSource.Play();
 
         PhotonNetwork.Instantiate(
             FrostMageAbiltiesResourceLocation + IceBoltResource,
@@ -80,7 +80,7 @@ public class FrostMageAbilities : MonoBehaviour
         // start the ability cooldown
         abilityCooldownManager.StartCooldown(IceBlockAbilityIndex, IceBlockCooldown);
 
-        iceBlockAudioSource.Play();
+        //iceBlockAudioSource.Play();
         
         PhotonNetwork.Instantiate(
             FrostMageAbiltiesResourceLocation + IceBlockResource,
@@ -95,7 +95,7 @@ public class FrostMageAbilities : MonoBehaviour
         // start the ability cooldown
         abilityCooldownManager.StartCooldown(FreezingWindsAbilityIndex, FreezingWindsCooldown);
 
-        freezingWindsAudioSource.Play();
+        //freezingWindsAudioSource.Play();
         
         AbilityRpcReceiver.instance.photonView.RPC("FreezingWinds", RpcTarget.Others);
     }
