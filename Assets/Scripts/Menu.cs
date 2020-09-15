@@ -22,10 +22,6 @@ public class Menu : MonoBehaviourPunCallbacks
     private const string PLAY_OPTIONS_NAME = "PlayOptions";
     private const string SETTINGS_NAME = "SettingsPopUp";
 
-    [Header("Play Options Screen")]
-    public Button createRoomButton;
-    public Button joinRoomButton;
-
     [Header("Character Screen")]
     public GameObject characterChosen;
     private string characterChosenName;
@@ -37,6 +33,15 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Lobby Screen")]
     public TextMeshProUGUI playerListText;
     public Button startGameButton;
+
+    [Header("Custom Game")] 
+    public GameObject CustomGamePanel;
+    public GameObject CustomGameNameObject;
+    public TextMeshProUGUI CustomGameName;
+    public GameObject SearchForCustomGame;
+    public Button CreateCustomGameButton;
+    public Button JoinCustomGameButton;
+    public TextMeshProUGUI numberOfPlayersInCustomGame;
 
     [Header("Player Preview")]
     public Animator animator;
@@ -97,7 +102,7 @@ public class Menu : MonoBehaviourPunCallbacks
             // set as the chosen character
             characterChosen = classAlreadyChosen;
             // set character animator
-            switchClassAnimator(characterChosen.name.Replace("(Clone)", string.Empty));
+            SwitchClassAnimator(characterChosen.name.Replace("(Clone)", string.Empty));
         }
         else
         {
@@ -114,10 +119,6 @@ public class Menu : MonoBehaviourPunCallbacks
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
 
-        // can't create room or join rooms until connected to the master
-        createRoomButton.interactable = false;
-        joinRoomButton.interactable = false;
-
         // set audio source volume to the sliders default setting
         audioSource = cam.GetComponent<AudioSource>();
 
@@ -126,13 +127,6 @@ public class Menu : MonoBehaviourPunCallbacks
         RankDisplayer.instance.UpdateRankDisplay();
 
         searchForGame.SetActive(false);
-    }
-
-    // called when connection to photon server is successful
-    public override void OnConnectedToMaster()
-    {
-        createRoomButton.interactable = true;
-        joinRoomButton.interactable = true;
     }
 
     /**
@@ -336,12 +330,12 @@ public class Menu : MonoBehaviourPunCallbacks
     private void InitializeChosenClass(string className)
     {
         buttonClickAudio.Play();
-        switchClassAnimator(className);
+        SwitchClassAnimator(className);
         SetupPlayerPreview(className);
         DontDestroyOnLoad(characterChosen);
     }
 
-    private void switchClassAnimator(string classAnimBoolVar)
+    private void SwitchClassAnimator(string classAnimBoolVar)
     {
         // set the player preview in a kneeling animation
         animator = characterChosen.GetComponent<Animator>();
@@ -401,6 +395,97 @@ public class Menu : MonoBehaviourPunCallbacks
             // show the character again
             characterChosen.transform.GetChild(0).gameObject.SetActive(false);
         } 
+    }
+
+    public void OnCustomGameButton()
+    {
+        // show the custom game panel
+        CustomGamePanel.SetActive(true);
+        
+        // set the class character behind the view of the custom game view
+        characterChosen.transform.position = new Vector3(characterChosen.transform.position.x, characterChosen.transform.position.y, -10);
+    }
+
+    public void OnCustomGameExitButton()
+    {
+        // set create and join buttons non interactable
+        CreateCustomGameButton.interactable = true;
+        JoinCustomGameButton.interactable = true;
+        
+        // don't show the custom game panel
+        CustomGamePanel.SetActive(false);
+        
+        // don't show the search for game text
+        SearchForCustomGame.SetActive(false);
+        
+        // set the custom game input text field to enabled
+        // value can be changed
+        CustomGameNameObject.GetComponent<TMP_InputField>().interactable = true;
+        
+        // leave the room if you are in one
+        if(NetworkManager.instance.CurrentRoom() != null)
+            NetworkManager.instance.LeaveRoom();
+        
+        // set the class character back to a visible position
+        characterChosen.transform.position = new Vector3(characterChosen.transform.position.x, characterChosen.transform.position.y, 0.5f);
+    }
+
+    public void OnCustomGameNameChange(string gameName)
+    {
+        CustomGameName.text = gameName;
+    }
+    
+    public void OnCustomGameCreateButton()
+    {
+        // set create and join buttons non interactable
+        CreateCustomGameButton.interactable = false;
+        JoinCustomGameButton.interactable = false;
+
+        // show the search for game text
+        SearchForCustomGame.SetActive(true);
+        
+        // set the custom game input text field to disabled
+        // value cannot be changed
+        CustomGameNameObject.GetComponent<TMP_InputField>().interactable = false;
+
+        // setup to create an unranked game
+        NetworkManager.instance.rankedGame = false;
+        // create the custom game room
+        NetworkManager.instance.CreateRoom(CustomGameName.text);
+    }
+    
+    public void OnCustomGameJoinButton()
+    {
+        // set create and join buttons non interactable
+        CreateCustomGameButton.interactable = false;
+        JoinCustomGameButton.interactable = false;
+        
+        // show the search for game text
+        SearchForCustomGame.SetActive(true);
+        
+        // set the custom game input text field to disabled
+        // value cannot be changed
+        CustomGameNameObject.GetComponent<TMP_InputField>().interactable = false;
+        
+        // join the custom game room
+        NetworkManager.instance.JoinRoom(CustomGameName.text);
+    }
+
+    public void OnCancelCustomGameSearchButton()
+    {
+        // set create and join buttons non interactable
+        CreateCustomGameButton.interactable = true;
+        JoinCustomGameButton.interactable = true;
+        
+        // don't show the search for game text
+        SearchForCustomGame.SetActive(false);
+        
+        // set the custom game input text field to enabled
+        // value can be changed
+        CustomGameNameObject.GetComponent<TMP_InputField>().interactable = true;
+        
+        // leave the room
+        NetworkManager.instance.LeaveRoom();
     }
 
     /**
@@ -489,5 +574,6 @@ public class Menu : MonoBehaviourPunCallbacks
     public void UpdateLobbyUI()
     {
         numberOfPlayersInLobby.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+        numberOfPlayersInCustomGame.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
     }
 }

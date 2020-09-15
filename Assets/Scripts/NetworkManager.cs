@@ -55,6 +55,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             PopulateGrid.instance.PopulateRoomList(roomList);
     }
 
+    public Room CurrentRoom()
+    {
+        return PhotonNetwork.CurrentRoom;
+    }
+
     public void CreateRoom(string roomName)
     {
         int rank;
@@ -121,9 +126,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient &&
                     PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
-            // set animator to not be kneeling - entering game now
-            Menu.instance.animator.SetBool("InMainMenu", false);
-
             // send an rpc call to all players in the room to load the "Game" scene
             photonView.RPC("ChangeScene", RpcTarget.All, "Game");
         }
