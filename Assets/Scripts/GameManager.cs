@@ -185,10 +185,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         // get player
         PlayerManager player = GetPlayer(playerId);
 
+        int newRank = -1;
+        
         // if it is me, modify my rank
         if (player.photonView.IsMine && NetworkManager.instance.rankedGame)
         {
-            CloudManager.instance.RankModifier(playersInGame);
+            newRank = CloudManager.instance.RankModifier(playersInGame);
         }
 
         // reduce the number of players in the game
@@ -196,7 +198,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // end the game
         gameEnded = true;
-        GameUI.instance.SetLoseText(player.PhotonPlayer.NickName);
+        GameUI.instance.SetLoseText(player.PhotonPlayer.NickName, newRank, playersInGame.ToString());
     }
 
     // called after the game has been won - navigates back to the Menu scene

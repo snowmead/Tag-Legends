@@ -70,10 +70,12 @@ public class CloudManager : MonoBehaviour
     }
 
     // increase rank of player who didn't lose the game
-    public void RankModifier(int playersInGame)
+    public int RankModifier(int playersInGame)
     {
         CloudVariables.RankScore += getRankModifier(playersInGame);
         Save();
+
+        return CloudVariables.RankScore;
     }
 
     public int getRankModifier(int playersInGame)

@@ -8,6 +8,12 @@ using System.ComponentModel;
 
 public class GameUI : MonoBehaviour
 {
+    [Header("End Game Screen")] 
+    public GameObject EndGameScreen;
+    public TextMeshProUGUI EndGameScreenTitle;
+    public GameObject RankScoreScreen;
+    public TextMeshProUGUI RankScore; 
+    
     public PlayerUIContainer[] playerContainers;
     public TextMeshProUGUI loseText;
     public TextMeshProUGUI countdownText;
@@ -71,10 +77,21 @@ public class GameUI : MonoBehaviour
     }
 
     // called when a player has won the game
-    public void SetLoseText(string loserName)
+    public void SetLoseText(string loserName, int newRank, string playersLeft)
     {
-        loseText.gameObject.SetActive(true);
-        loseText.text = loserName + " lost";
+        EndGameScreen.SetActive(true);
+        if (newRank >= 0)
+        {
+            RankScoreScreen.SetActive(true);
+            RankScore.text = newRank.ToString();
+        }
+            
+        EndGameScreenTitle.gameObject.SetActive(true);
+        if (playersLeft == "0")
+        {
+            EndGameScreenTitle.text = "You WON!";
+        }
+        EndGameScreenTitle.text = "You came in " + playersLeft + "th place!";
     }
 
     public void BeginCountdown(int seconds)
