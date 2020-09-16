@@ -10470,7 +10470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299369f945879d147a3e97f89f51f236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActivatedGameObject: {fileID: 3982755697974458159}
   Delay: 1.9
 --- !u!114 &3951280760512781743
 MonoBehaviour:
@@ -10484,7 +10483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299369f945879d147a3e97f89f51f236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActivatedGameObject: {fileID: 3983180413567168029}
   Delay: 0.2
 --- !u!1 &3982633253778140445
 GameObject:
@@ -41352,7 +41350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299369f945879d147a3e97f89f51f236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActivatedGameObject: {fileID: 3982626901983355617}
   Delay: 0
 --- !u!114 &3951401191885219393
 MonoBehaviour:
@@ -41366,7 +41363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299369f945879d147a3e97f89f51f236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActivatedGameObject: {fileID: 3983236857438231563}
   Delay: 0
 --- !u!114 &3951558790445671063
 MonoBehaviour:
@@ -41380,7 +41376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299369f945879d147a3e97f89f51f236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActivatedGameObject: {fileID: 3982754026664520711}
   Delay: 0
 --- !u!1 &3983215209283799545
 GameObject:
