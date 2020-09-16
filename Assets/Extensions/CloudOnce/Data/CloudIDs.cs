@@ -33,7 +33,7 @@ namespace CloudOnce
                 {
 #if UNITY_ANDROID && !UNITY_EDITOR
 #if CLOUDONCE_GOOGLE
-                    return "CgkIwNa2m8MOEAIQAA";
+                    return "CgkIyoCahe4CEAIQAQ";
 #else
                     return string.Empty;
 #endif
