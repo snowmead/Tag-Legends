@@ -1281,7 +1281,6 @@ MonoBehaviour:
   curTagTime: 0
   startGame: 0
   chosenClass: 
-  TagCircle: {fileID: 2215065226051252628}
   rig: {fileID: 6900564281828306959}
   cam: {fileID: 7014416444427985670}
   tagIndicator: {fileID: 3265171104829327984}

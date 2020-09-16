@@ -19,7 +19,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public float  curTagTime;  // current tag time of player
     public bool   startGame;   // determines if the game started
     public string chosenClass; // Holds player's chosen class
-    public GameObject TagCircle;
 
     [Header("Components")]
     public Player     PhotonPlayer;
@@ -199,9 +198,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
         }
-
-        GroundSlamCheck(other);
-        FrostNovaCheck(other);
     }
 
     private void OnTriggerStay(Collider other)
@@ -211,56 +207,35 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             return;
 
-        GroundSlamCheck(other);
-        FrostNovaCheck(other);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // only the client controlling this player will check for collisions
-        // client based collision detection
-        if (!photonView.IsMine)
-            return;
-
-        // am I in a ground slam
-        if (other.gameObject.CompareTag(BerserkerAbilities.GroundSlamTag))
+        // am I in any slowing effects
+        if (SlowingAbilityEffectCheck(other, BerserkerAbilities.GroundSlamTag) || 
+            SlowingAbilityEffectCheck(other, FrostMageAbilities.FrostNovaTag))
         {
-            // am I in someone else's ground slam
-            if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = 0f;
+            // slow myself
+            rig.drag = SlowedRigDrag;
         }
-        
-        // am I in a ground slam
-        if (other.gameObject.CompareTag(FrostMageAbilities.FrostNovaTag))
+        else
         {
-            // am I in someone else's ground slam
-            if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = 0f;
-        }
-    }
-
-    private void GroundSlamCheck(Collider other)
-    {
-        // am I in a ground slam
-        if (other.gameObject.CompareTag(BerserkerAbilities.GroundSlamTag))
-        {
-            // am I in someone else's ground slam
-            if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = SlowedRigDrag;
+            // run at normal speed
+            rig.drag = 0f;   
         }
     }
     
-    private void FrostNovaCheck(Collider other)
+    private bool SlowingAbilityEffectCheck(Collider other, string ability)
     {
+        // get parent game object
+        GameObject otherCollider = other.gameObject.transform.root.gameObject;
+
         // am I in a ground slam
-        if (other.gameObject.CompareTag(FrostMageAbilities.FrostNovaTag))
+        if (otherCollider.CompareTag(ability))
         {
             // am I in someone else's ground slam
-            if (!other.gameObject.GetPhotonView().IsMine)
-                rig.drag = SlowedRigDrag;
+            return !otherCollider.GetPhotonView().IsMine;
         }
+
+        return false;
     }
-    
+
     // called when all the players are ready to play and the countdown was done
     [PunRPC]
     public void BeginGame()
@@ -299,8 +274,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         isIceBlock = true;
         startIceBlock = currentTime;
         endIceBlock = startIceBlock + FrostMageAbilities.IceBlockDurationEffect;
-        
-        TagCircle.SetActive(false);
     }
     
     // sets the player in a freezing winds state from the frost mage freezing winds ability

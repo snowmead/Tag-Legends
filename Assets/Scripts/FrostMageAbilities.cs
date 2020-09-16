@@ -77,6 +77,8 @@ public class FrostMageAbilities : MonoBehaviour
             FrostMageAbiltiesResourceLocation + IceBlockResource,
             transform.position,
             gameObject.transform.rotation);
+        
+        AbilityRpcReceiver.instance.photonView.RPC("IceBlock", RpcTarget.Others, playerManager.id);
 
         playerManager.StartIceBlock();
     }

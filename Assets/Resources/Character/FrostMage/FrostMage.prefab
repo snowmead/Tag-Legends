@@ -7902,7 +7902,6 @@ MonoBehaviour:
   curTagTime: 0
   startGame: 0
   chosenClass: 
-  TagCircle: {fileID: 2307348757216254018}
   rig: {fileID: 2394162231821568578}
   cam: {fileID: 6641386814120367209}
   tagIndicator: {fileID: 2365851073939965484}
@@ -7935,10 +7934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e3d61092b1ac7419b9355ac0916727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frostNovaAudioSource: {fileID: 0}
-  iceBoltAudioSource: {fileID: 0}
-  iceBlockAudioSource: {fileID: 0}
-  freezingWindsAudioSource: {fileID: 1200029116230693179}
 --- !u!114 &3237285010501158304
 MonoBehaviour:
   m_ObjectHideFlags: 0

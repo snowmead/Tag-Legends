@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using TMPro;
 using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -30,7 +31,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     GameObject chosenClass;
 
     [Header("Tag Effects")] 
-    private const string TAG_EFFECT_RESOURCE = "TagEffect";
     public AudioSource TagSound;
     
     [HideInInspector]
@@ -147,18 +147,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // play tag sound effect
         TagSound.Play();
-        // instantiate tag effect where player was tagged
-        PhotonNetwork.Instantiate("Character/" + TAG_EFFECT_RESOURCE, GetPlayer(playerId).gameObject.transform.position, Quaternion.identity);
     }
 
     // is the player able to get tagged at this current time?
     public bool CanGetTagged(int id)
     {
         // check invincibleDuration and if the player is in an iceblock
-        if (Time.time > taggedTime + invincibleDuration || GetPlayer(taggedPlayer).isIceBlock)
-            return true;
-        else
-            return false;
+        return Time.time > taggedTime + invincibleDuration && !GetPlayer(id).isIceBlock;
     }
 
     // called when all players are ready and loaded in
