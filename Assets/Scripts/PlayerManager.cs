@@ -275,7 +275,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         // instantiate the feared particles over the network so all players can see that this player is feared
         fearParticles = PhotonNetwork.Instantiate(
-            BerserkerAbilities.BERSERKER_ABILTIES_RESOURCE_LOCATION + BerserkerAbilities.FearedParticlesObjectName,
+            BerserkerAbilities.BerserkerAbiltiesResourceLocation + BerserkerAbilities.FearedParticlesObjectName,
             new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
 
         // set shout to active so that the player can't move during this time
@@ -283,7 +283,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         // start feared timer
         startFearedFromShoutAbility = currentTime;
-        endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.SHOUT_DURATION_EFFECT;
+        endFearFromShoutAbility = startFearedFromShoutAbility + BerserkerAbilities.ShoutDurationEffect;
     }
 
     // sets the player in a ice bolt freezed state
@@ -339,7 +339,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         isAxeStunned = true;
 
         startAxeStunned = currentTime;
-        endAxeStunned = startAxeStunned + BerserkerAbilities.SHOUT_DURATION_EFFECT;
+        endAxeStunned = startAxeStunned + BerserkerAbilities.AxeDurationEffect;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

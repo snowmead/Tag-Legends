@@ -9,48 +9,45 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public Animator animator;
 
     public Rigidbody rig;
-    public const string BERSERKER_ABILTIES_RESOURCE_LOCATION = "Character/Berserker/";
+    public const string BerserkerAbiltiesResourceLocation = "Character/Berserker/";
     private AbilityCooldownManager abilityCooldownManager;
 
     [Header("Leap Ability Config")]
-    private const int LEAP_ABILITY_INDEX = 0;
-    private const float LEAP_COOLDOWN = 5f;
+    private const int LeapAbilityIndex = 0;
+    private const float LeapCooldown = 10f;
 
     [Header("Axe Ability Config")]
-    private const int AXE_ABILITY_INDEX = 1;
-    private const float AXE_COOLDOWN = 5f;
-    public const float AXE_DURATION_EFFECT = 5f;
+    private const int AxeAbilityIndex = 1;
+    private const float AxeCooldown = 10f;
+    public const float AxeDurationEffect = 2f;
 
     [Header("Ground Slam Ability Config")]
     public const string GroundSlamTag = "GroundSlam";
-    private const int GROUND_SLAM_ABILITY_INDEX = 2;
-    private const float GROUND_SLAM_COOLDOWN = 5f;
-    public const float GROUND_SLAM_DURATION_EFFECT = 5f;
+    private const int GroundSlamAbilityIndex = 2;
+    private const float GroundSlamCooldown = 20f;
+    public const float GroundSlamDurationEffect = 5f;
 
     [Header("Shout Ability Config")] 
     public const string FearedParticlesObjectName = "FearedParticles";
-    private const int SHOUT_ABILITY_INDEX = 3;
-    private const float SHOUT_COOLDOWN = 15f;
-    public const float SHOUT_DURATION_EFFECT = 10f;
-    public const string SHOUT_ACTIVE_ANIMATOR_FLOAT_VAR = "ShoutActive";
+    private const int ShoutAbilityIndex = 3;
+    private const float ShoutCooldown = 30f;
+    public const float ShoutDurationEffect = 3f;
+    public const string ShoutActiveAnimatorFloatVar = "ShoutActive";
 
     public AudioSource leapAudioSource;
     public AudioSource axeThrowAudioSource;
     public AudioSource groundSlamAudioSource;
     public AudioSource shoutAudioSource;
-
-    public static BerserkerAbilities instance;
-
+    
     private void Awake()
     {
-        instance = this;
         abilityCooldownManager = gameObject.GetComponent<AbilityCooldownManager>();
     }
 
     public void Leap()
     {
         // start the ability cooldown
-        abilityCooldownManager.StartCooldown(LEAP_ABILITY_INDEX, LEAP_COOLDOWN);
+        abilityCooldownManager.StartCooldown(LeapAbilityIndex, LeapCooldown);
 
         leapAudioSource.Play();
 
@@ -64,12 +61,12 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public void AxeThrow()
     {
         // start the ability cooldown
-        abilityCooldownManager.StartCooldown(AXE_ABILITY_INDEX, AXE_COOLDOWN);
+        abilityCooldownManager.StartCooldown(AxeAbilityIndex, AxeCooldown);
 
         axeThrowAudioSource.Play();
 
         PhotonNetwork.Instantiate(
-            BERSERKER_ABILTIES_RESOURCE_LOCATION + "Axe",
+            BerserkerAbiltiesResourceLocation + "Axe",
             transform.position + Vector3.up,
             gameObject.transform.rotation);
     }
@@ -77,15 +74,14 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public void GroundSlam()
     {
         // start the ability cooldown
-        abilityCooldownManager.StartCooldown(GROUND_SLAM_ABILITY_INDEX, GROUND_SLAM_COOLDOWN);
+        abilityCooldownManager.StartCooldown(GroundSlamAbilityIndex, GroundSlamCooldown);
 
         groundSlamAudioSource.Play();
 
         Vector3 position = new Vector3(transform.position.x, 0.1f, transform.position.z);
 
-        //animator.SetTrigger("GroundSlam");
         PhotonNetwork.Instantiate(
-            BERSERKER_ABILTIES_RESOURCE_LOCATION + "GroundSlam",
+            BerserkerAbiltiesResourceLocation + "GroundSlam",
             position,
             gameObject.transform.rotation);
     }
@@ -93,14 +89,14 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public void Shout()
     {
         // start the ability cooldown
-        abilityCooldownManager.StartCooldown(SHOUT_ABILITY_INDEX, SHOUT_COOLDOWN);
+        abilityCooldownManager.StartCooldown(ShoutAbilityIndex, ShoutCooldown);
 
         shoutAudioSource.Play();
-        animator.SetTrigger("Shout");
+        
         // Set all other players feared active state
         AbilityRpcReceiver.instance.photonView.RPC("BerserkerShout", RpcTarget.Others);
         PhotonNetwork.Instantiate(
-            BERSERKER_ABILTIES_RESOURCE_LOCATION + "ShoutParticles",
+            BerserkerAbiltiesResourceLocation + "ShoutParticles",
             transform.position,
             Quaternion.identity);
     }

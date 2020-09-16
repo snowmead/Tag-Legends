@@ -5,6 +5,18 @@ using UnityEngine;
 
 public class GroundSlam : MonoBehaviourPunCallbacks
 {
+    private float currentTime;
+
+    private void Update()
+    {
+        currentTime += Time.deltaTime;
+
+        if (currentTime > BerserkerAbilities.GroundSlamDurationEffect)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     private void OnDestroy()
     {
         // destroy root game object

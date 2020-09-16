@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 // if shout is active - set fear animation and set kinematic to true
                 if (playerManager.isFearedActive)
                 {
-                    animator.SetBool(BerserkerAbilities.SHOUT_ACTIVE_ANIMATOR_FLOAT_VAR, true);
+                    animator.SetBool(BerserkerAbilities.ShoutActiveAnimatorFloatVar, true);
                     rig.isKinematic = true;
                 }
                 // if i'm a berserker and im shouting - then don't move until animation is complete
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 else
                 {
                     // reset to normal state player behaviour - no ability effects
-                    animator.SetBool(BerserkerAbilities.SHOUT_ACTIVE_ANIMATOR_FLOAT_VAR, false);
+                    animator.SetBool(BerserkerAbilities.ShoutActiveAnimatorFloatVar, false);
                     rig.isKinematic = false;
 
                     // check if my player is grounded
