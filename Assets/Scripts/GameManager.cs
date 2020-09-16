@@ -182,8 +182,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         // get player
         PlayerManager player = GetPlayer(playerId);
         
-        //player.TagCollider.SetActive(false);
-        
         // only stop my game
         if (player.photonView.IsMine && !gameEnded)
         {
