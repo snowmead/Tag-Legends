@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private void Update()
     {
         // check if the game is started
-        if (PlayerManager.Instance.startGame)
+        if (PlayerManager.Instance.startGame && !GameManager.instance.gameEnded)
         {
             // only move my player
             if (photonView.IsMine)

@@ -399,6 +399,7 @@
             <e p="PluginVersion.cs" t="Include" />
           </e>
         </e>
+        <e p="FloatingText.cs" t="Include" />
         <e p="GoogleMobileAds" t="Include">
           <e p="Api" t="Include">
             <e p="AdLoader.cs" t="Include" />

@@ -3,6 +3,8 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
@@ -19,7 +21,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public float  curTagTime;  // current tag time of player
     public bool   startGame;   // determines if the game started
     public string chosenClass; // Holds player's chosen class
-
+    public GameObject TagTimer;
+    private TMP_Text TagTimerText;
+    
     [Header("Components")]
     public Player     PhotonPlayer;
     public Rigidbody  rig;
@@ -27,6 +31,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject tagIndicator;
     public GameObject playerUI;
     public GameObject body;
+    public GameObject TagCollider;
 
     [Header("General Ability Configs")]
     private const float SlowedRigDrag = 20f;
@@ -61,6 +66,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public static PlayerManager Instance;
 
     public float currentTime;
+    private static readonly int Dead = Animator.StringToHash("dead");
 
     void Awake()
     {
@@ -102,21 +108,31 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             playerUI.SetActive(true);
         }
     }
-    
+
+    private void Start()
+    {
+        TagTimer.SetActive(true);
+        TagTimerText = TagTimer.transform.GetChild(0).gameObject.GetComponent<TMP_Text>();
+        TagTimerText.enabled = true;
+    }
+
     private void Update()
     {
         currentTime += Time.deltaTime;
-
-        // only the master client decides when the game has ended
-        if (PhotonNetwork.IsMasterClient)
+        
+        // check if the curTagTime is greater then the max time allowed before losing
+        // check if the game has already ended for me 
+        // check if I'm the one who reached the tag limit
+        if (curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded && photonView.IsMine)
         {
-            // check if the curTagTime is greater then the max time allowed before losing
-            if (curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded)
-            {
-                // end the game for all players
-                GameManager.instance.gameEnded = true;
-                GameManager.instance.photonView.RPC(GameOverMethodName, RpcTarget.All, PlayerManager.Instance.id);
-            }
+            // end the game for all players
+            //GameManager.instance.gameEnded = true;
+            GameManager.instance.photonView.RPC(GameOverMethodName, RpcTarget.All, id);
+            
+            // play dead animation
+            gameObject.GetComponent<PlayerController>().animator.SetBool(Dead, true);
+
+            gameObject.GetComponent<PlayerController>().SoundFootSteps.Stop();
         }
 
         // only the master client decides when to start the game
@@ -127,9 +143,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 // start the game for all players
                 GameManager.instance.photonView.RPC(StartCountdownMethodName, RpcTarget.All);
-
-                // update player vingettes in UI
-                GameManager.instance.photonView.RPC(UpdateInGameUIMethodName, RpcTarget.All);
             }
         }
 
@@ -138,8 +151,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             // track the amount of time we're tagged
             if (tagIndicator.activeInHierarchy)
+            {
                 // increase current tag time every second
                 curTagTime += Time.deltaTime;
+                
+                // displayer tag timer above player's head
+                int curTagTimeInt = Mathf.RoundToInt(curTagTime);
+                int myCurrentTagTime = 50 - curTagTimeInt;
+                TagTimerText.text = myCurrentTagTime.ToString();
+            }
+
         }
 
         if(currentTime > endFearFromShoutAbility)
@@ -184,17 +205,20 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             return;
 
-        // did we hit another player's tag range circle?
-        if (other.gameObject.CompareTag("TagCircle"))
+        if (!GameManager.instance.gameEnded)
         {
-            // are they tag?
-            if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
+            // did we hit another player's tag range circle?
+            if (other.gameObject.CompareTag("TagCircle"))
             {
-                // can we get tagged?
-                if (GameManager.instance.CanGetTagged(id))
+                // are they tag?
+                if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
                 {
-                    // get tagged
-                    GameManager.instance.photonView.RPC(TagPlayerMethodName, RpcTarget.All, id, false);
+                    // can we get tagged?
+                    if (GameManager.instance.CanGetTagged(id))
+                    {
+                        // get tagged
+                        GameManager.instance.photonView.RPC(TagPlayerMethodName, RpcTarget.All, id, false);
+                    }
                 }
             }
         }

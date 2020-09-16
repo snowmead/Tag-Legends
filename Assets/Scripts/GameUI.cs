@@ -14,8 +14,6 @@ public class GameUI : MonoBehaviour
     public GameObject RankScoreScreen;
     public TextMeshProUGUI RankScore; 
     
-    public PlayerUIContainer[] playerContainers;
-    public TextMeshProUGUI loseText;
     public TextMeshProUGUI countdownText;
     public GameObject menu;
 
@@ -33,105 +31,50 @@ public class GameUI : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-        InitializePlayerUI();
-    }
-
-    void Update()
-    {
-        UpdatePlayerUI();
-    }
-
-    // initializes the player UI containers
-    void InitializePlayerUI()
-    {
-        // loop through all of the containers
-        for (int x = 0; x < playerContainers.Length; ++x)
-        {
-            PlayerUIContainer container = playerContainers[x];
-
-            // only enable and modify the UI containers we need
-            if (x < PhotonNetwork.PlayerList.Length)
-            {
-                container.obj.SetActive(true);
-                container.nameText.text = PhotonNetwork.PlayerList[x].NickName;
-            }
-            else
-                container.obj.SetActive(false);
-        }
-    }
-
-    // updates the player UI sliders
-    void UpdatePlayerUI()
-    {
-        // loop through all of the players
-        for (int x = 0; x < GameManager.instance.players.Length; ++x)
-        {
-            // update the grey mask area in the players profile
-            if (GameManager.instance.players[x] != null)
-                playerContainers[x].timer.fillAmount =
-                    1.0f / GameManager.instance.timeToLose *
-                    GameManager.instance.players[x].curTagTime;
-        }
-    }
-
-    // called when a player has won the game
-    public void SetLoseText(string loserName, int newRank, string playersLeft)
+    // called when a player has reached the tag limit
+    public void SetEndGameScreen(int newRank, int playersLeft)
     {
         EndGameScreen.SetActive(true);
+        
+        // Show rank section on screen if it's a ranked game
         if (newRank >= 0)
         {
             RankScoreScreen.SetActive(true);
             RankScore.text = newRank.ToString();
         }
-            
+        else
+        {
+            RankScoreScreen.SetActive(false);
+        }
+        
         EndGameScreenTitle.gameObject.SetActive(true);
-        if (playersLeft == "0")
+        if (playersLeft == 1)
         {
             EndGameScreenTitle.text = "You WON!";
         }
-        EndGameScreenTitle.text = "You came in " + playersLeft + "th place!";
+        else
+        {
+            switch (playersLeft)
+            {
+                case 2:
+                    EndGameScreenTitle.text = "You came in " + playersLeft + "nd place!";
+                    break;
+                case 3:
+                    EndGameScreenTitle.text = "You came in " + playersLeft + "rd place!";
+                    break;
+                case 4:
+                    EndGameScreenTitle.text = "You came in " + playersLeft + "th place!";
+                    break;
+                case 5:
+                    EndGameScreenTitle.text = "You came in " + playersLeft + "th place!";
+                    break;
+            }
+        }
     }
 
     public void BeginCountdown(int seconds)
     {
         StartCoroutine(Countdown(seconds));
-    }
-
-    public void SetPlayerVingettes()
-    {
-        // Game started, set player vingettes
-        for (int x = 0; x < PhotonNetwork.PlayerList.Length; ++x)
-        {
-            PlayerUIContainer container = playerContainers[x];
-
-            switch (GameManager.instance.players[x].chosenClass)
-            {
-                case GameManager.BERSERKER_ACTIVE_CLASS_NAME:
-                    container.classImage.sprite = berserkerSprite;
-                    break;
-                case GameManager.FROSTMAGE_ACTIVE_CLASS_NAME:
-                    container.classImage.sprite = frostMageSprite;
-                    break;
-                case GameManager.ILLUSIONIST_ACTIVE_CLASS_NAME:
-                    container.classImage.sprite = illusionistSprite;
-                    break;
-                case GameManager.NINJA_ACTIVE_CLASS_NAME:
-                    container.classImage.sprite = ninjaSprite;
-                    break;
-            }           
-            
-            // Increase the size of your own UI vingette and set your image to the top of the player list
-            if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
-            {              
-                // Increase the size of your vingette
-                container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
-                // Set yourself as the first child in the list
-                container.obj.gameObject.transform.SetAsFirstSibling();               
-            }
-          
-        }
     }
 
     // begin 3... 2... 1... Go! Countdown

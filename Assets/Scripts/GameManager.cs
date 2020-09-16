@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public const string FROSTMAGE_ACTIVE_CLASS_NAME = "FrostMage";
     public const string ILLUSIONIST_ACTIVE_CLASS_NAME = "Illusionist";
     public const string NINJA_ACTIVE_CLASS_NAME = "Ninja";
-
+    
     [Header("Stats")]
     public bool gameEnded = false;
     public float timeToLose;
@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [Header("Tag Effects")] 
     public AudioSource TagSound;
-    
-    [HideInInspector]
+
+    [HideInInspector] 
     PlayerManager playerManagerScript;
     public bool countdownStarted = false;
 
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         return players.First(x => x.id == playerId);
     }
-
+    
     // returns the player of the requested GameObject
     public PlayerManager GetPlayer(GameObject playerObj)
     {
@@ -168,13 +168,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         GameUI.instance.BeginCountdown(3);
     }
 
-    // Called when all players are ready and loaded in
-    [PunRPC]
-    void UpdateInGameUI()
-    {
-        GameUI.instance.SetPlayerVingettes();
-    }
-
     // start the game
     public void StartGame()
     {
@@ -188,21 +181,48 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // get player
         PlayerManager player = GetPlayer(playerId);
+        
+        //player.TagCollider.SetActive(false);
+        
+        // only stop my game
+        if (player.photonView.IsMine && !gameEnded)
+        {
+            EndGameForPlayer(true, playerId);
+        }
+        
+        // reduce the number of players in the game
+        playersInGame--;
+        
+        // end the game for the last player
+        if (!player.photonView.IsMine && playersInGame == 1)
+        {
+            EndGameForPlayer(false, playerId);
+        }
+    }
+
+    // End game actions to finish when a player has ended his game
+    private void EndGameForPlayer(bool continueTheGame, int playerId)
+    {
+        // continue the game for the remaining players battle royale style
+        if (continueTheGame)
+        {
+            // get the first player found from the remaining player list
+            PlayerManager playerManager = players.First(x => x.id != playerId);
+            // tag that player to continue the flow of the game
+            photonView.RPC("TagPlayer", RpcTarget.All, playerManager.id, false);
+        }
 
         int newRank = -1;
         
-        // if it is me, modify my rank
-        if (player.photonView.IsMine && NetworkManager.instance.rankedGame)
-        {
-            newRank = CloudManager.instance.RankModifier(playersInGame);
-        }
-
-        // reduce the number of players in the game
-        playersInGame--;
-
         // end the game
         gameEnded = true;
-        GameUI.instance.SetLoseText(player.PhotonPlayer.NickName, newRank, playersInGame.ToString());
+            
+        // modify my rank
+        if(NetworkManager.instance.rankedGame)
+            newRank = CloudManager.instance.RankModifier(playersInGame);
+
+        // show end game screen
+        GameUI.instance.SetEndGameScreen(newRank, playersInGame);
     }
 
     // called after the game has been won - navigates back to the Menu scene
