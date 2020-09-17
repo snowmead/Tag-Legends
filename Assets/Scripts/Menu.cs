@@ -531,7 +531,7 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public int GetMaxNumberOfPlayersFromDropdown()
     {
-        switch (CustomGameMaxNumberOfPlayers)
+        switch (MaxPlayersCustomGameDropdown.value)
         {
             case 0:
                 CustomGameMaxNumberOfPlayers = 2;
