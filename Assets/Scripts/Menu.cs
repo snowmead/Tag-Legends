@@ -398,7 +398,6 @@ public class Menu : MonoBehaviourPunCallbacks
         {
             // close the settings screen
             GetScreen(SETTINGS_NAME).SetActive(true);
-            Debug.Log(characterChosen.transform.GetChild(0).gameObject);
             // show the character again
             characterChosen.transform.GetChild(0).gameObject.SetActive(false);
         } 
@@ -469,8 +468,6 @@ public class Menu : MonoBehaviourPunCallbacks
         NetworkManager.instance.rankedGame = false;
         // create the custom game room
         
-        Debug.Log(CustomGameMaxNumberOfPlayers);
-
         // create the custom game room
         NetworkManager.instance.CreateRoom(CustomGameName.text, GetMaxNumberOfPlayersFromDropdown());
         
