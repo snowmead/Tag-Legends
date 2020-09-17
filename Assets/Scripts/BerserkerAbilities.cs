@@ -55,7 +55,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         rig.transform.position = new Vector3(rig.transform.position.x, rig.transform.position.y + 0.5f, rig.transform.position.z);
 
         // Leap
-        rig.velocity = new Vector3(transform.forward.x * 8f, 8f, transform.forward.z * 8.0f);
+        rig.velocity = new Vector3(transform.forward.x * 6f, 6f, transform.forward.z * 6.0f);
     }
 
     public void AxeThrow()
