@@ -842,25 +842,6 @@
             </e>
           </e>
         </e>
-        <e p="PolygonFantasyHeroCharacters" t="Include">
-          <e p="Scripts" t="Include">
-            <e p="CharacterRandomizer.cs" t="Include" />
-          </e>
-          <e p="Shaders" t="Include">
-            <e p="POLYGON_CustomCharacters.shader" t="Include" />
-          </e>
-        </e>
-        <e p="PolygonNature" t="Include">
-          <e p="Shaders" t="Include">
-            <e p="SyntyStudios_LOD.shader" t="Include" />
-            <e p="SyntyStudios_Moss.shader" t="Include" />
-            <e p="SyntyStudios_SkyGradient.shader" t="Include" />
-            <e p="SyntyStudios_Trees.shader" t="Include" />
-            <e p="SyntyStudios_Vines.shader" t="Include" />
-            <e p="SyntyStudios_Water.shader" t="Include" />
-            <e p="VS_indirect.cginc" t="Include" />
-          </e>
-        </e>
         <e p="Rank Animations" t="Include">
           <e p="Demo Scene" t="Include">
             <e p="ButtonAnimation.cs" t="Include" />
