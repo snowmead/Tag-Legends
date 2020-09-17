@@ -134,13 +134,6 @@ public class Menu : MonoBehaviourPunCallbacks
         
         //Fetch the Dropdown GameObject
         MaxPlayersCustomGameDropdown = MaxPlayersDropdown.GetComponent<TMP_Dropdown>();
-        //Add listener for when the value of the Dropdown changes, to take action
-        MaxPlayersCustomGameDropdown.onValueChanged.AddListener(delegate {
-            DropdownValueChanged(MaxPlayersCustomGameDropdown);
-        });
-
-        //Initialise the number of players with default to say the first value of the Dropdown
-        CustomGameMaxNumberOfPlayers = MaxPlayersCustomGameDropdown.value;
     }
 
     /**
@@ -417,7 +410,11 @@ public class Menu : MonoBehaviourPunCallbacks
         CustomGamePanel.SetActive(true);
         
         // set the class character behind the view of the custom game view
-        characterChosen.transform.position = new Vector3(characterChosen.transform.position.x, characterChosen.transform.position.y, -10);
+        characterChosen.transform.position = 
+            new Vector3(
+                characterChosen.transform.position.x,
+                characterChosen.transform.position.y,
+                -10);
     }
 
     public void OnCustomGameExitButton()
@@ -444,7 +441,10 @@ public class Menu : MonoBehaviourPunCallbacks
         MaxPlayersCustomGameDropdown.interactable = true;
         
         // set the class character back to a visible position
-        characterChosen.transform.position = new Vector3(characterChosen.transform.position.x, characterChosen.transform.position.y, 0.5f);
+        characterChosen.transform.position = 
+            new Vector3(characterChosen.transform.position.x,
+                characterChosen.transform.position.y,
+                0.5f);
     }
 
     public void OnCustomGameNameChange(string gameName)
@@ -521,12 +521,6 @@ public class Menu : MonoBehaviourPunCallbacks
         
         // leave the room
         NetworkManager.instance.LeaveRoom();
-    }
-
-    //Ouput the new value of the Dropdown into Text
-    void DropdownValueChanged(TMP_Dropdown change)
-    {
-        CustomGameMaxNumberOfPlayers =  change.value;
     }
 
     public int GetMaxNumberOfPlayersFromDropdown()
