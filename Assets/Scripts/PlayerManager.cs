@@ -328,6 +328,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public void PlayerInvisible(bool isInvisible)
     {
         body.SetActive(isInvisible);
+
+        TagTimerText.enabled = isInvisible;
     }
 
     // set the amount of seconds the player is stunned
