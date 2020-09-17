@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 6588587059347299304}
   - component: {fileID: 5696653243449286582}
   - component: {fileID: 8753281119874964689}
+  - component: {fileID: 4905246418676992443}
   m_Layer: 11
   m_Name: AxeThrowButton
   m_TagString: Untagged
@@ -364,6 +365,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4905246418676992443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283727514629153796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &351384880185210200
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2745021400027721275
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1287,6 +1300,8 @@ MonoBehaviour:
   cam: {fileID: 7014416444427985670}
   tagIndicator: {fileID: 3265171104829327984}
   playerUI: {fileID: 756846455364438098}
+  playerUIAbilities: {fileID: 0}
+  playerUIJoystic: {fileID: 0}
   body: {fileID: 7293320700562819547}
   TagCollider: {fileID: 2215065226051252628}
   isShoutAnimationActive: 0
@@ -2116,6 +2131,7 @@ GameObject:
   - component: {fileID: 6419110119311784197}
   - component: {fileID: 2663595542169209443}
   - component: {fileID: 8627832748730211919}
+  - component: {fileID: 7652280045708957847}
   m_Layer: 11
   m_Name: ShoutButton
   m_TagString: Untagged
@@ -2235,6 +2251,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7652280045708957847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2669739215772493389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2711011549221182089
 GameObject:
   m_ObjectHideFlags: 0
@@ -8707,6 +8735,7 @@ GameObject:
   - component: {fileID: 3618746260021957202}
   - component: {fileID: 7666910861840127037}
   - component: {fileID: 4335980304899594632}
+  - component: {fileID: 2247821608066801376}
   m_Layer: 11
   m_Name: GroundSlamButton
   m_TagString: Untagged
@@ -8826,6 +8855,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2247821608066801376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116626243794485656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7119404899311664133
 GameObject:
   m_ObjectHideFlags: 0
@@ -9049,6 +9090,7 @@ GameObject:
   - component: {fileID: 4990814962942352966}
   - component: {fileID: 1888836652145701645}
   - component: {fileID: 3102715412582900787}
+  - component: {fileID: 3343867521809725281}
   m_Layer: 11
   m_Name: LeapButton
   m_TagString: Untagged
@@ -9168,6 +9210,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3343867521809725281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7392873535880100235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7845283084933044077
 GameObject:
   m_ObjectHideFlags: 0

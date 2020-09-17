@@ -587,6 +587,7 @@ GameObject:
   - component: {fileID: 8671044296191496493}
   - component: {fileID: 7232685672631223870}
   - component: {fileID: 6114509219304904882}
+  - component: {fileID: 5704181846941085955}
   m_Layer: 11
   m_Name: IceBlockButton
   m_TagString: Untagged
@@ -706,6 +707,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5704181846941085955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951689186380947113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1194533969957505351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,6 +1024,7 @@ GameObject:
   - component: {fileID: 1525895714751968788}
   - component: {fileID: 3866450411419995577}
   - component: {fileID: 1124268752401323976}
+  - component: {fileID: 6598438543386920625}
   m_Layer: 11
   m_Name: FrostNovaButton
   m_TagString: Untagged
@@ -1130,6 +1144,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6598438543386920625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610637579336982528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2229830886502635999
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,6 +1445,7 @@ GameObject:
   - component: {fileID: 3237870372655547322}
   - component: {fileID: 6882140828692603117}
   - component: {fileID: 692131831422031905}
+  - component: {fileID: 539604573806741097}
   m_Layer: 11
   m_Name: IceBoltButton
   m_TagString: Untagged
@@ -1538,6 +1565,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &539604573806741097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058199598753888242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3133088859423122992
 GameObject:
   m_ObjectHideFlags: 0
@@ -7908,6 +7947,8 @@ MonoBehaviour:
   cam: {fileID: 6641386814120367209}
   tagIndicator: {fileID: 2365851073939965484}
   playerUI: {fileID: 8850480571143353107}
+  playerUIAbilities: {fileID: 0}
+  playerUIJoystic: {fileID: 0}
   body: {fileID: 5473680071426662682}
   TagCollider: {fileID: 2307348757216254018}
   isShoutAnimationActive: 0
@@ -8344,6 +8385,7 @@ GameObject:
   - component: {fileID: 1823921564593970589}
   - component: {fileID: 5804052527711816101}
   - component: {fileID: 3757986720830623407}
+  - component: {fileID: 3445681976820925663}
   m_Layer: 11
   m_Name: FreezingWindsButton
   m_TagString: Untagged
@@ -8463,6 +8505,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3445681976820925663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6396281143717368202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6805080418029251155
 GameObject:
   m_ObjectHideFlags: 0

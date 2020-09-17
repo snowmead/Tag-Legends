@@ -1,5 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5972242709205397004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806307742253395830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5978688174158840625
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,6 +422,8 @@ MonoBehaviour:
   cam: {fileID: 1103594150754761715}
   tagIndicator: {fileID: 0}
   playerUI: {fileID: 516779278829205557}
+  playerUIAbilities: {fileID: 0}
+  playerUIJoystic: {fileID: 0}
   body: {fileID: 5980138207328888887}
   TagCollider: {fileID: 0}
   isShoutAnimationActive: 0
@@ -1960,6 +1974,42 @@ Transform:
   m_Father: {fileID: 5974980684236937721}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8363120765567104296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6453135020943043172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &172896838906545501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608187816965991371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2968956446362572458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158934703136677878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414712c8fd38a414b89289f63877dd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2392727918666353993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2549,15 +2599,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5402832727676944926}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &806307742253395830 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4740640191371488616, guid: ecf0031b4d24f524ebac897ab3e2c6da,
-    type: 3}
-  m_PrefabInstance: {fileID: 5402832727676944926}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7358368392359817400 stripped
+--- !u!114 &63309065846561123 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3234880498083541670, guid: ecf0031b4d24f524ebac897ab3e2c6da,
+  m_CorrespondingSourceObject: {fileID: 5339682558602025853, guid: ecf0031b4d24f524ebac897ab3e2c6da,
     type: 3}
   m_PrefabInstance: {fileID: 5402832727676944926}
   m_PrefabAsset: {fileID: 0}
@@ -2567,6 +2611,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &806307742253395830 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4740640191371488616, guid: ecf0031b4d24f524ebac897ab3e2c6da,
+    type: 3}
+  m_PrefabInstance: {fileID: 5402832727676944926}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9158934703136677878 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3882565960413978088, guid: ecf0031b4d24f524ebac897ab3e2c6da,
@@ -2615,9 +2665,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &63309065846561123 stripped
+--- !u!114 &7358368392359817400 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5339682558602025853, guid: ecf0031b4d24f524ebac897ab3e2c6da,
+  m_CorrespondingSourceObject: {fileID: 3234880498083541670, guid: ecf0031b4d24f524ebac897ab3e2c6da,
     type: 3}
   m_PrefabInstance: {fileID: 5402832727676944926}
   m_PrefabAsset: {fileID: 0}

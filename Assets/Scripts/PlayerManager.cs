@@ -30,6 +30,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public Camera     cam;
     public GameObject tagIndicator;
     public GameObject playerUI;
+    public GameObject playerUIAbilities;
+    public GameObject playerUIJoystic;
     public GameObject body;
     public GameObject TagCollider;
 
