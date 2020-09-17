@@ -454,8 +454,8 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnCustomGameCreateButton()
     {
         // set create and join buttons non interactable
-        CreateCustomGameButton.interactable = false;
-        JoinCustomGameButton.interactable = false;
+        CreateCustomGameButton.gameObject.SetActive(false);
+        JoinCustomGameButton.gameObject.SetActive(false);
 
         // show the search for game text
         SearchForCustomGame.SetActive(true);
@@ -466,7 +466,6 @@ public class Menu : MonoBehaviourPunCallbacks
 
         // setup to create an unranked game
         NetworkManager.instance.rankedGame = false;
-        // create the custom game room
         
         // create the custom game room
         NetworkManager.instance.CreateRoom(CustomGameName.text, GetMaxNumberOfPlayersFromDropdown());
@@ -478,8 +477,8 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnCustomGameJoinButton()
     {
         // set create and join buttons non interactable
-        CreateCustomGameButton.interactable = false;
-        JoinCustomGameButton.interactable = false;
+        CreateCustomGameButton.gameObject.SetActive(false);
+        JoinCustomGameButton.gameObject.SetActive(false);
         
         // show the search for game text
         SearchForCustomGame.SetActive(true);
@@ -503,8 +502,8 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnCancelCustomGameSearchButton()
     {
         // set create and join buttons non interactable
-        CreateCustomGameButton.interactable = true;
-        JoinCustomGameButton.interactable = true;
+        CreateCustomGameButton.gameObject.SetActive(true);
+        JoinCustomGameButton.gameObject.SetActive(true);
         
         // don't show the search for game text
         SearchForCustomGame.SetActive(false);
