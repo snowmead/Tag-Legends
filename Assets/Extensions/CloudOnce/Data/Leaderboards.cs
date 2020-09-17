@@ -18,7 +18,7 @@ namespace CloudOnce
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS)
             ""
 #elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_GOOGLE
-            "CgkIwNa2m8MOEAIQAA"
+            "CgkIyoCahe4CEAIQAQ"
 #else
             "RankingScore"
 #endif

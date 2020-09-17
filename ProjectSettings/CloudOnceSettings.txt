@@ -4,7 +4,7 @@
 		{
 			"InternalID":"RankingScore",
 			"AppleID":"",
-			"GoogleID":"CgkIwNa2m8MOEAIQAA"
+			"GoogleID":"CgkIyoCahe4CEAIQAQ"
 		}
 	],
 	"CloudVariables":[
@@ -18,7 +18,7 @@
 	],
 	"AppleSupported":false,
 	"GoogleSupported":true,
-	"GoogleAppID":"499079031616",
+	"GoogleAppID":"98258288714",
 	"GoogleSetupRun":true,
 	"DebugModeEnabled":false,
 	"Version":"2.6.8",

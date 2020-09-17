@@ -57,7 +57,7 @@ Shader "KriptoFX/RFX4/Distortion"
 			"_GrabTexture"
 			}*/
 
-			Tags { "Queue" = "Transparent-10" "IgnoreProjector" = "True" "RenderType" = "Transparent"}
+			Tags { "Queue" = "Transparent+1" "IgnoreProjector" = "True" "RenderType" = "Transparent"}
 			ZWrite[_ZWriteMode]
 			Cull[_CullMode]
 

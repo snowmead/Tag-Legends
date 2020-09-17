@@ -42,6 +42,10 @@ public class Menu : MonoBehaviourPunCallbacks
     public Button CreateCustomGameButton;
     public Button JoinCustomGameButton;
     public TextMeshProUGUI numberOfPlayersInCustomGame;
+    public TextMeshProUGUI numberOfPlayersDenominator;
+    public int CustomGameMaxNumberOfPlayers;
+    public GameObject MaxPlayersDropdown;
+    private TMP_Dropdown MaxPlayersCustomGameDropdown;
 
     [Header("Player Preview")]
     public Animator animator;
@@ -127,6 +131,16 @@ public class Menu : MonoBehaviourPunCallbacks
         RankDisplayer.instance.UpdateRankDisplay();
 
         searchForGame.SetActive(false);
+        
+        //Fetch the Dropdown GameObject
+        MaxPlayersCustomGameDropdown = MaxPlayersDropdown.GetComponent<TMP_Dropdown>();
+        //Add listener for when the value of the Dropdown changes, to take action
+        MaxPlayersCustomGameDropdown.onValueChanged.AddListener(delegate {
+            DropdownValueChanged(MaxPlayersCustomGameDropdown);
+        });
+
+        //Initialise the number of players with default to say the first value of the Dropdown
+        CustomGameMaxNumberOfPlayers = MaxPlayersCustomGameDropdown.value;
     }
 
     /**
@@ -426,6 +440,9 @@ public class Menu : MonoBehaviourPunCallbacks
         if(NetworkManager.instance.CurrentRoom() != null)
             NetworkManager.instance.LeaveRoom();
         
+        // allow the player to choose how many players in the custom game
+        MaxPlayersCustomGameDropdown.interactable = true;
+        
         // set the class character back to a visible position
         characterChosen.transform.position = new Vector3(characterChosen.transform.position.x, characterChosen.transform.position.y, 0.5f);
     }
@@ -451,7 +468,14 @@ public class Menu : MonoBehaviourPunCallbacks
         // setup to create an unranked game
         NetworkManager.instance.rankedGame = false;
         // create the custom game room
-        NetworkManager.instance.CreateRoom(CustomGameName.text);
+        
+        Debug.Log(CustomGameMaxNumberOfPlayers);
+
+        // create the custom game room
+        NetworkManager.instance.CreateRoom(CustomGameName.text, GetMaxNumberOfPlayersFromDropdown());
+        
+        // disable dropdown
+        MaxPlayersCustomGameDropdown.interactable = false;
     }
     
     public void OnCustomGameJoinButton()
@@ -469,6 +493,14 @@ public class Menu : MonoBehaviourPunCallbacks
         
         // join the custom game room
         NetworkManager.instance.JoinRoom(CustomGameName.text);
+        
+        // disable dropdown
+        MaxPlayersCustomGameDropdown.interactable = false;
+    }
+
+    public void UpdateCustomGamePlayersDenominator(int maxPlayers)
+    {
+        numberOfPlayersDenominator.text = "/" + maxPlayers;
     }
 
     public void OnCancelCustomGameSearchButton()
@@ -484,10 +516,40 @@ public class Menu : MonoBehaviourPunCallbacks
         // value can be changed
         CustomGameNameObject.GetComponent<TMP_InputField>().interactable = true;
         
+        // allow the player to choose how many players in the custom game
+        MaxPlayersCustomGameDropdown.interactable = true;
+        
         // leave the room
         NetworkManager.instance.LeaveRoom();
     }
 
+    //Ouput the new value of the Dropdown into Text
+    void DropdownValueChanged(TMP_Dropdown change)
+    {
+        CustomGameMaxNumberOfPlayers =  change.value;
+    }
+
+    public int GetMaxNumberOfPlayersFromDropdown()
+    {
+        switch (CustomGameMaxNumberOfPlayers)
+        {
+            case 0:
+                CustomGameMaxNumberOfPlayers = 2;
+                break;
+            case 1:
+                CustomGameMaxNumberOfPlayers = 3;
+                break;
+            case 2:
+                CustomGameMaxNumberOfPlayers = 4;
+                break;
+            case 3:
+                CustomGameMaxNumberOfPlayers = 5;
+                break;
+        }
+
+        return CustomGameMaxNumberOfPlayers;
+    }
+    
     /**
      * PLAY OPTIONS SECTION
      * 
@@ -513,7 +575,9 @@ public class Menu : MonoBehaviourPunCallbacks
     public void OnCreateRoomButton(TMP_InputField roomNameInput)
     {
         buttonClickAudio.Play();
-        NetworkManager.instance.CreateRoom(roomNameInput.text);
+        // pass 0 max number of players because in the CreateRoom function, it will add the default 5 player room
+        // only custom games will allow the player to change the max number of players
+        NetworkManager.instance.CreateRoom(roomNameInput.text, 0);
     }
 
     // called when "Join Room" Button is pressed

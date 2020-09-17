@@ -12,7 +12,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public static NetworkManager instance;
     readonly TypedLobby typedLobby = new TypedLobby("SqlTypedLobby", LobbyType.SqlLobby);
     public const string ELO_PROP_KEY = "C0";
-    public const int MAX_PLAYERS = 3;
+    public const int MaxPlayersDefault = 5;
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
     string matchmakingSqlQuery;
     public bool rankedGame = false;
@@ -60,14 +60,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         return PhotonNetwork.CurrentRoom;
     }
 
-    public void CreateRoom(string roomName)
+    public void CreateRoom(string roomName, int numberOfPlayers)
     {
         int rank;
         int.TryParse(CloudManager.instance.GetRank().ToString(), out rank);
 
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = MAX_PLAYERS;
-
+        
+        // number of players is specified when creating a custom game
+        if (numberOfPlayers <= 1)
+            roomOptions.MaxPlayers = MaxPlayersDefault;
+        else
+            roomOptions.MaxPlayers = (byte) numberOfPlayers;
+        
         // if it's a ranked game, add the elo to the room
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
@@ -112,19 +117,34 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank().ToString() } };
 
         // join random room
-        PhotonNetwork.JoinRandomRoom(customRoomProperties, MAX_PLAYERS, MatchmakingMode.FillRoom, typedLobby, matchmakingSqlQuery);
+        PhotonNetwork.JoinRandomRoom(customRoomProperties, MaxPlayersDefault, MatchmakingMode.FillRoom, typedLobby, matchmakingSqlQuery);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         // create a room if unable to join one
-        CreateRoom("");
+        CreateRoom("", 0);
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        CreateRoom(Menu.instance.CustomGameName.text, Menu.instance.GetMaxNumberOfPlayersFromDropdown());
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Menu.instance.UpdateCustomGamePlayersDenominator(PhotonNetwork.CurrentRoom.MaxPlayers);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        Menu.instance.UpdateCustomGamePlayersDenominator(PhotonNetwork.CurrentRoom.MaxPlayers);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.IsMasterClient &&
-                    PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+            PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
             // send an rpc call to all players in the room to load the "Game" scene
             photonView.RPC("ChangeScene", RpcTarget.All, "Game");
