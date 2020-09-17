@@ -69,6 +69,13 @@ public class Menu : MonoBehaviourPunCallbacks
     public TextMeshProUGUI illusionistListText;
     public TextMeshProUGUI ninjaListText;
 
+    [Header("Class Abilities Previews")] 
+    public GameObject BerserkerAbilitiesPreview;
+    public GameObject FrostMageAbilitiesPreview;
+    public GameObject NinjaAbilitiesPreview;
+    public GameObject IllusionistAbilitiesPreview;
+    public GameObject AbilityPreviewCanvas;
+    
     [Header("Button configs")]
     public GameObject buttonClickAudioObject;
     private AudioSource buttonClickAudio;
@@ -298,6 +305,8 @@ public class Menu : MonoBehaviourPunCallbacks
     // Remove all components on the player prefab to set up the character preview
     public void SetupPlayerPreview(string className)
     {
+        SetupClassAbilityPreview();
+        
         characterChosen.GetComponent<PlayerController>().enabled = false;
         characterChosen.GetComponent<PlayerManager>().enabled = false;
         switch (className)
@@ -305,18 +314,22 @@ public class Menu : MonoBehaviourPunCallbacks
             case BERSERKER_NAME:
                 characterChosen.GetComponent<BerserkerAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(berserkerListText, berserkerButtonIcon);
+                BerserkerAbilitiesPreview.SetActive(true);
                 break;
             case FROSTMAGE_NAME:
                 characterChosen.GetComponent<FrostMageAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(frostMageListText, frostMageButtonIcon);
+                FrostMageAbilitiesPreview.SetActive(true);
                 break;
             case NINJA_NAME:
                 characterChosen.GetComponent<NinjaAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(ninjaListText, ninjaButtonIcon);
+                NinjaAbilitiesPreview.SetActive(true);
                 break;
             case ILLUSIONIST_NAME:
                 characterChosen.GetComponent<IllusionistAbilities>().enabled = false;
                 SetChosenCharacterTextColorAndIcon(illusionistListText, illusionistButtonIcon);
+                IllusionistAbilitiesPreview.SetActive(true);
                 break;
         }
 
@@ -327,6 +340,16 @@ public class Menu : MonoBehaviourPunCallbacks
         characterChosen.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
     }
 
+    private void SetupClassAbilityPreview()
+    {
+        AbilityPreviewCanvas.SetActive(false);
+        
+        BerserkerAbilitiesPreview.SetActive(false);
+        FrostMageAbilitiesPreview.SetActive(false);
+        NinjaAbilitiesPreview.SetActive(false);
+        IllusionistAbilitiesPreview.SetActive(false);
+    }
+    
     private void SetChosenCharacterTextColorAndIcon(TextMeshProUGUI characterText, GameObject icon)
     {
         characterText.color = new Color32(251, 244, 190, 255);

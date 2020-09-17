@@ -6,7 +6,8 @@
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="AbilitiesButtonHandler.cs" t="Include" />
+        <e p="AbilityDescription.cs" t="Include" />
+        <e p="ClassAbilityPreviewHandler.cs" t="Include" />
         <e p="CloudPack" t="Include">
           <e p="Shaders" t="Include">
             <e p="Documentation CloudShading.txt" t="Include" />
@@ -399,7 +400,6 @@
             <e p="PluginVersion.cs" t="Include" />
           </e>
         </e>
-        <e p="FloatingText.cs" t="Include" />
         <e p="GoogleMobileAds" t="Include">
           <e p="Api" t="Include">
             <e p="AdLoader.cs" t="Include" />
@@ -513,7 +513,6 @@
             <e p="CtrPanel.cs" t="Include" />
           </e>
         </e>
-        <e p="IceBlock.cs" t="Include" />
         <e p="Joystick Pack" t="Include">
           <e p="Scripts" t="Include">
             <e p="Base" t="Include">
@@ -646,7 +645,6 @@
           <e p="License.txt" t="Include" />
           <e p="readme.txt" t="Include" />
         </e>
-        <e p="MenuLoading.cs" t="Include" />
         <e p="Photon" t="Include">
           <e p="PhotonChat" t="Include">
             <e p="Code" t="Include">
@@ -852,6 +850,7 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="AbilitiesButtonHandler.cs" t="Include" />
           <e p="AbilityCooldownManager.cs" t="Include" />
           <e p="AbilityRpcReceiver.cs" t="Include" />
           <e p="AmimatorCollider.cs" t="Include" />
@@ -862,6 +861,7 @@
           <e p="CameraController.cs" t="Include" />
           <e p="CloudManager.cs" t="Include" />
           <e p="Cooldown.cs" t="Include" />
+          <e p="FloatingText.cs" t="Include" />
           <e p="FrostMageAbilities.cs" t="Include" />
           <e p="FrostNova.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
@@ -870,9 +870,11 @@
           <e p="GrassHandler.cs" t="Include" />
           <e p="GroundSlam.cs" t="Include" />
           <e p="GroundSlamAnimationStateHandler.cs" t="Include" />
+          <e p="IceBlock.cs" t="Include" />
           <e p="IllusionistAbilities.cs" t="Include" />
           <e p="JoinRoomFromListHandler.cs" t="Include" />
           <e p="Menu.cs" t="Include" />
+          <e p="MenuLoading.cs" t="Include" />
           <e p="NetworkManager.cs" t="Include" />
           <e p="NinjaAbilities.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
@@ -882,6 +884,7 @@
           <e p="RankDisplayer.cs" t="Include" />
           <e p="RingColorChanger.cs" t="Include" />
           <e p="ShoutAnimationStateHandler.cs" t="Include" />
+          <e p="TagEffect.cs" t="Include" />
         </e>
         <e p="Standard Assets" t="Include">
           <e p="Characters" t="Include">
@@ -895,7 +898,6 @@
             </e>
           </e>
         </e>
-        <e p="TagEffect.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
             <e p="LiberationSans - OFL.txt" t="Include" />
