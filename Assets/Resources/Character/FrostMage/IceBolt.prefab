@@ -4498,9 +4498,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75bcd4d4aef247d48915d2aa7cc7bc3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RaycastDistance: 100
+  RaycastDistance: 1000
   Effects:
-  - {fileID: 173866, guid: 6692e3c69d930964f89b810020ae7d5c, type: 3}
+  - {fileID: 1270704315643719267, guid: 6692e3c69d930964f89b810020ae7d5c, type: 3}
   Offset: 0
   EnableTimeDelay: 0.1
   DestroyTime: 13
