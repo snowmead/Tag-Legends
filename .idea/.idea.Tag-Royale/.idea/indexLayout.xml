@@ -3,7 +3,6 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
-      <Path>Assets</Path>
       <Path>Library/PackageCache/com.google.external-dependency-manager@1.2.156</Path>
       <Path>Library/PackageCache/com.google.firebase.analytics@6.15.2</Path>
       <Path>Library/PackageCache/com.google.firebase.app@6.15.2</Path>
