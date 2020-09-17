@@ -67,16 +67,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions roomOptions = new RoomOptions();
         
+        roomOptions.IsOpen = true;
+
         // number of players is specified when creating a custom game
         if (numberOfPlayers <= 1)
+        {
+            // if it's a ranked game, add the elo to the room
+            roomOptions.IsVisible = true;
             roomOptions.MaxPlayers = MaxPlayersDefault;
+        }
         else
+        {
+            roomOptions.IsVisible = false;
             roomOptions.MaxPlayers = (byte) numberOfPlayers;
+        }
         
-        // if it's a ranked game, add the elo to the room
-        roomOptions.IsOpen = true;
-        roomOptions.IsVisible = true;
-
         if (rankedGame)
         {
             roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, rank } };
