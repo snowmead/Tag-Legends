@@ -1428,6 +1428,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: ShoutActive
+  - Type: 4
+    SynchronizeType: 2
+    Name: dead
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
