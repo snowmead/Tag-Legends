@@ -431,6 +431,9 @@ public class Menu : MonoBehaviourPunCallbacks
         // show the custom game panel
         CustomGamePanel.SetActive(true);
         
+        // allow the player to choose how many players in the custom game
+        MaxPlayersCustomGameDropdown.interactable = true;
+        
         // set the class character behind the view of the custom game view
         characterChosen.transform.position = 
             new Vector3(
@@ -441,27 +444,11 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void OnCustomGameExitButton()
     {
-        // set create and join buttons non interactable
-        CreateCustomGameButton.interactable = true;
-        JoinCustomGameButton.interactable = true;
-        
+        DefaultCustomGame();
+
         // don't show the custom game panel
         CustomGamePanel.SetActive(false);
-        
-        // don't show the search for game text
-        SearchForCustomGame.SetActive(false);
-        
-        // set the custom game input text field to enabled
-        // value can be changed
-        CustomGameNameObject.GetComponent<TMP_InputField>().interactable = true;
-        
-        // leave the room if you are in one
-        if(NetworkManager.instance.CurrentRoom() != null)
-            NetworkManager.instance.LeaveRoom();
-        
-        // allow the player to choose how many players in the custom game
-        MaxPlayersCustomGameDropdown.interactable = true;
-        
+
         // set the class character back to a visible position
         characterChosen.transform.position = 
             new Vector3(characterChosen.transform.position.x,
@@ -524,6 +511,17 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void OnCancelCustomGameSearchButton()
     {
+        DefaultCustomGame();
+        
+        // allow the player to choose how many players in the custom game
+        MaxPlayersCustomGameDropdown.interactable = true;
+        
+        // leave the room
+        NetworkManager.instance.LeaveRoom();
+    }
+
+    private void DefaultCustomGame()
+    {
         // set create and join buttons non interactable
         CreateCustomGameButton.gameObject.SetActive(true);
         JoinCustomGameButton.gameObject.SetActive(true);
@@ -534,12 +532,7 @@ public class Menu : MonoBehaviourPunCallbacks
         // set the custom game input text field to enabled
         // value can be changed
         CustomGameNameObject.GetComponent<TMP_InputField>().interactable = true;
-        
-        // allow the player to choose how many players in the custom game
-        MaxPlayersCustomGameDropdown.interactable = true;
-        
-        // leave the room
-        NetworkManager.instance.LeaveRoom();
+
     }
 
     public int GetMaxNumberOfPlayersFromDropdown()
