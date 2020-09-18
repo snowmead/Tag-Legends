@@ -163,7 +163,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             // check if we are in the Game Scene (in a game)
-            if (GameObject.Find("GameManager"))
+            if (SceneManager.GetActiveScene().name == "Game")
             {
                 GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
@@ -171,9 +171,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 GameManager.Instance.photonView.RPC(
                     "RemovePlayer",
                     RpcTarget.All,
-                    otherPlayer.ActorNumber);
+                    otherPlayer.ActorNumber,
+                    true);
 
                 // check if there's only one player left in the game
+                Debug.Log(gameManager.players.Length);
                 if (gameManager.players.Length <= 1)
                 {
                     // send -1 to the RPC function that handles this integer as an indicator that the game was cut short

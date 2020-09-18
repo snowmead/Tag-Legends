@@ -8109,6 +8109,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: dead
+  - Type: 4
+    SynchronizeType: 2
+    Name: stunned
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0

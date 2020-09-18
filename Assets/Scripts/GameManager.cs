@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform[] spawnPoints;
     public PlayerManager[] players;
     public int taggedPlayer;
-    private int playersInGame;
+    public int playersInGame;
     GameObject chosenClass;
 
     [Header("Tag Effects")] 
@@ -142,11 +142,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     
     // removes the player from the list of players in the game
     [PunRPC]
-    public void RemovePlayer(int playerId)
+    public void RemovePlayer(int playerId, bool destroyPlayer)
     {
-        Destroy(GetPlayer(playerId));
-        players = players.Where(x => x.id != playerId).ToArray();
-        playersInGame--;
+        if(destroyPlayer)
+            Destroy(GetPlayer(playerId));
+        
+        int newArrayLength = players.Where(x => x.id != playerId).ToArray().Length;
+        PlayerManager[] tempPlayerManagers = new PlayerManager[newArrayLength];
+        tempPlayerManagers = players.Where(x => x.id != playerId).ToArray();
+        players = new PlayerManager[newArrayLength];
+        players = tempPlayerManagers;
+        
+        if(destroyPlayer)
+            playersInGame--;
     }
 
     // called when a player tagged someone else
@@ -202,6 +210,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void GameOver(int playerId)
     {
+        // stop game over process if the player is already out of the game
+        Debug.Log(gameEnded);
+        if (gameEnded)
+        {
+            Debug.Log("my game ended skip everything else");
+            return;
+        }
+
         // from the network manager, when someone disconnects from the game and you are the last person in the game
         // the playerId -1 is sent to indicate that the game is finished since no one is there
         if (playerId == -1)
@@ -210,7 +226,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             EndGameForPlayer(false, PhotonNetwork.LocalPlayer.ActorNumber);
             return;
         }
-        
+
         // get player
         PlayerManager player = GetPlayer(playerId);
 
@@ -219,10 +235,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             EndGameForPlayer(true, playerId);
         }
-        
+
         // reduce the number of players in the game
         playersInGame--;
-        
+
         // end the game for the last player
         if (!player.photonView.IsMine && playersInGame == 1)
         {
@@ -238,6 +254,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             // get the first player found from the remaining player list
             PlayerManager playerManager = players.First(x => x.id != playerId);
+            
             // tag that player to continue the flow of the game
             photonView.RPC("TagPlayer", RpcTarget.All, playerManager.id, false, false);
         }
@@ -253,6 +270,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // show end game screen
         GameUI.instance.SetEndGameScreen(newRank, playersInGame);
+        
+        // remove player from the list of players
+        photonView.RPC(
+            "RemovePlayer",
+            RpcTarget.All,
+            playerId,
+            false);
     }
 
     // called after the game has been won - navigates back to the Menu scene

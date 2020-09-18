@@ -338,7 +338,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public void AxeStunned()
     {
         isAxeStunned = true;
+        
+        GameObject AxeStunnedEffectNet = PhotonNetwork.Instantiate(
+            BerserkerAbilities.BerserkerAbiltiesResourceLocation + BerserkerAbilities.AxeStunnedEffectResource,
+            transform.position + 2 * (Vector3.up),
+            Quaternion.identity);
 
+        AxeStunnedEffectNet.transform.parent = gameObject.transform;
+        
         startAxeStunned = currentTime;
         endAxeStunned = startAxeStunned + BerserkerAbilities.AxeDurationEffect;
     }

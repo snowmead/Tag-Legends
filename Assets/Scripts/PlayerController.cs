@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 // am I stunned by an axe?
                 else if (playerManager.isAxeStunned)
                 {
+                    animator.SetBool(BerserkerAbilities.AxeStunnedAnimatorFloatVar, true);
                     rig.isKinematic = true;
                 }
                 else if (playerManager.isIceBoltFreeze)
@@ -100,6 +101,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     // reset to normal state player behaviour - no ability effects
                     animator.SetBool(BerserkerAbilities.ShoutActiveAnimatorFloatVar, false);
+                    animator.SetBool(BerserkerAbilities.AxeStunnedAnimatorFloatVar, false);
                     rig.isKinematic = false;
 
                     // check if my player is grounded

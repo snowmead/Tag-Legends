@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CloudOnce;
+using CloudOnce.CloudPrefs;
 
 public class CloudManager : MonoBehaviour
 {
+    private const string LeaderboardId = "CgkIyoCahe4CEAIQAQ";
     public static CloudManager Instance;
 
     private void Awake()
@@ -67,25 +69,16 @@ public class CloudManager : MonoBehaviour
     }
 
     // increase rank of player who didn't lose the game
-    public void IncreaseRank()
-    {
-
-        CloudVariables.RankScore += 10;
-        Save();
-    }
-
-    // decrease rank of player who lost the game
-    public void DecreaseRank()
-    {
-        CloudVariables.RankScore -= 10;
-        Save();
-    }
-
-    // increase rank of player who didn't lose the game
     public int RankModifier(int playersInGame)
     {
-        CloudVariables.RankScore += getRankModifier(playersInGame);
-        Save();
+        int rankModifier = getRankModifier(playersInGame);
+        // make sure player rank doesn't go below 0
+        if (rankModifier >= CloudVariables.RankScore)
+            CloudVariables.RankScore = 0;
+        else
+            CloudVariables.RankScore += rankModifier;
+        
+        SubmitNewRankScoreToLeaderBoard();
 
         return CloudVariables.RankScore;
     }
@@ -118,8 +111,9 @@ public class CloudManager : MonoBehaviour
     }
 
     // save data to cloud storage
-    private void Save()
+    private void SubmitNewRankScoreToLeaderBoard()
     {
         Cloud.Storage.Save();
+        Cloud.Leaderboards.SubmitScore(LeaderboardId, CloudVariables.RankScore);
     }
 }

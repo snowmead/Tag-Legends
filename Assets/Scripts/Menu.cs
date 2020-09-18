@@ -497,6 +497,9 @@ public class Menu : MonoBehaviourPunCallbacks
         // value cannot be changed
         CustomGameNameObject.GetComponent<TMP_InputField>().interactable = false;
         
+        // setup to join an unranked game
+        NetworkManager.instance.rankedGame = false;
+        
         // join the custom game room
         NetworkManager.instance.JoinRoom(CustomGameName.text);
         

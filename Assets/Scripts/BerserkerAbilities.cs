@@ -21,6 +21,8 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     private const int AxeAbilityIndex = 1;
     private const float AxeCooldown = 10f;
     public const float AxeDurationEffect = 2f;
+    public const string AxeStunnedEffectResource = "AxeStunnedEffect";
+    public const string AxeStunnedAnimatorFloatVar = "stunned";
 
     [Header("Ground Slam Ability Config")]
     public const string GroundSlamTag = "GroundSlam";
