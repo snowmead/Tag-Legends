@@ -168,6 +168,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         if(playerId == playerManagerScript.id)
             TagYoureItText.SetActive(true);
+        else 
+            TagYoureItText.SetActive(false);
     }
 
     // is the player able to get tagged at this current time?
