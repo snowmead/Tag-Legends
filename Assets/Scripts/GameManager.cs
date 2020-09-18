@@ -33,17 +33,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Header("Tag Effects")] 
     public AudioSource TagSound;
 
+    public GameObject TagYoureItText;
+
     [HideInInspector] 
     PlayerManager playerManagerScript;
     public bool countdownStarted = false;
 
     // instance
-    public static GameManager instance;
+    public static GameManager Instance;
 
     private void Awake()
     {
-        instance = this;
-        instance.enabled = true;
+        Instance = this;
+        Instance.enabled = true;
     }
 
     private void Start()
@@ -126,27 +128,46 @@ public class GameManager : MonoBehaviourPunCallbacks
         return players.First(x => x.id == playerId);
     }
     
+    // returns the player of the requested id
+    public PlayerManager GetPlayerFirstPlayerFromList()
+    {
+        return players.First();
+    }
+    
     // returns the player of the requested GameObject
     public PlayerManager GetPlayer(GameObject playerObj)
     {
         return players.First(x => x.gameObject == playerObj);
     }
+    
+    // removes the player from the list of players in the game
+    [PunRPC]
+    public void RemovePlayer(int playerId)
+    {
+        Destroy(GetPlayer(playerId));
+        players = players.Where(x => x.id != playerId).ToArray();
+        playersInGame--;
+    }
 
     // called when a player tagged someone else
     [PunRPC]
-    public void TagPlayer(int playerId, bool initialTag)
+    public void TagPlayer(int playerId, bool initialTag, bool leftAbruptly)
     {
         // untag the player that was tag
-        if (!initialTag)
+        if (!initialTag && !leftAbruptly)
             GetPlayer(taggedPlayer).TagPlayer(false);
 
         taggedPlayer = playerId;
+        
         // tag the player who should now be tag
         GetPlayer(playerId).TagPlayer(true);
         taggedTime = Time.time;
 
         // play tag sound effect
         TagSound.Play();
+        
+        if(playerId == playerManagerScript.id)
+            TagYoureItText.SetActive(true);
     }
 
     // is the player able to get tagged at this current time?
@@ -179,9 +200,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void GameOver(int playerId)
     {
+        // from the network manager, when someone disconnects from the game and you are the last person in the game
+        // the playerId -1 is sent to indicate that the game is finished since no one is there
+        if (playerId == -1)
+        {
+            // reduce the number of players in the game
+            EndGameForPlayer(false, PhotonNetwork.LocalPlayer.ActorNumber);
+            return;
+        }
+        
         // get player
         PlayerManager player = GetPlayer(playerId);
-        
+
         // only stop my game
         if (player.photonView.IsMine && !gameEnded)
         {
@@ -207,7 +237,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             // get the first player found from the remaining player list
             PlayerManager playerManager = players.First(x => x.id != playerId);
             // tag that player to continue the flow of the game
-            photonView.RPC("TagPlayer", RpcTarget.All, playerManager.id, false);
+            photonView.RPC("TagPlayer", RpcTarget.All, playerManager.id, false, false);
         }
 
         int newRank = -1;

@@ -100,7 +100,7 @@ public class GameUI : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-        GameManager.instance.StartGame();
+        GameManager.Instance.StartGame();
         countdownText.gameObject.SetActive(false);
     }
 

@@ -87,11 +87,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         chosenClass = activeClass;
 
         // set the amount of players in the game 
-        GameManager.instance.players[id - 1] = this;
+        GameManager.Instance.players[id - 1] = this;
 
         // tag the first player
         if (id == 1)
-            GameManager.instance.TagPlayer(id, true);
+            GameManager.Instance.TagPlayer(id, true, false);
 
         // if this isn't our local player - disable physics and camera
         // the other players sync their own position accross the network
@@ -125,11 +125,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // check if the curTagTime is greater then the max time allowed before losing
         // check if the game has already ended for me 
         // check if I'm the one who reached the tag limit
-        if (curTagTime >= GameManager.instance.timeToLose && !GameManager.instance.gameEnded && photonView.IsMine)
+        if (curTagTime >= GameManager.Instance.timeToLose && !GameManager.Instance.gameEnded && photonView.IsMine)
         {
             // end the game for all players
             //GameManager.instance.gameEnded = true;
-            GameManager.instance.photonView.RPC(GameOverMethodName, RpcTarget.All, id);
+            GameManager.Instance.photonView.RPC(GameOverMethodName, RpcTarget.All, id);
             
             // play dead animation
             gameObject.GetComponent<PlayerController>().animator.SetBool(Dead, true);
@@ -141,10 +141,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             // check if all players have initialized their player in the game
-            if (GameManager.instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.instance.countdownStarted)
+            if (GameManager.Instance.players.Length == PhotonNetwork.PlayerList.Length && !GameManager.Instance.countdownStarted)
             {
                 // start the game for all players
-                GameManager.instance.photonView.RPC(StartCountdownMethodName, RpcTarget.All);
+                GameManager.Instance.photonView.RPC(StartCountdownMethodName, RpcTarget.All);
             }
         }
 
@@ -207,19 +207,19 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             return;
 
-        if (!GameManager.instance.gameEnded)
+        if (!GameManager.Instance.gameEnded)
         {
             // did we hit another player's tag range circle?
             if (other.gameObject.CompareTag("TagCircle"))
             {
                 // are they tag?
-                if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.instance.taggedPlayer)
+                if (other.gameObject.GetComponentInParent<PlayerManager>().id == GameManager.Instance.taggedPlayer)
                 {
                     // can we get tagged?
-                    if (GameManager.instance.CanGetTagged(id))
+                    if (GameManager.Instance.CanGetTagged(id))
                     {
                         // get tagged
-                        GameManager.instance.photonView.RPC(TagPlayerMethodName, RpcTarget.All, id, false);
+                        GameManager.Instance.photonView.RPC(TagPlayerMethodName, RpcTarget.All, id, false, false);
                     }
                 }
             }

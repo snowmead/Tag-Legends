@@ -100,7 +100,7 @@ public class RFX4_RaycastCollision : MonoBehaviourPunCallbacks
                             if (effect != null)
                             {
                                 Transform playerHit = raycastHit.collider.transform.root;
-                                PlayerManager playerManager = GameManager.instance.GetPlayer(playerHit.gameObject);
+                                PlayerManager playerManager = GameManager.Instance.GetPlayer(playerHit.gameObject);
                                 playerHit.GetComponent<AbilityRpcReceiver>().photonView.RPC("IceBolt", playerManager.PhotonPlayer);
                                 
                                 var instance = PhotonNetwork.Instantiate(FrostMageAbilities.FrostMageAbiltiesResourceLocation + "IceBoltFreeze", playerHit.position, new Quaternion()) as GameObject;

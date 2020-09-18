@@ -40,6 +40,6 @@ public class AbilityRpcReceiver : MonoBehaviourPunCallbacks
     [PunRPC]
     public void IceBlock(int playerId)
     { 
-        GameManager.instance.GetPlayer(playerId).StartIceBlock();
+        GameManager.Instance.GetPlayer(playerId).StartIceBlock();
     }
 }

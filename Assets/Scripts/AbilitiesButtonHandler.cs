@@ -36,7 +36,7 @@ public class AbilitiesButtonHandler : MonoBehaviour
             ability.interactable = false;
         }
 
-        if (startAbilities && GameManager.instance.gameEnded)
+        if (startAbilities && GameManager.Instance.gameEnded)
             ability.interactable = false;
     }
 }

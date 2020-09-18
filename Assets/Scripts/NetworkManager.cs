@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.IO;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
@@ -153,6 +154,45 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             // send an rpc call to all players in the room to load the "Game" scene
             photonView.RPC("ChangeScene", RpcTarget.All, "Game");
+        }
+    }
+
+    // We use this function to handle what happens when someone leaves in the middle of a game of tag
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // check if we are in the Game Scene (in a game)
+            if (GameObject.Find("GameManager"))
+            {
+                GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+                // remove player from the list of players
+                GameManager.Instance.photonView.RPC(
+                    "RemovePlayer",
+                    RpcTarget.All,
+                    otherPlayer.ActorNumber);
+
+                // check if there's only one player left in the game
+                if (gameManager.players.Length <= 1)
+                {
+                    // send -1 to the RPC function that handles this integer as an indicator that the game was cut short
+                    GameManager.Instance.photonView.RPC("GameOver", RpcTarget.All, -1);
+                }
+                // check if the person that left is the one who was tag
+                // if he is then we must make someone else tag
+                else if (otherPlayer.ActorNumber == gameManager.taggedPlayer)
+                {
+                    Debug.Log("otherPlayer.ActorNumber" + otherPlayer.ActorNumber);
+                    // since there is still players remaining in the game
+                    // we must tag another random person to keep the game going
+                    GameManager.Instance.photonView.RPC(
+                        "TagPlayer",
+                        RpcTarget.All,
+                        gameManager.GetPlayerFirstPlayerFromList().id,
+                        false, true);
+                }
+            }
         }
     }
 
