@@ -74,7 +74,7 @@ public class RankDisplayer : MonoBehaviour
     public void UpdateRankDisplay()
     {
         // get player rank
-        int rank = CloudManager.instance.GetRank();
+        int rank = CloudManager.Instance.GetRank();
 
         // check all ranges
         for (int i = 0; i < rankRanges.Length - 1; i++)

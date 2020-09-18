@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             
         // modify my rank
         if(NetworkManager.instance.rankedGame)
-            newRank = CloudManager.instance.RankModifier(playersInGame);
+            newRank = CloudManager.Instance.RankModifier(playersInGame);
 
         // show end game screen
         GameUI.instance.SetEndGameScreen(newRank, playersInGame);

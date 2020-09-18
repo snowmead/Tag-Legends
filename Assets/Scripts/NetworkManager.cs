@@ -33,7 +33,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        matchmakingSqlQuery = "C0 BETWEEN -100 + " + CloudManager.instance.GetRank().ToString() + " AND 100 + " + CloudManager.instance.GetRank().ToString();
+        matchmakingSqlQuery = "C0 BETWEEN -100 + " + CloudManager.Instance.GetRank().ToString() + " AND 100 + " + CloudManager.Instance.GetRank().ToString();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -63,7 +63,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreateRoom(string roomName, int numberOfPlayers)
     {
         int rank;
-        int.TryParse(CloudManager.instance.GetRank().ToString(), out rank);
+        int.TryParse(CloudManager.Instance.GetRank().ToString(), out rank);
 
         RoomOptions roomOptions = new RoomOptions();
         
@@ -119,7 +119,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         rankedGame = true;
 
         // set custom room properties - elo
-        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.instance.GetRank().ToString() } };
+        ExitGames.Client.Photon.Hashtable customRoomProperties = new ExitGames.Client.Photon.Hashtable { { ELO_PROP_KEY, CloudManager.Instance.GetRank().ToString() } };
 
         // join random room
         PhotonNetwork.JoinRandomRoom(customRoomProperties, MaxPlayersDefault, MatchmakingMode.FillRoom, typedLobby, matchmakingSqlQuery);

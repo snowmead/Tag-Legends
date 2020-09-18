@@ -1,19 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CloudOnce;
 
 public class CloudManager : MonoBehaviour
 {
-    public static CloudManager instance;
+    public static CloudManager Instance;
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
             gameObject.SetActive(false);
         else
         {
-            instance = this;
+            Instance = this;
             // Don't destroy NetworkManager game object when switching scenes
             DontDestroyOnLoad(gameObject);
         }
@@ -21,6 +22,17 @@ public class CloudManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        ConnectToCloud();
+    }
+
+    private void Update()
+    {
+        if (!Cloud.IsSignedIn)
+            ConnectToCloud();
+    }
+
+    private void ConnectToCloud()
     {
         // initialize and load cloudonce
         Cloud.OnInitializeComplete += CloudOnceOnInitializeComplete;

@@ -8,6 +8,9 @@ public class AbilitiesButtonHandler : MonoBehaviour
 {
     private Button ability;
     private PlayerManager playerManager;
+
+    private bool startAbilities;
+    
     private void Awake()
     {
         playerManager = gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
@@ -17,12 +20,23 @@ public class AbilitiesButtonHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startAbilities = false;
         ability.interactable = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ability.interactable = !GameManager.instance.gameEnded && playerManager.startGame;
+        if (playerManager.startGame && !startAbilities)
+        {
+            ability.interactable = true;
+            startAbilities = true;
+        } else if (!startAbilities)
+        {
+            ability.interactable = false;
+        }
+
+        if (startAbilities && GameManager.instance.gameEnded)
+            ability.interactable = false;
     }
 }

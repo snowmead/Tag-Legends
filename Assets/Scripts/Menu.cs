@@ -134,7 +134,7 @@ public class Menu : MonoBehaviourPunCallbacks
         audioSource = cam.GetComponent<AudioSource>();
 
         // this allows the rank text to appear by setting it everytime we switch from game scene to the menu scene
-        UpdateUI(CloudManager.instance.GetRank().ToString());
+        UpdateUI(CloudManager.Instance.GetRank().ToString());
         RankDisplayer.instance.UpdateRankDisplay();
 
         searchForGame.SetActive(false);
@@ -611,7 +611,7 @@ public class Menu : MonoBehaviourPunCallbacks
     // called when a player joins the room
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.NickName = CloudManager.instance.GetPlayerName();
+        PhotonNetwork.NickName = CloudManager.Instance.GetPlayerName();
 
         // send an rpc call to update all the other clients that this player has joined the room
         // update everyone elses lobby ui
