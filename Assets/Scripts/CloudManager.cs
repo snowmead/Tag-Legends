@@ -30,8 +30,8 @@ public class CloudManager : MonoBehaviour
 
     private void Update()
     {
-        if (!Cloud.IsSignedIn)
-            ConnectToCloud();
+        /*if (!Cloud.IsSignedIn)
+            ConnectToCloud();*/
     }
 
     private void ConnectToCloud()

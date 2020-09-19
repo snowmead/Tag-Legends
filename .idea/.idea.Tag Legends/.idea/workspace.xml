@@ -20,28 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a071e8f-4536-4e03-ab3b-34b41cd8add2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Tag Legends/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Tag Legends/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Tag Legends/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Tag Legends/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Tag Legends/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Tag Legends/riderModule.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/PlayerAnimator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animation/PlayerAnimator.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Tag Legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tag Legends/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/KriptoFX/Realistic Effects Pack v4/Effects/Shaders/RFX4_UberDistortion.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/KriptoFX/Realistic Effects Pack v4/Effects/Shaders/RFX4_UberDistortion.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Character/Berserker/Berserker.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Character/Berserker/Berserker.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Character/Berserker/FearedParticles.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Character/Berserker/FearedParticles.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Character/Berserker/ShoutParticles.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Character/Berserker/ShoutParticles.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Character/FrostMage/FrostMage.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Character/FrostMage/FrostMage.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Character/Illusionist/Illusionist.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Character/Illusionist/Illusionist.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Character/Ninja/Ninja.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Character/Ninja/Ninja.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AbilityRpcReceiver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AbilityRpcReceiver.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BerserkerAbilities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BerserkerAbilities.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,25 +36,24 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/dev/UltimateProjects/Tag Legends/Assets/KriptoFX/Realistic Effects Pack v4/Effects/Shaders/RFX4_UberDistortion.shader" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/VfxDestroyRootParent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_FontAsset.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A979F18D-51AF-4117-9D12-B797E8C5BE14/b2/8a80538a/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/dev/UltimateProjects/Tag Legends/ProjectSettings/GraphicsSettings.asset" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_FontAsset.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Axe.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BerserkerAbilities.cs" />
         <option value="$PROJECT_DIR$/Assets/VfxDestroyRootParent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Menu.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" />
+        <option value="$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_FontAsset.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BerserkerAbilities.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/AbilityRpcReceiver.cs" />
       </list>
     </option>
   </component>
@@ -124,6 +106,7 @@
       <option name="presentableId" value="Default" />
       <updated>1600445090487</updated>
       <workItem from="1600445101568" duration="11401000" />
+      <workItem from="1600485774941" duration="1017000" />
     </task>
     <servers />
   </component>
@@ -142,15 +125,16 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="552" y="253" width="815" height="534" key="find.popup" timestamp="1600454994348">
+    <state x="552" y="253" width="815" height="534" key="find.popup" timestamp="1600486723080">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" width="815" height="534" key="find.popup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600454994348" />
+    <state x="552" y="253" width="815" height="534" key="find.popup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600486723080" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1600445975857">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

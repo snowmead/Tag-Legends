@@ -20,9 +20,10 @@ public class AbilityRpcReceiver : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void BerserkerShout()
+    public void BerserkerShout(int playerId)
     {
-        gameObject.GetComponent<PlayerManager>().SetFearState();
+        if(playerId != PhotonNetwork.LocalPlayer.ActorNumber)
+            gameObject.GetComponent<PlayerManager>().SetFearState();
     }
     
     [PunRPC]

@@ -97,7 +97,11 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         shoutAudioSource.Play();
         
         // Set all other players feared active state
-        AbilityRpcReceiver.instance.photonView.RPC("BerserkerShout", RpcTarget.Others);
+        AbilityRpcReceiver.instance.photonView.RPC(
+            "BerserkerShout", 
+            RpcTarget.All, 
+            PhotonNetwork.LocalPlayer.ActorNumber);
+        
         PhotonNetwork.Instantiate(
             BerserkerAbiltiesResourceLocation + "ShoutParticles",
             transform.position,
