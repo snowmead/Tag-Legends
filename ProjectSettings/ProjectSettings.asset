@@ -122,7 +122,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 7
+  bundleVersion: 8
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -168,7 +168,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.BendaiGames.TagLegends
   buildNumber: {}
-  AndroidBundleVersionCode: 7
+  AndroidBundleVersionCode: 8
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 29
   AndroidPreferredInstallLocation: 1
@@ -265,7 +265,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: a47a8242a08246e41a1f21dfda4a9f24, type: 3}
+      m_Icon: {fileID: 2800000, guid: 8ec496734c6e9c44b88da0a715936fa2, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -273,8 +273,8 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_Icons:
     - m_Textures:
-      - {fileID: 2800000, guid: a47a8242a08246e41a1f21dfda4a9f24, type: 3}
-      - {fileID: 2800000, guid: a47a8242a08246e41a1f21dfda4a9f24, type: 3}
+      - {fileID: 2800000, guid: 8ec496734c6e9c44b88da0a715936fa2, type: 3}
+      - {fileID: 2800000, guid: 8ec496734c6e9c44b88da0a715936fa2, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
@@ -305,7 +305,7 @@ PlayerSettings:
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: a47a8242a08246e41a1f21dfda4a9f24, type: 3}
+      - {fileID: 2800000, guid: 8ec496734c6e9c44b88da0a715936fa2, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 1
@@ -341,7 +341,7 @@ PlayerSettings:
       m_Kind: 1
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: a47a8242a08246e41a1f21dfda4a9f24, type: 3}
+      - {fileID: 2800000, guid: 8ec496734c6e9c44b88da0a715936fa2, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 0
