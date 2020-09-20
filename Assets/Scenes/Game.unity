@@ -1716,6 +1716,7 @@ MonoBehaviour:
   - {fileID: 545011759}
   players: []
   taggedPlayer: 0
+  playersInGame: 0
   TagSound: {fileID: 828072270}
   TagYoureItText: {fileID: 401532897}
   countdownStarted: 0

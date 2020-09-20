@@ -78,7 +78,7 @@ public class FrostMageAbilities : MonoBehaviour
             transform.position,
             gameObject.transform.rotation);
         
-        AbilityRpcReceiver.instance.photonView.RPC("IceBlock", RpcTarget.Others, playerManager.id);
+        AbilityRpcReceiver.Instance.photonView.RPC("IceBlock", RpcTarget.Others, playerManager.id);
 
         playerManager.StartIceBlock();
     }
@@ -90,6 +90,6 @@ public class FrostMageAbilities : MonoBehaviour
 
         //freezingWindsAudioSource.Play();
         
-        AbilityRpcReceiver.instance.photonView.RPC("FreezingWinds", RpcTarget.Others);
+        GameManager.Instance.photonView.RPC("FreezingWinds", RpcTarget.Others);
     }
 }

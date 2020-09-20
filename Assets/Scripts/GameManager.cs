@@ -186,6 +186,19 @@ public class GameManager : MonoBehaviourPunCallbacks
         // check invincibleDuration and if the player is in an iceblock
         return Time.time > taggedTime + invincibleDuration && !GetPlayer(id).isIceBlock;
     }
+    
+    // sets the player in a feared state from the berserker shout ability
+    [PunRPC]
+    public void BerserkerShout()
+    {
+        playerManagerScript.SetFearState();
+    }
+    
+    [PunRPC]
+    public void FreezingWinds()
+    {
+        playerManagerScript.SetFreezingWindsState();
+    }
 
     // called when all players are ready and loaded in
     [PunRPC]

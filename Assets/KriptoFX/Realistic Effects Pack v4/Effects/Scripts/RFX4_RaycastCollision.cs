@@ -64,7 +64,7 @@ public class RFX4_RaycastCollision : MonoBehaviourPunCallbacks
     private void UpdateRaycast()
     {
         RaycastHit raycastHit;
-        if (Physics.Raycast(transform.position, transform.forward, out raycastHit, RaycastDistance))
+        if (Physics.CapsuleCast(transform.position, transform.forward, 5f, transform.forward,out raycastHit, RaycastDistance))
         {
             if (raycastHit.collider.transform.root.gameObject.CompareTag("Player"))
             {

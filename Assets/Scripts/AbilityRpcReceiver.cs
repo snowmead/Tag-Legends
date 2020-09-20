@@ -6,38 +6,19 @@ using Photon.Pun;
 
 public class AbilityRpcReceiver : MonoBehaviourPunCallbacks
 {
-    public static AbilityRpcReceiver instance;
-    private PlayerManager playerManager;
+    public static AbilityRpcReceiver Instance;
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
-    private void Start()
-    {
-        playerManager = gameObject.GetComponent<PlayerManager>();
-    }
-
-    [PunRPC]
-    public void BerserkerShout(int playerId)
-    {
-        if(playerId != PhotonNetwork.LocalPlayer.ActorNumber)
-            gameObject.GetComponent<PlayerManager>().SetFearState();
-    }
-    
     [PunRPC]
     public void IceBolt()
     {
         gameObject.GetComponent<PlayerManager>().SetIceBolt();
     }
-    
-    [PunRPC]
-    public void FreezingWinds()
-    {
-        gameObject.GetComponent<PlayerManager>().SetFreezingWindsState();
-    }
-    
+
     [PunRPC]
     public void IceBlock(int playerId)
     { 

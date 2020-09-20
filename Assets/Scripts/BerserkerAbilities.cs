@@ -12,6 +12,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     public Rigidbody rig;
     public const string BerserkerAbiltiesResourceLocation = "Character/Berserker/";
     private AbilityCooldownManager abilityCooldownManager;
+    private AbilityRpcReceiver abilityRpcReceiver;
 
     [Header("Leap Ability Config")]
     private const int LeapAbilityIndex = 0;
@@ -45,6 +46,7 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
     private void Awake()
     {
         abilityCooldownManager = gameObject.GetComponent<AbilityCooldownManager>();
+        abilityRpcReceiver = gameObject.GetComponent<AbilityRpcReceiver>();
     }
 
     public void Leap()
@@ -97,10 +99,9 @@ public class BerserkerAbilities : MonoBehaviourPunCallbacks
         shoutAudioSource.Play();
         
         // Set all other players feared active state
-        AbilityRpcReceiver.instance.photonView.RPC(
+        GameManager.Instance.photonView.RPC(
             "BerserkerShout", 
-            RpcTarget.All, 
-            PhotonNetwork.LocalPlayer.ActorNumber);
+            RpcTarget.Others);
         
         PhotonNetwork.Instantiate(
             BerserkerAbiltiesResourceLocation + "ShoutParticles",
