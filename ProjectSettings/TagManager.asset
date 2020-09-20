@@ -7,6 +7,9 @@ TagManager:
   - TagCircle
   - ChosenClass
   - GroundSlam
+  - AxeThrow
+  - IceBolt
+  - FrostNova
   layers:
   - Default
   - TransparentFX
@@ -19,7 +22,7 @@ TagManager:
   - Ground
   - TagCircle
   - GroundSlam
-  - 
+  - Player
   - 
   - 
   - 
@@ -43,4 +46,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2932140723
+    locked: 0
+  - name: Forground
+    uniqueID: 1951900627
     locked: 0

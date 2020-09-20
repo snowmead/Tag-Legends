@@ -4,13 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using System.ComponentModel;
 
 public class GameUI : MonoBehaviour
 {
-    public PlayerUIContainer[] playerContainers;
-    public TextMeshProUGUI loseText;
+    [Header("End Game Screen")] 
+    public GameObject EndGameScreen;
+    public TextMeshProUGUI EndGameScreenTitle;
+    public GameObject RankScoreScreen;
+    public TextMeshProUGUI RankScore; 
+    
     public TextMeshProUGUI countdownText;
     public GameObject menu;
+
+    public Sprite berserkerSprite;
+    public Sprite frostMageSprite;
+    public Sprite illusionistSprite;
+    public Sprite ninjaSprite;
 
     // instance
     public static GameUI instance;
@@ -21,51 +31,45 @@ public class GameUI : MonoBehaviour
         instance = this;
     }
 
-    void Start()
+    // called when a player has reached the tag limit
+    public void SetEndGameScreen(int newRank, int playersLeft)
     {
-        InitializePlayerUI();
-    }
-
-    void Update()
-    {
-        UpdatePlayerUI();
-    }
-
-    // initializes the player UI containers
-    void InitializePlayerUI()
-    {
-        // loop through all of the containers
-        for (int x = 0; x < playerContainers.Length; ++x)
+        EndGameScreen.SetActive(true);
+        
+        // Show rank section on screen if it's a ranked game
+        if (newRank >= 0)
         {
-            PlayerUIContainer container = playerContainers[x];
-
-            // only enable and modify the UI containers we need
-            if (x < PhotonNetwork.PlayerList.Length)
+            RankScoreScreen.SetActive(true);
+            RankScore.text = newRank.ToString();
+        }
+        else
+        {
+            RankScoreScreen.SetActive(false);
+        }
+        
+        EndGameScreenTitle.gameObject.SetActive(true);
+        if (playersLeft == 1)
+        {
+            EndGameScreenTitle.text = "You WON!";
+        }
+        else
+        {
+            switch (playersLeft)
             {
-                container.obj.SetActive(true);
-                container.nameText.text = PhotonNetwork.PlayerList[x].NickName;
+                case 2:
+                    EndGameScreenTitle.text = "You came in " + playersLeft + "nd place!";
+                    break;
+                case 3:
+                    EndGameScreenTitle.text = "You came in " + playersLeft + "rd place!";
+                    break;
+                case 4:
+                    EndGameScreenTitle.text = "You came in " + playersLeft + "th place!";
+                    break;
+                case 5:
+                    EndGameScreenTitle.text = "You came in " + playersLeft + "th place!";
+                    break;
             }
-            else
-                container.obj.SetActive(false);
         }
-    }
-
-    // updates the player UI sliders
-    void UpdatePlayerUI()
-    {
-        // loop through all of the players
-        for (int x = 0; x < GameManager.instance.players.Length; ++x)
-        {
-            if (GameManager.instance.players[x] != null)
-                playerContainers[x].timer.fillAmount = 1.0f / GameManager.instance.timeToLose  * GameManager.instance.players[x].curTagTime;
-        }
-    }
-
-    // called when a player has won the game
-    public void SetLoseText(string loserName)
-    {
-        loseText.gameObject.SetActive(true);
-        loseText.text = loserName + " lost";
     }
 
     public void BeginCountdown(int seconds)
@@ -73,26 +77,9 @@ public class GameUI : MonoBehaviour
         StartCoroutine(Countdown(seconds));
     }
 
-    public void SetPlayerVingettes()
-    {
-        // Game started, set player vingettes
-        for (int x = 0; x < PhotonNetwork.PlayerList.Length; ++x)
-        {
-            // Increase the size of your own UI vingette and set your image to the top of the player list
-            if (GameManager.instance.GetPlayer(GameManager.instance.players[x].id).photonView.IsMine)
-            {
-                PlayerUIContainer container = playerContainers[x];
-                container.obj.gameObject.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f); // Increase the size of your vingette
-                container.obj.gameObject.transform.SetAsFirstSibling(); // Set yourself as the first child in the list
-            }
-        }
-    }
-
     // begin 3... 2... 1... Go! Countdown
     IEnumerator Countdown(int seconds)
     {
-        Debug.Log("countdown was called");
-
         countdownText.gameObject.SetActive(true);
         int count = seconds;
 
@@ -113,7 +100,7 @@ public class GameUI : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-        GameManager.instance.StartGame();
+        GameManager.Instance.StartGame();
         countdownText.gameObject.SetActive(false);
     }
 
@@ -134,4 +121,5 @@ public class PlayerUIContainer
     public GameObject obj;
     public TextMeshProUGUI nameText;
     public Image timer;
+    public Image classImage;
 }

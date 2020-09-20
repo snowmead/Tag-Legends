@@ -1,19 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CloudOnce;
+using CloudOnce.CloudPrefs;
 
 public class CloudManager : MonoBehaviour
 {
-    public static CloudManager instance;
+    private const string LeaderboardId = "CgkIyoCahe4CEAIQAQ";
+    public static CloudManager Instance;
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
             gameObject.SetActive(false);
         else
         {
-            instance = this;
+            Instance = this;
             // Don't destroy NetworkManager game object when switching scenes
             DontDestroyOnLoad(gameObject);
         }
@@ -21,6 +24,17 @@ public class CloudManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        ConnectToCloud();
+    }
+
+    private void Update()
+    {
+        /*if (!Cloud.IsSignedIn)
+            ConnectToCloud();*/
+    }
+
+    private void ConnectToCloud()
     {
         // initialize and load cloudonce
         Cloud.OnInitializeComplete += CloudOnceOnInitializeComplete;
@@ -40,13 +54,13 @@ public class CloudManager : MonoBehaviour
     // on cloudonce load complete, update the menu ui with the player's rank
     void CloudOnceLoadComplete(bool success)
     {
-        Menu.instance.UpdateUI(CloudVariables.RankScore.ToString());
+        MenuLoading.instance.CloudConnectionDone();
     }
 
     // get rank of player
-    public string GetRank()
+    public int GetRank()
     {
-        return CloudVariables.RankScore.ToString();
+        return CloudVariables.RankScore;
     }
 
     public string GetPlayerName()
@@ -55,25 +69,18 @@ public class CloudManager : MonoBehaviour
     }
 
     // increase rank of player who didn't lose the game
-    public void IncreaseRank()
+    public int RankModifier(int playersInGame)
     {
+        int rankModifier = getRankModifier(playersInGame);
+        // make sure player rank doesn't go below 0
+        if (rankModifier >= CloudVariables.RankScore)
+            CloudVariables.RankScore = 0;
+        else
+            CloudVariables.RankScore += rankModifier;
+        
+        SubmitNewRankScoreToLeaderBoard();
 
-        CloudVariables.RankScore += 10;
-        Save();
-    }
-
-    // decrease rank of player who lost the game
-    public void DecreaseRank()
-    {
-        CloudVariables.RankScore -= 10;
-        Save();
-    }
-
-    // increase rank of player who didn't lose the game
-    public void RankModifier(int playersInGame)
-    {
-        CloudVariables.RankScore += getRankModifier(playersInGame);
-        Save();
+        return CloudVariables.RankScore;
     }
 
     public int getRankModifier(int playersInGame)
@@ -104,8 +111,9 @@ public class CloudManager : MonoBehaviour
     }
 
     // save data to cloud storage
-    private void Save()
+    private void SubmitNewRankScoreToLeaderBoard()
     {
         Cloud.Storage.Save();
+        Cloud.Leaderboards.SubmitScore(LeaderboardId, CloudVariables.RankScore);
     }
 }
