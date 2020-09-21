@@ -23,7 +23,10 @@ jobs:
         with:
           path: test-project/Library
           key: Library-test-project-WebGL
-
+          key:  
+      - name: Unity - Builder
+        uses: webbertakken/unity-builder@v1.2
+        
       # Test
       - name: Run tests
         uses: webbertakken/unity-test-runner@v1.3
@@ -193,13 +196,10 @@ jobs:
         projectPath:
           - test-project
         unityVersion:
-          - 2019.2.11f1
+          - 2019.4.4f1
         targetPlatform:
-          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - StandaloneLinux64 # Build a Linux 64-bit standalone.
-          - iOS # Build an iOS player.
-          - WebGL # WebGL.
+          - Android
+          - iOS
     steps:
       - uses: actions/checkout@v2
         with:
