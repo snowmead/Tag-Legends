@@ -47,6 +47,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                               " AND 100 + " + 
                               CloudManager.Instance.GetRank();
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.ConnectToRegion("cae");
     }
 
     private void OnApplicationPause(bool pauseStatus)
