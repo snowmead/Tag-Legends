@@ -90,7 +90,8 @@ public class Menu : MonoBehaviourPunCallbacks
     public GameObject quickPlayButton;
     public GameObject rankedPlayButton;
     public GameObject backButton;
-
+    public GameObject customGameButton;
+    
     public UnityEvent onCompleteCallback;
 
     public static Menu instance;
@@ -631,15 +632,21 @@ public class Menu : MonoBehaviourPunCallbacks
         quickPlayButton.GetComponent<Button>().interactable = isEnabled;
         rankedPlayButton.GetComponent<Button>().interactable = isEnabled;
         backButton.GetComponent<Button>().interactable = isEnabled;
+        customGameButton.GetComponent<Button>().interactable = isEnabled;
     }
 
     public void StopShowingSearchGame()
     {
+        
+        
         if(SearchForCustomGame.activeSelf)
             SearchForCustomGame.SetActive(false);
-        
-        if(searchForGame.activeSelf)
+
+        if (searchForGame.activeSelf)
+        {
+            EnableOrDisbalePlayScreenButtons(false);
             searchForGame.SetActive(false);
+        }
     }
     
     // called when the "Start Game" button is pressed
