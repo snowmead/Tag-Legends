@@ -62,13 +62,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         else if (!pauseStatus)
         {
             CloudManager.Instance.Reconnect();
-            PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.Reconnect();
         }
     }
-    private void OnApplicationFocus(bool focus)
-    {
-        
-    }
+    
     private void OnApplicationQuit()
     {
         PhotonNetwork.LeaveRoom();
@@ -77,11 +74,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         // increase the progress bar of the loading screen
-        MenuLoading.instance.PhotonConnectionDone();
-        
-        #if UNITY_EDITOR
-            Debug.Log("Connected to Photon Region: " + PhotonNetwork.CloudRegion);
-        #endif
+        if(SceneManager.GetActiveScene().name == "MenuLoading")
+            MenuLoading.instance.PhotonConnectionDone();
+        Debug.LogError("Connected to Photon");
     }
 
     // get list of rooms based on string query
