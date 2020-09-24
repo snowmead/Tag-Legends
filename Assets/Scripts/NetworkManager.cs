@@ -54,11 +54,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.LogError("PauseStatus: "+ pauseStatus);
         if (pauseStatus && PhotonNetwork.CurrentRoom != null)
         {
-            if(SceneManager.GetActiveScene().name == "Game")
+            if (SceneManager.GetActiveScene().name == "Game")
+            {
                 GameManager.Instance.photonView.RPC("GameOver", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+                SceneManager.LoadScene("Menu");
+            }
+
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.SendAllOutgoingCommands();
-            SceneManager.LoadScene("Menu");
         }
         else if (!pauseStatus)
         {
