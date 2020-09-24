@@ -153,6 +153,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         players = new PlayerManager[newArrayLength];
         players = tempPlayerManagers;
         
+        // modify my rank
+        if(NetworkManager.instance.rankedGame)
+            CloudManager.Instance.RankModifier(playersInGame);
+        
         if(destroyPlayer)
             playersInGame--;
     }
