@@ -40,18 +40,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void OnApplicationPause(bool pauseStaus)
     {
+        Debug.LogError("PauseStatus: "+ pauseStaus);
         if (pauseStaus && PhotonNetwork.CurrentRoom != null)
         {
             PhotonNetwork.LeaveRoom();
+            PhotonNetwork.SendAllOutgoingCommands();
             SceneManager.LoadScene("Menu");
         }
-        else if (!pauseStaus && PhotonNetwork.CurrentRoom == null)
+        else if (!pauseStaus)
         {
             CloudManager.Instance.Reconnect();
             PhotonNetwork.ConnectUsingSettings();
         }
     }
-
+    private void OnApplicationFocus(bool focus)
+    {
+        
+    }
     private void OnApplicationQuit()
     {
         PhotonNetwork.LeaveRoom();
