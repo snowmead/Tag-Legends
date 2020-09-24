@@ -17,6 +17,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
     string matchmakingSqlQuery;
     public bool rankedGame = false;
+    private static int CreateRoomAlreadyExistsReturnCode;
+
+    static NetworkManager()
+    {
+        CreateRoomAlreadyExistsReturnCode = 32766;
+    }
 
     private void Awake()
     {
@@ -61,11 +67,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (roomList.Count > 0)
             PopulateGrid.instance.PopulateRoomList(roomList);
-    }
-
-    public Room CurrentRoom()
-    {
-        return PhotonNetwork.CurrentRoom;
     }
 
     public void CreateRoom(string roomName, int numberOfPlayers)
@@ -146,12 +147,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Menu.instance.UpdateCustomGamePlayersDenominator(PhotonNetwork.CurrentRoom.MaxPlayers);
+        Menu.instance.DefaultCustomGamePreview(PhotonNetwork.CurrentRoom.MaxPlayers);
     }
 
     public override void OnCreatedRoom()
     {
-        Menu.instance.UpdateCustomGamePlayersDenominator(PhotonNetwork.CurrentRoom.MaxPlayers);
+        Menu.instance.DefaultCustomGamePreview(PhotonNetwork.CurrentRoom.MaxPlayers);
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        if(returnCode == CreateRoomAlreadyExistsReturnCode)
+            Menu.instance.ShowCreateRoomErrorMessage();
+        
+        #if UNITY_EDITOR
+                Debug.Log("Failed to create room with return code [" + returnCode + "]: " + message);
+        #endif
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
