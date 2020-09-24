@@ -43,6 +43,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.LogError("PauseStatus: "+ pauseStaus);
         if (pauseStaus && PhotonNetwork.CurrentRoom != null)
         {
+            GameManager.Instance.photonView.RPC("GameOver", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.SendAllOutgoingCommands();
             SceneManager.LoadScene("Menu");
