@@ -630,7 +630,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public void EnableOrDisbalePlayScreenButtons(bool isEnabled)
     {
         quickPlayButton.GetComponent<Button>().interactable = isEnabled;
-        rankedPlayButton.GetComponent<Button>().interactable = isEnabled;
+        //rankedPlayButton.GetComponent<Button>().interactable = isEnabled;
         backButton.GetComponent<Button>().interactable = isEnabled;
         customGameButton.GetComponent<Button>().interactable = isEnabled;
     }
