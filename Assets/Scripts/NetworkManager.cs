@@ -76,7 +76,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // increase the progress bar of the loading screen
         if(SceneManager.GetActiveScene().name == "MenuLoading")
             MenuLoading.instance.PhotonConnectionDone();
-        Debug.LogError("Connected to Photon");
+        Debug.LogError("Connected to Photon region: " + PhotonNetwork.CloudRegion);
     }
 
     // get list of rooms based on string query
