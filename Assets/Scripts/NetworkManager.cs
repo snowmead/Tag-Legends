@@ -17,6 +17,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
     string matchmakingSqlQuery;
     public bool rankedGame = false;
+    private static int JoinRoomDoesNotExistReturnCode;
+    private static int CreateRoomAlreadyExistsReturnCode;
+
+    static NetworkManager()
+    {
+        CreateRoomAlreadyExistsReturnCode = 32766;
+        CreateRoomAlreadyExistsReturnCode = 32766;
+    }
 
     private void Awake()
     {
@@ -34,21 +42,24 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        matchmakingSqlQuery = "C0 BETWEEN -100 + " + CloudManager.Instance.GetRank().ToString() + " AND 100 + " + CloudManager.Instance.GetRank().ToString();
+        matchmakingSqlQuery = "C0 BETWEEN -100 + " + 
+                              CloudManager.Instance.GetRank() + 
+                              " AND 100 + " + 
+                              CloudManager.Instance.GetRank();
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    private void OnApplicationPause(bool pauseStaus)
+    private void OnApplicationPause(bool pauseStatus)
     {
-        Debug.LogError("PauseStatus: "+ pauseStaus);
-        if (pauseStaus && PhotonNetwork.CurrentRoom != null)
+        Debug.LogError("PauseStatus: "+ pauseStatus);
+        if (pauseStatus && PhotonNetwork.CurrentRoom != null)
         {
             GameManager.Instance.photonView.RPC("GameOver", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.SendAllOutgoingCommands();
             SceneManager.LoadScene("Menu");
         }
-        else if (!pauseStaus)
+        else if (!pauseStatus)
         {
             CloudManager.Instance.Reconnect();
             PhotonNetwork.Reconnect();
@@ -78,11 +89,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (roomList.Count > 0)
             PopulateGrid.instance.PopulateRoomList(roomList);
-    }
-
-    public Room CurrentRoom()
-    {
-        return PhotonNetwork.CurrentRoom;
     }
 
     public void CreateRoom(string roomName, int numberOfPlayers)
@@ -158,17 +164,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        CreateRoom(Menu.instance.CustomGameName.text, Menu.instance.GetMaxNumberOfPlayersFromDropdown());
+        #if UNITY_EDITOR
+                Debug.Log("Failed to join room with return code [" + returnCode + "]: " + message);
+        #endif
+
+        Menu.instance.ShowCreatingGameInsteadOfJoinedOne();
     }
 
     public override void OnJoinedRoom()
     {
-        Menu.instance.UpdateCustomGamePlayersDenominator(PhotonNetwork.CurrentRoom.MaxPlayers);
+        Menu.instance.DefaultCustomGamePreview(PhotonNetwork.CurrentRoom.MaxPlayers);
     }
 
     public override void OnCreatedRoom()
     {
-        Menu.instance.UpdateCustomGamePlayersDenominator(PhotonNetwork.CurrentRoom.MaxPlayers);
+        Menu.instance.DefaultCustomGamePreview(PhotonNetwork.CurrentRoom.MaxPlayers);
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        if(returnCode == CreateRoomAlreadyExistsReturnCode)
+            Menu.instance.ShowCreateRoomErrorMessage();
+        
+        #if UNITY_EDITOR
+                Debug.Log("Failed to create room with return code [" + returnCode + "]: " + message);
+        #endif
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -191,6 +211,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             {
                 GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+                GameManager.Instance.photonView.RPC("GameOver", RpcTarget.All, otherPlayer.ActorNumber);
+                
                 // remove player from the list of players
                 GameManager.Instance.photonView.RPC(
                     "RemovePlayer",

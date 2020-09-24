@@ -46,7 +46,9 @@ public class Menu : MonoBehaviourPunCallbacks
     public int CustomGameMaxNumberOfPlayers;
     public GameObject MaxPlayersDropdown;
     private TMP_Dropdown MaxPlayersCustomGameDropdown;
-
+    public GameObject CreateCustomGameInsteadOfJoinMessage;
+    public GameObject CreateCustomGameErrorMessage;
+    
     [Header("Player Preview")]
     public Animator animator;
     public TextMeshProUGUI rankScore;
@@ -463,29 +465,31 @@ public class Menu : MonoBehaviourPunCallbacks
     
     public void OnCustomGameCreateButton()
     {
-        // set create and join buttons non interactable
-        CreateCustomGameButton.gameObject.SetActive(false);
-        JoinCustomGameButton.gameObject.SetActive(false);
-
-        // show the search for game text
-        SearchForCustomGame.SetActive(true);
-        
-        // set the custom game input text field to disabled
-        // value cannot be changed
-        CustomGameNameObject.GetComponent<TMP_InputField>().interactable = false;
-
         // setup to create an unranked game
         NetworkManager.instance.rankedGame = false;
         
         // create the custom game room
         NetworkManager.instance.CreateRoom(CustomGameName.text, GetMaxNumberOfPlayersFromDropdown());
         
-        // disable dropdown
-        MaxPlayersCustomGameDropdown.interactable = false;
     }
     
     public void OnCustomGameJoinButton()
     {
+        // setup to join an unranked game
+        NetworkManager.instance.rankedGame = false;
+        
+        // join the custom game room
+        NetworkManager.instance.JoinRoom(CustomGameName.text);
+    }
+
+    public void DefaultCustomGamePreview(int maxPlayers)
+    {
+        // set the custom game input text field to disabled
+        // value cannot be changed
+        CustomGameNameObject.GetComponent<TMP_InputField>().interactable = false;
+        
+        numberOfPlayersDenominator.text = "/" + maxPlayers;
+        
         // set create and join buttons non interactable
         CreateCustomGameButton.gameObject.SetActive(false);
         JoinCustomGameButton.gameObject.SetActive(false);
@@ -493,23 +497,20 @@ public class Menu : MonoBehaviourPunCallbacks
         // show the search for game text
         SearchForCustomGame.SetActive(true);
         
-        // set the custom game input text field to disabled
-        // value cannot be changed
-        CustomGameNameObject.GetComponent<TMP_InputField>().interactable = false;
-        
-        // setup to join an unranked game
-        NetworkManager.instance.rankedGame = false;
-        
-        // join the custom game room
-        NetworkManager.instance.JoinRoom(CustomGameName.text);
-        
         // disable dropdown
         MaxPlayersCustomGameDropdown.interactable = false;
+        
+        CreateCustomGameErrorMessage.SetActive(false);
     }
 
-    public void UpdateCustomGamePlayersDenominator(int maxPlayers)
+    public void ShowCreatingGameInsteadOfJoinedOne()
     {
-        numberOfPlayersDenominator.text = "/" + maxPlayers;
+        CreateCustomGameInsteadOfJoinMessage.SetActive(true);
+    }
+    
+    public void ShowCreateRoomErrorMessage()
+    {
+        CreateCustomGameErrorMessage.SetActive(true);
     }
 
     public void OnCancelCustomGameSearchButton()
@@ -536,6 +537,8 @@ public class Menu : MonoBehaviourPunCallbacks
         // value can be changed
         CustomGameNameObject.GetComponent<TMP_InputField>().interactable = true;
 
+        CreateCustomGameErrorMessage.SetActive(false);
+        CreateCustomGameInsteadOfJoinMessage.SetActive(false);
     }
 
     public int GetMaxNumberOfPlayersFromDropdown()
