@@ -60,18 +60,18 @@ public class GoogleAds : MonoBehaviour
         #endif
 
         // Initialize an InterstitialAd.
-        this.interstitial = new InterstitialAd(adUnitId);
+        interstitial = new InterstitialAd(adUnitId);
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
         // Load the interstitial with the request.
-        this.interstitial.LoadAd(request);
+        interstitial.LoadAd(request);
     }
 
     public void ShowInterstitialAd()
     {
-        if (this.interstitial.IsLoaded())
+        if (interstitial.IsLoaded())
         {
-            this.interstitial.Show();
+            interstitial.Show();
         }
     }
 
@@ -82,28 +82,28 @@ public class GoogleAds : MonoBehaviour
 
     public void HandleOnAdLoaded(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdLoaded event received");
+        print("HandleAdLoaded event received");
     }
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
+        print("HandleFailedToReceiveAd event received with message: "
                             + args.Message);
     }
 
     public void HandleOnAdOpened(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdOpened event received");
+        print("HandleAdOpened event received");
     }
 
     public void HandleOnAdClosed(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdClosed event received");
+        print("HandleAdClosed event received");
     }
 
     public void HandleOnAdLeavingApplication(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdLeavingApplication event received");
+        print("HandleAdLeavingApplication event received");
     }
 
 }
