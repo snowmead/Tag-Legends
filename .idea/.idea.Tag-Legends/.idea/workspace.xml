@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="74530279-11ae-4971-b45c-18263c762d75" name="Default Changelist" comment="" />
+    <list default="true" id="74530279-11ae-4971-b45c-18263c762d75" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,9 +20,9 @@
       <list>
         <option value="$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_FontAsset.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Menu.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" />
       </list>
     </option>
   </component>
@@ -73,7 +75,7 @@
       <updated>1600918296279</updated>
       <workItem from="1600918314806" duration="274000" />
       <workItem from="1600961887076" duration="7002000" />
-      <workItem from="1600970683390" duration="2203000" />
+      <workItem from="1600970683390" duration="2721000" />
     </task>
     <servers />
   </component>
