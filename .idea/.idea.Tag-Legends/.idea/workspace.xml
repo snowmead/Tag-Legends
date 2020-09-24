@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74530279-11ae-4971-b45c-18263c762d75" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Tag-Legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tag-Legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GUIMobileHyperCasual.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GUIProKitFantasyRPG.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Editor Resources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Plugins.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GoogleAds.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GoogleAds.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +23,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/CloudManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Menu.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GoogleAds.cs" />
       </list>
     </option>
   </component>
