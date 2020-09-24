@@ -63,6 +63,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             if (SceneManager.GetActiveScene().name == "Menu")
             {
                 Menu.instance.StopShowingSearchGame();
+                Menu.instance.EnableOrDisbalePlayScreenButtons(true);
             } 
                 
             PhotonNetwork.LeaveRoom();

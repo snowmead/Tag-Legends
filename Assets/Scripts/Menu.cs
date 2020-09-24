@@ -627,7 +627,7 @@ public class Menu : MonoBehaviourPunCallbacks
         EnableOrDisbalePlayScreenButtons(true);
     }
 
-    private void EnableOrDisbalePlayScreenButtons(bool isEnabled)
+    public void EnableOrDisbalePlayScreenButtons(bool isEnabled)
     {
         quickPlayButton.GetComponent<Button>().interactable = isEnabled;
         rankedPlayButton.GetComponent<Button>().interactable = isEnabled;
@@ -637,8 +637,6 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void StopShowingSearchGame()
     {
-        
-        
         if(SearchForCustomGame.activeSelf)
             SearchForCustomGame.SetActive(false);
 
