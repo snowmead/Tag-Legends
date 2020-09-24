@@ -633,6 +633,15 @@ public class Menu : MonoBehaviourPunCallbacks
         backButton.GetComponent<Button>().interactable = isEnabled;
     }
 
+    public void StopShowingSearchGame()
+    {
+        if(SearchForCustomGame.activeSelf)
+            SearchForCustomGame.SetActive(false);
+        
+        if(searchForGame.activeSelf)
+            searchForGame.SetActive(false);
+    }
+    
     // called when the "Start Game" button is pressed
     // only the host can click this button
     public void OnStartGameButton()

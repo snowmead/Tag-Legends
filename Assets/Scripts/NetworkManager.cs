@@ -60,6 +60,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 SceneManager.LoadScene("Menu");
             }
 
+            if (SceneManager.GetActiveScene().name == "Menu")
+            {
+                Menu.instance.StopShowingSearchGame();
+            } 
+                
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.SendAllOutgoingCommands();
         }
