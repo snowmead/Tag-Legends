@@ -215,6 +215,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             {
                 GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+                GameManager.Instance.photonView.RPC("GameOver", RpcTarget.All, otherPlayer.ActorNumber);
+                
                 // remove player from the list of players
                 GameManager.Instance.photonView.RPC(
                     "RemovePlayer",
