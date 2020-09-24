@@ -34,7 +34,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        matchmakingSqlQuery = "C0 BETWEEN -100 + " + CloudManager.Instance.GetRank().ToString() + " AND 100 + " + CloudManager.Instance.GetRank().ToString();
+        matchmakingSqlQuery = "C0 BETWEEN -100 + " + 
+                              CloudManager.Instance.GetRank() + 
+                              " AND 100 + " + 
+                              CloudManager.Instance.GetRank();
         PhotonNetwork.ConnectUsingSettings();
     }
 
