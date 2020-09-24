@@ -153,6 +153,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         players = new PlayerManager[newArrayLength];
         players = tempPlayerManagers;
         
+        // modify my rank
+        if(NetworkManager.instance.rankedGame)
+            CloudManager.Instance.RankModifier(playersInGame);
+        
         if(destroyPlayer)
             playersInGame--;
     }
@@ -224,10 +228,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     void GameOver(int playerId)
     {
         // stop game over process if the player is already out of the game
-        Debug.Log(gameEnded);
         if (gameEnded)
         {
-            Debug.Log("my game ended skip everything else");
             return;
         }
 

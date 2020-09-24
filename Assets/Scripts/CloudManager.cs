@@ -28,10 +28,9 @@ public class CloudManager : MonoBehaviour
         ConnectToCloud();
     }
 
-    private void Update()
+    public void Reconnect()
     {
-        /*if (!Cloud.IsSignedIn)
-            ConnectToCloud();*/
+        ConnectToCloud();
     }
 
     private void ConnectToCloud()
@@ -72,6 +71,7 @@ public class CloudManager : MonoBehaviour
     public int RankModifier(int playersInGame)
     {
         int rankModifier = getRankModifier(playersInGame);
+        
         // make sure player rank doesn't go below 0
         if (rankModifier >= CloudVariables.RankScore)
             CloudVariables.RankScore = 0;
