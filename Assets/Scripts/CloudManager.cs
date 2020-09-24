@@ -34,6 +34,11 @@ public class CloudManager : MonoBehaviour
             ConnectToCloud();*/
     }
 
+    public void Reconnect()
+    {
+        ConnectToCloud();
+    }
+
     private void ConnectToCloud()
     {
         // initialize and load cloudonce
