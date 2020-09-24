@@ -56,6 +56,8 @@ public class CloudManager : MonoBehaviour
         MenuLoading.instance.CloudConnectionDone();
     }
 
+    
+    
     // get rank of player
     public int GetRank()
     {

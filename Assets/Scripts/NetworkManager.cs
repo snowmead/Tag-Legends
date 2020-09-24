@@ -69,7 +69,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.Reconnect();
         }
     }
-    
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        PhotonNetwork.Reconnect();
+    }
+
     private void OnApplicationQuit()
     {
         PhotonNetwork.LeaveRoom();
