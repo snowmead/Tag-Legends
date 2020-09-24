@@ -38,6 +38,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
+    private void OnApplicationPause(bool pauseStaus)
+    {
+        if (pauseStaus && PhotonNetwork.CurrentRoom != null)
+        {
+            PhotonNetwork.LeaveRoom();
+            SceneManager.LoadScene("Menu");
+        }
+        else if (!pauseStaus && PhotonNetwork.CurrentRoom == null)
+        {
+            CloudManager.Instance.Reconnect();
+            PhotonNetwork.ConnectUsingSettings();
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
     public override void OnConnectedToMaster()
     {
         // increase the progress bar of the loading screen
