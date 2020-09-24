@@ -46,6 +46,7 @@ public class Menu : MonoBehaviourPunCallbacks
     public int CustomGameMaxNumberOfPlayers;
     public GameObject MaxPlayersDropdown;
     private TMP_Dropdown MaxPlayersCustomGameDropdown;
+    public GameObject CreateCustomGameInsteadOfJoinMessage;
     public GameObject CreateCustomGameErrorMessage;
     
     [Header("Player Preview")]
@@ -502,6 +503,11 @@ public class Menu : MonoBehaviourPunCallbacks
         CreateCustomGameErrorMessage.SetActive(false);
     }
 
+    public void ShowCreatingGameInsteadOfJoinedOne()
+    {
+        CreateCustomGameInsteadOfJoinMessage.SetActive(true);
+    }
+    
     public void ShowCreateRoomErrorMessage()
     {
         CreateCustomGameErrorMessage.SetActive(true);
@@ -532,6 +538,7 @@ public class Menu : MonoBehaviourPunCallbacks
         CustomGameNameObject.GetComponent<TMP_InputField>().interactable = true;
 
         CreateCustomGameErrorMessage.SetActive(false);
+        CreateCustomGameInsteadOfJoinMessage.SetActive(false);
     }
 
     public int GetMaxNumberOfPlayersFromDropdown()

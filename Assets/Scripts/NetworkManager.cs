@@ -17,10 +17,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     string[] roomPropertiesLobby = { ELO_PROP_KEY };
     string matchmakingSqlQuery;
     public bool rankedGame = false;
+    private static int JoinRoomDoesNotExistReturnCode;
     private static int CreateRoomAlreadyExistsReturnCode;
 
     static NetworkManager()
     {
+        CreateRoomAlreadyExistsReturnCode = 32766;
         CreateRoomAlreadyExistsReturnCode = 32766;
     }
 
@@ -142,7 +144,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        CreateRoom(Menu.instance.CustomGameName.text, Menu.instance.GetMaxNumberOfPlayersFromDropdown());
+        #if UNITY_EDITOR
+                Debug.Log("Failed to join room with return code [" + returnCode + "]: " + message);
+        #endif
+
+        Menu.instance.ShowCreatingGameInsteadOfJoinedOne();
     }
 
     public override void OnJoinedRoom()

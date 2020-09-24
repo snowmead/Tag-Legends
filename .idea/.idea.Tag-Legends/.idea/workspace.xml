@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="74530279-11ae-4971-b45c-18263c762d75" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Tag-Legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tag-Legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/KriptoFX/Realistic Effects Pack v4/Effects/Shaders/RFX4_UberDistortion.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/KriptoFX/Realistic Effects Pack v4/Effects/Shaders/RFX4_UberDistortion.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Character/Berserker/Berserker.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Character/Berserker/Berserker.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1600918296279</updated>
       <workItem from="1600918314806" duration="274000" />
-      <workItem from="1600961887076" duration="4226000" />
+      <workItem from="1600961887076" duration="4901000" />
     </task>
     <servers />
   </component>
