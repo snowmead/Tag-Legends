@@ -42,6 +42,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         // increase the progress bar of the loading screen
         MenuLoading.instance.PhotonConnectionDone();
+        
+        #if UNITY_EDITOR
+            Debug.Log("Connected to Photon Region: " + PhotonNetwork.CloudRegion);
+        #endif
     }
 
     // get list of rooms based on string query
