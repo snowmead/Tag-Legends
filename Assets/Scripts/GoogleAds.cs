@@ -6,11 +6,18 @@ using GoogleMobileAds.Api;
 
 public class GoogleAds : MonoBehaviour
 {
+    public static GoogleAds instance;
     private BannerView bannerView;
     private InterstitialAd interstitial;
 
+    public void Awake()
+    {
+        instance = this;
+    }
+
     public void Start()
     {
+
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus => { });
         
@@ -75,7 +82,7 @@ public class GoogleAds : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public void destroyBanner()
     {
         bannerView.Destroy();
     }
