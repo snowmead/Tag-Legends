@@ -850,6 +850,7 @@
           <e p="CameraController.cs" t="Include" />
           <e p="CloudManager.cs" t="Include" />
           <e p="Cooldown.cs" t="Include" />
+          <e p="FIrstTimePlaying.cs" t="Include" />
           <e p="FloatingText.cs" t="Include" />
           <e p="FrostMageAbilities.cs" t="Include" />
           <e p="FrostNova.cs" t="Include" />
