@@ -502,6 +502,17 @@
             </e>
           </e>
         </e>
+        <e p="GUI Pro Kit Fantasy RPG" t="Include">
+          <e p="Extensions" t="Include">
+            <e p="UIParticle" t="Include">
+              <e p="hidden particle.shader" t="Include" />
+              <e p="UIParticleSystem.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="CtrPanel.cs" t="Include" />
+          </e>
+        </e>
         <e p="Joystick Pack" t="Include">
           <e p="Scripts" t="Include">
             <e p="Base" t="Include">
