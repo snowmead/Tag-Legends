@@ -72,6 +72,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
         else if (!pauseStatus)
         {
+            if (SceneManager.GetActiveScene().name == "MenuLoading") return;
             CloudManager.Instance.Reconnect();
             PhotonNetwork.Reconnect();
         }
