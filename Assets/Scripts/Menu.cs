@@ -399,7 +399,9 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
         SetScreen(GetScreen(PLAY_OPTIONS_NAME));
-        GoogleAds.instance.destroyBanner();
+        
+        if(GoogleAds.instance != null)
+            GoogleAds.instance.destroyBanner();
     }
 
     // called when "Character" Button is pressed
@@ -407,7 +409,9 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         buttonClickAudio.Play();
         SetScreen(GetScreen(CHARACTER_SCREEN_NAME));
-        GoogleAds.instance.destroyBanner();
+        
+        if(GoogleAds.instance != null)
+            GoogleAds.instance.destroyBanner();
     }
 
     // called when "Settings" Button is pressed
