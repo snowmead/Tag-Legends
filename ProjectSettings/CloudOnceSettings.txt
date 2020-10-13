@@ -3,7 +3,7 @@
 	"LeaderboardIDs":[
 		{
 			"InternalID":"RankingScore",
-			"AppleID":"",
+			"AppleID":"gamecenter_rank_leaderboard",
 			"GoogleID":"CgkIyoCahe4CEAIQAQ"
 		}
 	],
@@ -16,7 +16,7 @@
 			"AllowNegative":false
 		}
 	],
-	"AppleSupported":false,
+	"AppleSupported":true,
 	"GoogleSupported":true,
 	"GoogleAppID":"98258288714",
 	"GoogleSetupRun":true,

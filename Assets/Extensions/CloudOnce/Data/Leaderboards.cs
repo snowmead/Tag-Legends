@@ -16,7 +16,7 @@ namespace CloudOnce
     {
         private static readonly UnifiedLeaderboard s_rankingScore = new UnifiedLeaderboard("RankingScore",
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS)
-            ""
+            "gamecenter_rank_leaderboard"
 #elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_GOOGLE
             "CgkIyoCahe4CEAIQAQ"
 #else
@@ -38,7 +38,7 @@ namespace CloudOnce
 
         private static readonly Dictionary<string, UnifiedLeaderboard> s_leaderboardDictionary = new Dictionary<string, UnifiedLeaderboard>
         {
-            { "RankingScore", s_rankingScore },
+            { "RankingScore", s_rankingScore }
         };
     }
 }

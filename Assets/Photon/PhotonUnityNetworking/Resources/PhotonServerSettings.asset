@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: b4a5dfea-6e8a-4e7d-b7c9-ff4b8902453a
+    AppIdRealtime: 
     AppIdChat: 
     AppIdVoice: 
     AppVersion: 
@@ -27,7 +27,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: cae
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -38,17 +38,16 @@ MonoBehaviour:
   - ChangeScene
   - ClickRpc
   - DestroyRpc
+  - FreezingWinds
   - GameOver
+  - IceBlock
   - IceBolt
   - ImInGame
   - Initialize
+  - RemovePlayer
   - StartCountdown
   - TagPlayer
-  - UpdateInGameUI
   - UpdateLobbyUI
-  - FreezingWinds
-  - IceBlock
-  - RemovePlayer
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
-  DevRegionSetOnce: 1
+  ShowSettings: 0
+  DevRegionSetOnce: 0

@@ -38,7 +38,7 @@ namespace CloudOnce
                     return string.Empty;
 #endif
 #elif (UNITY_IOS || UNITY_TVOS) && !UNITY_EDITOR
-                    return "";
+                    return "gamecenter_rank_leaderboard";
 #elif UNITY_EDITOR
                     return "RankingScore";
 #else
