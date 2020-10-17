@@ -30,7 +30,7 @@ public class GoogleAds : MonoBehaviour
         #if UNITY_ANDROID
             string adUnitId = "ca-app-pub-9687511672810085/4251581567";
         #elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3940256099942544/2934735716";
+            string adUnitId = "ca-app-pub-9687511672810085/8874647427";
         #else
             string adUnitId = "unexpected_platform";
         #endif
@@ -61,7 +61,7 @@ public class GoogleAds : MonoBehaviour
         #if UNITY_ANDROID
                 string adUnitId = "ca-app-pub-9687511672810085/9528038523";
         #elif UNITY_IPHONE
-                string adUnitId = "ca-app-pub-3940256099942544/4411468910";
+                string adUnitId = "ca-app-pub-9687511672810085/7233745774";
         #else
                 string adUnitId = "unexpected_platform";
         #endif
